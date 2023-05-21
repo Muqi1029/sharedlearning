@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muqi.backendsl.mapper.ArticleMapper">
+    
+    <resultMap id="ArticleCardDTO" type="com.muqi.backendsl.model.dto.ArticleCardDTO">
+            <id property="id" column="id" jdbcType="BIGINT"/>
+            <result property="articleCover" column="articleCover" jdbcType="VARCHAR"/>
+            <result property="articleTitle" column="articleTitle" jdbcType="VARCHAR"/>
+            <result property="articleContent" column="articleContent" jdbcType="VARCHAR"/>
+            <result property="articleStatus" column="articleStatus" jdbcType="TINYINT"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="courseID" column="courseID" jdbcType="BIGINT"/>
+            <result property="thumbUpCount" column="thumbUpCount"></result>
+            <result property="rewardCount" column="rewardCount"></result>
+            <result property="viewCount" column="viewCount"></result>
+            <result property="commentCount" column="commentCount"></result>
+            <association property="userInfo" javaType="com.muqi.backendsl.entity.UserInfo">
+                <result property="id" column="U_id"></result>
+                <result property="avatarURL" column="avatarURL" jdbcType="VARCHAR"></result>
+                <result property="userName" column="userName" jdbcType="VARCHAR"></result>
+            </association>
+    </resultMap>
+
+
+    <sql id="Base_Column_List">
+        id,userID,articleCover,
+        articleTitle,articleContent,isTop,
+        isDelete,articleStatus,articleType,
+        originalURL,createTime,updateTime, courseID
+    </sql>
+
+    <select id="listArticlesByCourseId" resultMap="ArticleCardDTO">
+        select id,
+               articleCover,
+               articleTitle,
+               articleContent,
+               isFeatured,
+               articleStatus,
+               createTime,
+               courseID,
+               rewardCount,
+               thumbUpCount,
+               commentCount,
+               viewCount,
+               U.avatarURL as avatarURL,
+               U.userName as userName,
+               U.Uid as U_id
+        from t_article
+        left join (select id as Uid, userName, avatarURL from t_user) U on userID = U.Uid
+        where isDelete = 0 and courseID = #{courseID};
+    </select>
+
+    <select id="getArticleById" resultType="com.muqi.backendsl.model.dto.ArticleDTO">
+        select
+            *
+        from t_article a
+        left join (select id as cID, term, category from t_course) c
+        on a.courseID = cID
+        left join (select id as uID, userName, avatarURL from t_user) u
+                  on a.userID = uID
+        where id = ${articleID} and isDelete = 0;
+    </select>
+
+
+</mapper>

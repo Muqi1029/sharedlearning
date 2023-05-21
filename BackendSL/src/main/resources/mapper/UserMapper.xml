@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.muqi.backendsl.mapper.UserMapper">
+
+    <resultMap id="BaseResultMap" type="com.muqi.backendsl.entity.User">
+            <id property="userID" column="userID" jdbcType="BIGINT"/>
+            <result property="userName" column="userName" jdbcType="VARCHAR"/>
+            <result property="loginAccount" column="loginAccount" jdbcType="VARCHAR"/>
+            <result property="loginPassword" column="loginPassword" jdbcType="VARCHAR"/>
+            <result property="userPhone" column="userPhone" jdbcType="VARCHAR"/>
+            <result property="avatarURL" column="avatarURL" jdbcType="VARCHAR"/>
+            <result property="gender" column="gender" jdbcType="TINYINT"/>
+            <result property="userAuthority" column="userAuthority" jdbcType="TINYINT"/>
+            <result property="userStatus" column="userStatus" jdbcType="TINYINT"/>
+            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+            <result property="userEmail" column="userEmail" jdbcType="VARCHAR"/>
+            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="isSubscribe" column="isSubscribe" jdbcType="TINYINT"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        userID,userName,loginAccount,
+        loginPassword,userPhone,avatarURL,
+        gender,userAuthority,userStatus,
+        isDelete,userEmail,createTime,
+        updateTime,isSubscribe
+    </sql>
+
+</mapper>
