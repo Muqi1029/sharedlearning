@@ -1,14 +1,18 @@
-drop table if exists `t_user`;
 
+CREATE DATABASE IF NOT EXISTS  sharedlearning;
+USE sharedlearning;
+
+
+DROP TABLE IF EXISTS `t_user`;
 -- --------------------------
 -- table structure for t_user
 -- ---------------------------
-create table t_user
+CREATE TABLE t_user
 (
     id            bigint auto_increment comment '用户ID'
         primary key,
     userName      varchar(256)                       null comment '用户昵称',
-    loginAccount  varchar(256)                       null comment '登录账号',
+    loginAccount  varchar(256)                       not null comment '登录账号',
     loginPassword varchar(32)                        not null comment '登录密码',
     avatarURL     varchar(1024)                      null comment '用户头像',
     gender        tinyint                            null comment '0: male 1: female',
@@ -22,21 +26,21 @@ create table t_user
     intro         varchar(255)                       null,
     userPhone     varchar(30)                        null
 )
-    engine = InnoDB;
+    COMMENT '用户类' engine = InnoDB;
 
 -- --------------------
 -- Records of t_user
 -- --------------------
 
-insert into t_user
-values ();
+INSERT INTO t_user (userName, loginAccount, loginPassword)
+VALUES ('test', 123456789, 123456789);
 
 
 -- -------------------------------
 -- table structure for t_course
 -- -------------------------------
-drop table if exists t_course;
-create table t_course
+DROP TABLE IF EXISTS t_course;
+CREATE TABLE t_course
 (
     id           int auto_increment
         primary key,
@@ -51,7 +55,7 @@ create table t_course
     courseStatus tinyint     default 0                 null comment '0 公开 1 私密 ',
     courseCover  varchar(300)                          null
 )
-    comment '课程类' engine = InnoDB;
+COMMENT '课程类' engine = InnoDB;
 
 -- --------------------------
 -- Records of t_course
@@ -64,9 +68,9 @@ VALUES ('大一下', '概率论', '倪葎', '概率论与数理统计', '概率�
 -- ------------------------------
 -- table structure for t_article
 -- ------------------------------
-drop table if exists t_article;
+DROP TABLE IF EXISTS t_article;
 
-create table t_article
+CREATE TABLE t_article
 (
     id             bigint auto_increment primary key,
     userID         bigint                               not null comment '文章作者',
@@ -124,7 +128,7 @@ create table t_link
     courseID int          null,
     isOffice tinyint(1)   not null comment '是否公有',
     userID   int          null comment '该链接属于哪个用户'
-);
+) COMMENT '链接类';
 
 insert into `t_link` (url, courseID, isOffice, userID)
 values ('http://math.itdiffer.com/positive_definite.html', 1, 1, 12),
