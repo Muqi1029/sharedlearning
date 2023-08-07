@@ -1,7 +1,12 @@
 import { createApp } from "vue";
 
+/**
+ * Entry file
+ */
+
 import v3ImgPreview from "v3-img-preview";
 // import * as ElementPlusIconsVue from "@/element-plus/icons-vue";
+
 /**
  * import root component
  */

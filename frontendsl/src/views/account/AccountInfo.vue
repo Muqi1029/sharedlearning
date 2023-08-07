@@ -1,6 +1,7 @@
 <template>
   <div>个人账号信息的组件</div>
 </template>
+
 <script lang="ts">
 import { defineComponent } from "vue";
 
