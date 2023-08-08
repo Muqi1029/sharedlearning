@@ -24,6 +24,4 @@ public class BeanCopyUtil {
         }
         return dest;
     }
-
-
 }

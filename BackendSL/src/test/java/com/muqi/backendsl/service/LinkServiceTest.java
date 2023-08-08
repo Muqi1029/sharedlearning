@@ -6,7 +6,6 @@ import com.muqi.backendsl.mapper.TagMapper;
 import com.muqi.backendsl.mapper.UserCourseMapper;
 import com.muqi.backendsl.model.request.LinkRequest;
 import com.muqi.backendsl.model.vo.RecommendLinkVO;
-import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -55,7 +54,7 @@ public class LinkServiceTest {
     public void GptTest() {
         List<String> recommendURL = null;
         try {
-            recommendURL = gptService.getGPTRecommandation(gptService.getGPTPrompt("矩阵分解"));
+            recommendURL = gptService.getGPTRecommendation(gptService.getGPTPrompt("矩阵分解"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

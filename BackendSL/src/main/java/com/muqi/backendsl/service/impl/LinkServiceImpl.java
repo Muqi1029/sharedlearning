@@ -10,10 +10,8 @@ import com.muqi.backendsl.mapper.UserCourseMapper;
 import com.muqi.backendsl.model.dto.LinkDTO;
 import com.muqi.backendsl.model.request.LinkRequest;
 import com.muqi.backendsl.model.vo.RecommendLinkVO;
-import com.muqi.backendsl.service.GPTService;
 import com.muqi.backendsl.service.LinkService;
 import com.muqi.backendsl.mapper.LinkMapper;
-import com.muqi.backendsl.utils.GPTThread;
 import com.muqi.backendsl.utils.UrlUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -26,7 +24,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CompletableFuture;
 
 /**
  * @author mq
@@ -38,9 +35,6 @@ import java.util.concurrent.CompletableFuture;
 public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
         implements LinkService {
 
-
-    @Autowired
-    private GPTService gptService;
 
 
     @Autowired
@@ -105,66 +99,6 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
         linkQueryWrapper.eq("tagID", tagID);
 
         List<Link> links = linkMapper.selectList(linkQueryWrapper);
-
-        CompletableFuture<Void> future = null;
-
-        if (links.size() < 20) {
-            GPTThread gptThread = new GPTThread(gptService,linkMapper);
-
-            gptThread.setTagName(tagName);
-            gptThread.setTagID(tagID);
-            gptThread.start();
-            System.out.println("线程开始");
-//            future = CompletableFuture.runAsync(() -> {
-//                // 3. 根据tag调用chatgpt接口查询tags.get(r)
-//                // 获取对应的url并返回
-//                /**
-//                 * code for tag fetching
-//                 */
-//                String prompt = gptService.getGPTPrompt(tagName);
-//                try {
-//                    for (String url : gptService.getGPTRecommandation(prompt)) {
-//                        LinkRequest linkRequest = new LinkRequest();
-//                        linkRequest.setUrl(url);
-//                        linkRequest.setUserID(0);
-//                        linkRequest.setTagID(tagID);
-//                        if (url.contains("github")) {
-//                            linkRequest.setSource(0);
-//                        }
-//
-//                        this.saveLink(linkRequest);
-//                    }
-//                } catch (Exception e) {
-//                    System.out.println(e);
-//                }
-//            });
-        }
-
-
-//        /**
-//         * code for tag fetching
-//         */
-//        String prompt = gptService.getGPTPrompt(tagName);
-//        try {
-//            List<String> gptRecommandation = gptService.getGPTRecommandation(prompt);
-//
-//            System.out.println("recommend URL: " + gptRecommandation);
-//
-//            for (String url : gptRecommandation) {
-//                LinkRequest linkRequest = new LinkRequest();
-//                linkRequest.setUrl(url);
-//                linkRequest.setUserID(0);
-//                linkRequest.setTagID(tagID);
-//                if (url.contains("github")) {
-//                    linkRequest.setSource(0);
-//                }
-//
-//                this.saveLink(linkRequest);
-//            }
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
-
 
         for (Link link : links) {
             int i = link.getSource();

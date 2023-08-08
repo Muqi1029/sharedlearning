@@ -1,9 +1,5 @@
 package com.muqi.backendsl.controller;
 
-
-
-
-
 import com.muqi.backendsl.model.dto.ArticleCardDTO;
 
 import com.muqi.backendsl.model.dto.CourseCardDTO;
@@ -31,7 +27,7 @@ public class CourseController {
     @Resource
     private CourseService courseService;
 
-    @Autowired
+    @Resource
     private ArticleService articleService;
 
     /**

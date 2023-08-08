@@ -45,11 +45,12 @@
                commentCount,
                viewCount,
                U.avatarURL as avatarURL,
-               U.userName as userName,
-               U.Uid as U_id
+               U.userName  as userName,
+               U.Uid       as U_id
         from t_article
-        left join (select id as Uid, userName, avatarURL from t_user) U on userID = U.Uid
-        where isDelete = 0 and courseID = #{courseID};
+                 left join (select id as Uid, userName, avatarURL from t_user) U on userID = U.Uid
+        where isDelete = 0
+          and courseID = #{courseID};
     </select>
 
     <select id="getArticleById" resultType="com.muqi.backendsl.model.dto.ArticleDTO">
