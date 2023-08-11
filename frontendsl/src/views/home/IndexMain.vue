@@ -6,8 +6,8 @@
     >
       <div class="flex justify-between">
         <h1>智能推荐部分</h1>
-        <el-button class="h-16 p-5" size="large" @click="dialogVisible = true"
-          >上传链接
+        <el-button class="h-16 p-5" size="large" @click="dialogVisible = true">
+          上传链接
         </el-button>
       </div>
 
@@ -35,12 +35,12 @@
 
         <template #footer>
           <span class="dialog-footer">
-            <el-button @click="dialogVisible = false">Cancel</el-button>
-            <el-button
-              @click="submitOfficialForm(officialFormRef)"
-              type="primary"
-              >Confirm</el-button
-            >
+            <el-button @click="dialogVisible = false">
+              Cancel
+            </el-button>
+            <el-button @click="submitOfficialForm(officialFormRef)" type="primary">
+              Confirm
+            </el-button>
           </span>
         </template>
       </el-dialog>
@@ -66,12 +66,6 @@
     <div class="main-grid">
       <div class="flex flex-col relative">
         <ul :class="tabClass">
-          <!--          <li-->
-          <!--            :class="{ active: activeTab === 0 }"-->
-          <!--            class="hover:bg-blue-100 relative bottom-6 p-3 rounded-2xl"-->
-          <!--          >-->
-          <!--            all-->
-          <!--          </li>-->
           <el-select
             placeholder="学期"
             v-model="term"
@@ -130,7 +124,7 @@
         <profile></profile>
         <recent-reserve
           :favList="favList"
-          :hasCourses="haveCourses"
+          :haveCourses="haveCourses"
         ></recent-reserve>
       </sidebar>
     </div>
@@ -186,15 +180,16 @@ export default defineComponent({
     const userStore = useUserStore();
     const linkStore = useLinkStore();
 
+    //所需要的响应式数据
+    //包括：学期  编程语言  课程列表  github列表   文章列表
     const reactiveData = reactive({
       haveCourses: false,
+      loading: false,
       term: "",
       language: "",
-      loading: false,
       courses: [] as any,
       githubList: [] as ILink[],
       articleList: [],
-      otherList: [],
     });
 
     const dialogVisible = ref(false);
@@ -303,6 +298,8 @@ export default defineComponent({
 
     favList.value = readData();
 
+
+    //用于更新收藏课程的队列
     const changeReserve = (param: [number, boolean]) => {
       if (param[1]) favList.value.push(param[0]);
       else {

@@ -3,11 +3,7 @@
     <div class="article">
       <!-- image of article card -->
       <div class="article-thumbnail" @click="toArticle">
-        <img
-          v-if="data.articleCover"
-          v-lazy="data.articleCover"
-          alt="文章图片"
-        />
+        <img v-if="data.articleCover" v-lazy="data.articleCover" alt="文章图片"/>
         <img v-else src="@/assets/default-cover.jpg" />
         <span class="thumbnail-screen" :style="gradientBackground"></span>
       </div>
@@ -19,14 +15,12 @@
           <div class="flex flex-row items-center">
             <img
               class="hover:opacity-50 cursor-pointer"
-              :src="data.userInfo.avatarURL || ''"
+              :src="data.userInfo.avatarURL"
               alt="author avatar"
-              @click="handleAuthorClick"
             />
             <span class="text-ob-dim">
               <strong
                 class="text-ob-normal pr-1.5 hover:text-ob hover:opacity-50 cursor-pointer"
-                @click="handleAuthorClick"
               >
                 {{ data.userInfo.userName }}
               </strong>
@@ -75,21 +69,20 @@ export default defineComponent({
     const router = useRouter();
     const appStore = useAppStore();
 
-    const handleAuthorClick = () => {};
 
-    // get into article
     const toArticle = () => {
       router.push({
         path: "/article/" + props.data.id,
       });
     };
 
+    const gradientBackground = computed(
+      () => appStore.themeConfig.header_gradient_css
+    )
+
     return {
       toArticle,
-      handleAuthorClick,
-      gradientBackground: computed(
-        () => appStore.themeConfig.header_gradient_css
-      ),
+      gradientBackground,
     };
   },
 });

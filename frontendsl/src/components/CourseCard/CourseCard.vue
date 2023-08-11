@@ -1,7 +1,6 @@
 <template>
   <div class="article-container relative rounded-2xl">
     <div class="article">
-      <!-- Course Img -->
       <div class="article-thumbnail row-span-1 relative" @click="toCourse">
         <img v-if="course.courseCover" v-lazy="course.courseCover" alt="" />
         <img v-else src="@/assets/default-cover.jpg" />
@@ -21,21 +20,12 @@
               <em># {{ tag.tagName }}</em>
             </li>
           </ul>
-
-          <!-- <ul v-else>
-            <ob-skeleton v-if="!course.tags" :count="2" tag="li" height="16px" width="35px" />
-          </ul> -->
         </span>
 
-        <!-- professor, title, intro -->
         <div>{{ course.professor }}</div>
         <h1 class="">{{ course.title }}</h1>
         <p>{{ course.intro }}</p>
-
-        <!-- <div class="course-footer flex">
-          课程底部注释
-        </div> -->
-
+        
         <div class="course-footer relative w-full">
           <Favorites @isFavHandle="setFav" :isFav="isFav"></Favorites>
         </div>
@@ -72,7 +62,6 @@ export default defineComponent({
      */
 
     const toCourse = () => {
-      // alert(courseID);
       UserClickCourse({ userID, courseID });
       router.push({
         path: "/course/" + courseID,

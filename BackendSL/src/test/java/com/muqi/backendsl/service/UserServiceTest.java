@@ -36,9 +36,9 @@ public class UserServiceTest {
     @Test
     public void testAddUser(){
         User user = new User();
-        user.setUserName("test");
-        user.setLoginAccount("12345678");
-        String loginPassword = "12345678";
+        user.setUserName("xixixi");
+        user.setLoginAccount("002629");
+        String loginPassword = "002629";
 
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + loginPassword).getBytes(StandardCharsets.UTF_8));
         user.setLoginPassword(encryptPassword);

@@ -32,10 +32,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, toRefs, reactive, computed } from "vue";
-import SubTitle from "@/components/Title/SubTitle.vue";
 import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
-import { useCommentStore } from "@/stores/comment";
 import { useAppStore } from "@/stores/app";
 import { saveComment } from "@/api/comment";
 
@@ -44,7 +42,6 @@ export default defineComponent({
   components: {},
   setup() {
     const userStore = useUserStore();
-    const commentStore = useCommentStore();
     const appStore = useAppStore();
     const route = useRoute();
     const reactiveData = reactive({
