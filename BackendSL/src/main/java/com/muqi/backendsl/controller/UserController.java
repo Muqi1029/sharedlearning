@@ -34,18 +34,6 @@ public class UserController {
     private UserCourseService userCourseService;
 
 
-//    /**
-//     *
-//     * @param map favList uploaded by users
-//     * @param userID userID
-//     * @return operating result
-//     */
-//    @PostMapping("/reserveCourse/{userID}")
-//    public ResultVO<?> reserveCourse(@RequestBody HashMap<String, Object> map, @PathVariable("userID") Long userID) {
-//        List<Integer> favList = (List<Integer>) map.get("favList");
-//        userService.reserveCourse(favList, userID);
-//        return ResultVO.fail();
-//    }
 
     /**
      * 用户注册接口
@@ -69,12 +57,26 @@ public class UserController {
         // DONE
         String loginAccount = userLoginRequest.getLoginAccount();
         String loginPassword = userLoginRequest.getLoginPassword();
+        Integer userAuthority=userLoginRequest.getUserAuthority();
+
+
+        User user = userService.userLogin(loginAccount, loginPassword, request);
+
+
+
+        if (userAuthority == 0) {
+            // This is a normal user login
+            return ResultVO.ok(user, "user");
+        } else if (userAuthority == 1) {
+            // This is an administrator login
+            return ResultVO.ok(user, "admin");
+        }
 
         if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
             return null;
         }
-
-        /** handle user login */
+//
+//        /** handle user login */
         return ResultVO.ok(userService.userLogin(loginAccount, loginPassword, request));
     }
 

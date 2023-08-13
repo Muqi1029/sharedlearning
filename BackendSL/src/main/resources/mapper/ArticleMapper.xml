@@ -63,6 +63,8 @@
                   on a.userID = uID
         where id = ${articleID} and isDelete = 0;
     </select>
-
+    <select id="findByArticleStatus" resultType="com.muqi.backendsl.entity.Article">
+        SELECT * FROM t_article WHERE articleStatus = #{status}
+    </select>
 
 </mapper>

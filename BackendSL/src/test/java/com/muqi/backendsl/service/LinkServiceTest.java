@@ -29,9 +29,6 @@ public class LinkServiceTest {
     @Autowired
     private TagMapper tagMapper;
 
-    @Autowired
-    private GPTService gptService;
-
     @Test
     public void getRecommendURLTest() {
         int userID = 12;
@@ -48,17 +45,6 @@ public class LinkServiceTest {
         int r = random.nextInt(tags.size());
 
         System.out.println(tags.get(r));
-    }
-
-    @Test
-    public void GptTest() {
-        List<String> recommendURL = null;
-        try {
-            recommendURL = gptService.getGPTRecommendation(gptService.getGPTPrompt("矩阵分解"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println(recommendURL);
     }
 
     @Test

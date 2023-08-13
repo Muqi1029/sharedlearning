@@ -2,6 +2,7 @@
 package com.muqi.backendsl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.muqi.backendsl.entity.Article;
 import com.muqi.backendsl.mapper.ArticleMapper;
@@ -9,6 +10,7 @@ import com.muqi.backendsl.model.dto.ArticleCardDTO;
 import com.muqi.backendsl.model.dto.ArticleDTO;
 import com.muqi.backendsl.model.dto.PageResultDTO;
 import com.muqi.backendsl.model.vo.ArticleVO;
+import com.muqi.backendsl.model.vo.ResultVO;
 import com.muqi.backendsl.service.ArticleService;
 import com.muqi.backendsl.utils.BeanCopyUtil;
 import lombok.SneakyThrows;
@@ -31,12 +33,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Autowired
     private ArticleMapper articleMapper;
-
-
-    /**
-     * tag of classes received from the sql
-     **/
-    private final List<String> tags = null;
 
 
     @Override
@@ -72,10 +68,24 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     }
 
 
-//    @Override
-//    public List<ArticleSearchDTO> listArticlesBySearch(ConditionVO condition) {
-//        return searchStrategyContext.executeSearchStrategy(condition.getKeywords());
-//    }
+    // ...
+
+    @Override
+    public List<Article> getPendingArticles() {
+        return articleMapper.findByArticleStatus(1);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
 
