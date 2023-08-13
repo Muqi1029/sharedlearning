@@ -1,9 +1,7 @@
 package com.muqi.backendsl.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
 import com.muqi.backendsl.entity.User;
-import com.muqi.backendsl.entity.UserCourse;
 import com.muqi.backendsl.model.request.UserCourseRequest;
 import com.muqi.backendsl.model.request.UserLoginRequest;
 import com.muqi.backendsl.model.vo.ResultVO;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +47,6 @@ public class UserController {
     /**
      * 用户注册接口
      *
-     * @param
      * @return userID
      */
     @PostMapping("/register")
@@ -64,17 +60,27 @@ public class UserController {
         return userService.userRegister(loginAccount, loginPassword, checkPassword);
     }
 
+
     @PostMapping("/login")
     public ResultVO<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
-        // DONE
         String loginAccount = userLoginRequest.getLoginAccount();
         String loginPassword = userLoginRequest.getLoginPassword();
+
+
+        /**
+         * 1. 用户登录：输入账号和密码
+         * 2. 根据账号和密码去查询数据库 同时将userAuthority拿出来，判断这是个普通用户登录还是管理员登录
+         * 3. 想一个类似于flag的属性，用ResultVO包装，返回给前端
+         * 4. 前端收到flag，根据其用户的权限导航到不同的页面
+         * 5. 管理员页面要显示对应待审核的数据 type == 0 # 设计对应的URL供前端使用
+         * 6. 返回type==0的文章数据给前端渲染
+         */
+
 
         if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
             return null;
         }
 
-        /** handle user login */
         return ResultVO.ok(userService.userLogin(loginAccount, loginPassword, request));
     }
 

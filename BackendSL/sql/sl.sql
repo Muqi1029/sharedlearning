@@ -1,5 +1,5 @@
 
-CREATE DATABASE IF NOT EXISTS  sharedlearning;
+CREATE DATABASE IF NOT EXISTS sharedlearning;
 USE sharedlearning;
 
 
@@ -61,7 +61,8 @@ COMMENT '课程类' engine = InnoDB;
 -- Records of t_course
 -- ------------------------
 insert into t_course (term, category, professor, intro, title)
-VALUES ('大一下', '概率论', '倪葎', '概率论与数理统计', '概率论与数理统计');
+VALUES ('大一下', '概率论', '倪葎', '概率论与数理统计', '概率论与数理统计')
+;
 
 
 

@@ -12,10 +12,10 @@ import com.muqi.backendsl.model.vo.ArticleVO;
 import com.muqi.backendsl.service.ArticleService;
 import com.muqi.backendsl.utils.BeanCopyUtil;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -28,14 +28,10 @@ import java.util.concurrent.CompletableFuture;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
 
-
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
 
 
-    /**
-     * tag of classes received from the sql
-     **/
     private final List<String> tags = null;
 
 

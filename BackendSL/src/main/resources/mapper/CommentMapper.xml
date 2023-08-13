@@ -5,23 +5,25 @@
 <mapper namespace="com.muqi.backendsl.mapper.CommentMapper">
 
     <resultMap id="BaseResultMap" type="com.muqi.backendsl.entity.Comment">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="userID" column="userID" jdbcType="INTEGER"/>
-            <result property="parentID" column="parentID" jdbcType="INTEGER"/>
-            <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
-            <result property="isReview" column="isReview" jdbcType="TINYINT"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userID" column="userID" jdbcType="INTEGER"/>
+        <result property="parentID" column="parentID" jdbcType="INTEGER"/>
+        <result property="isDelete" column="isDelete" jdbcType="TINYINT"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+        <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+        <result property="isReview" column="isReview" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,userID,parentID,
+        id
+        ,userID,parentID,
         isDelete,content,createTime,
         updateTime,isReview
     </sql>
     <select id="selectCommentByArticleID" resultType="com.muqi.backendsl.model.dto.CommentDTO">
-        select * from t_comment
+        select *
+        from t_comment
         where articleID = #{articleID};
     </select>
 </mapper>
