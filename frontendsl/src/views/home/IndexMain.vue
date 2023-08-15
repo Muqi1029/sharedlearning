@@ -66,12 +66,6 @@
     <div class="main-grid">
       <div class="flex flex-col relative">
         <ul :class="tabClass">
-          <!--          <li-->
-          <!--            :class="{ active: activeTab === 0 }"-->
-          <!--            class="hover:bg-blue-100 relative bottom-6 p-3 rounded-2xl"-->
-          <!--          >-->
-          <!--            all-->
-          <!--          </li>-->
           <el-select
             placeholder="学期"
             v-model="term"
@@ -169,9 +163,11 @@ import { getRecommendLinkByUserID } from "@/api/link";
 import { FormInstance, FormRules } from "element-plus";
 import { isValidURL } from "@/utils/validate";
 import { useLinkStore } from "@/stores/link";
+import SvgIcon from "@/components/SvgIcon/index.vue";
 
 export default defineComponent({
   components: {
+    SvgIcon,
     RecommendLinkCard,
     Title,
     CourseCard,
@@ -335,7 +331,6 @@ export default defineComponent({
       terms,
       dialogVisible,
       officialForm,
-
       officialFormRef,
       submitOfficialForm,
       rules,

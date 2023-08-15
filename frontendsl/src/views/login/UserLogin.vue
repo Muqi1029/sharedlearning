@@ -1,8 +1,8 @@
 <template>
   <div class="login-container">
-    <div class="formdata">
+    <div class="loginFormData">
       <!-- title -->
-      <div class="title-container bg-purple-400">
+      <div class="title-container">
         <h3 class="title">Sharedlearning</h3>
       </div>
 
@@ -17,10 +17,6 @@
       >
         <!-- 用户名 -->
         <el-form-item label="用户名:" prop="username" class="mt-8" size="large">
-          <!-- <span class="svg-container">
-            <svg-icon icon-class="user" />
-          </span> -->
-
           <el-input
             ref="usernameRef"
             v-model="loginForm.username"
@@ -40,9 +36,6 @@
         >
           <!-- password -->
           <el-form-item prop="password" label="密码：">
-            <!-- <span class="svg-container">
-              <svg-icon icon-class="password" />
-            </span> -->
             <el-input
               type="text"
               ref="passwordRef"
@@ -63,7 +56,7 @@
           <span
             @click="forgetPwd"
             class="cursor-pointer hover:text-blue-300 text-sm"
-            >忘记密码?</span
+            >忘记密码</span
           >
         </div>
 
@@ -88,7 +81,6 @@
     </div>
 
     <!-- title: 定义标题 -->
-    <!-- visible.sync: 同步可见 -->
     <el-dialog title="其他登录方式" :visible="showDialog">
       Can not be simulated on local, so please combine you own business
       simulation! ! !
@@ -101,7 +93,7 @@
 </template>
 
 <script lang="ts">
-import { reactive, ref, watch, nextTick, onMounted } from "vue";
+import { reactive, ref, watch, onMounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useUserStore } from "@/stores/user";
 import { ElTooltip } from "element-plus";
@@ -109,15 +101,9 @@ import { ElTooltip } from "element-plus";
 export default {
   name: "UserLogin",
   components: { ElTooltip },
-
-  // the entrance to compositional API
-  // argument 1: props
-  // argument 2: context
-
   setup() {
     /* --------------------------------------------------------------- */
     let capsTooltip = ref(true);
-
     let showDialog = ref(false); // 是否显示对话框(用来表示其他登录方式)
     let redirect = ref(); // redirect去的组件
     let otherQuery = reactive({}); // tmp
@@ -185,13 +171,19 @@ export default {
           loading.value = true;
           userStore
             .userLogin(loginForm)
-            .then(() => {
-              // if success, page will get into home
-              router.push({
-                path: "/home",
-                query: otherQuery,
-              });
-              loading.value = false;
+            .then((res: number) => {
+              if (res === 1) {
+                router.push({
+                  path: "/admin",
+                });
+              } else {
+                // if success, page will get into home
+                router.push({
+                  path: "/home",
+                  query: otherQuery,
+                });
+                loading.value = false;
+              }
             })
             .catch(() => {
               // if there is any error
@@ -272,7 +264,7 @@ export default {
   overflow: hidden;
 }
 
-.formdata {
+.loginFormData {
   width: 600px;
   padding: 30px;
   border-radius: 10px;

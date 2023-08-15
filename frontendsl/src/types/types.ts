@@ -31,24 +31,21 @@ export interface ICourse {
  */
 export interface IArticle {
   id: number;
-  content: string;
-  title: string;
-  courseID: number;
-  intro: string;
-  author: any;
-  authorAvatar: string;
-  // updatetime: Date
-  // createtime: Date
-  articleAvatar: string;
-  thumbupCount: number;
-  commentCount: number;
-  rewardCount: number;
-  category: string;
-  semester: string;
-  createTime: Date;
+  articleContent: string;
+  articleTitle: string;
+  courseID?: number;
+  intro?: string;
+  author?: any;
+  authorAvatar?: string;
+  articleAvatar?: string;
+  thumbupCount?: number;
+  commentCount?: number;
+  rewardCount?: number;
+  articleStatus?: number;
+  category?: string;
+  semester?: string;
+  createTime?: Date;
 }
-
-export interface IAuthor {}
 
 export interface ILink {
   id: number;

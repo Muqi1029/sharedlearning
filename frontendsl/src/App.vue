@@ -5,7 +5,6 @@
       <Header />
     </template>
 
-    <!--  -->
     <div class="app-banner app-banner-image"></div>
 
     <div
@@ -33,16 +32,10 @@
 </template>
 
 <script lang="ts">
-// import UserLogin from './views/login/UserLogin.vue';
 import Header from "./components/Header/Header.vue";
-// import Logo from "./components/Header/Logo.vue";
-
 import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
-
 import { useAppStore } from "./stores/app";
-import { useCommonStore } from "./stores/common";
-
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
@@ -107,8 +100,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center;*/
-  /* color: #2c3e50; */
   position: relative;
 }
 

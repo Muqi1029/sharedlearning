@@ -24,6 +24,8 @@ import {
   ElIcon,
   ElTabs,
   ElTabPane,
+  ElTable,
+  ElTableColumn,
 } from "element-plus";
 
 export const components: any[] = [
@@ -48,6 +50,8 @@ export const components: any[] = [
   ElIcon,
   ElTabs,
   ElTabPane,
+  ElTable,
+  ElTableColumn,
 ];
 
 export const plugins: any[] = [

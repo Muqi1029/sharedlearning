@@ -42,6 +42,11 @@ const routes = [
     component: () => import("../views/error-page/404.vue"),
   },
   {
+    path: "/admin",
+    name: "admin",
+    component: import("../views/Admin.vue"),
+  },
+  {
     path: "/:catchAll(.*)",
     redirect: "/404",
     hidden: true,
