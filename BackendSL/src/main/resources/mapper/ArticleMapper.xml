@@ -64,7 +64,7 @@
         where id = ${articleID} and isDelete = 0;
     </select>
     <select id="findByArticleStatus" resultType="com.muqi.backendsl.entity.Article">
-        SELECT * FROM t_article WHERE articleStatus = #{status}
+        SELECT * FROM t_article WHERE articleStatus = #{articleStatus}
     </select>
 
 </mapper>

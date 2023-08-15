@@ -5,6 +5,7 @@ import com.muqi.backendsl.mapper.ArticleMapper;
 import com.muqi.backendsl.model.dto.ArticleCardDTO;
 import com.muqi.backendsl.model.dto.ArticleDTO;
 import com.muqi.backendsl.model.dto.PageResultDTO;
+import com.muqi.backendsl.model.vo.ArticleVO;
 import com.muqi.backendsl.strategy.context.ArticleImportStrategyContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,4 +58,23 @@ public class ArticleServiceTest {
         System.out.println(articleService.getPendingArticles());
     }
 
-}
+    @Test
+    public void importArticle() {
+        ArticleVO article = new ArticleVO(1122256122L, 111633444L, 111666777L,"weq","wdwd","qas",2,0,"wer",2);
+
+        articleService.saveOrUpdateArticle(article,122345);
+        System.out.println(article.getArticleStatus());
+    }
+
+    @Test
+    public void changeArticleStatus() {
+        ArticleVO article = new ArticleVO(1122256122L, 111633444L, 111666777L,"weq","wdwd","qas",2,0,"wer",2);
+
+        articleService.saveOrUpdateArticle(article,122345);
+        System.out.println(article.getArticleStatus());
+
+    }
+
+
+
+    }

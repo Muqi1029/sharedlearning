@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserInfo {
 
-//    @TableId(type = IdType.AUTO)
     private int id;
 
     private String avatarURL;

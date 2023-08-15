@@ -18,6 +18,7 @@ public class UserUtil {
         safeUser.setLoginAccount(originUser.getLoginAccount());
         safeUser.setUserPhone(originUser.getUserPhone());
         safeUser.setUserEmail(originUser.getUserEmail());
+
         return safeUser;
     }
 }

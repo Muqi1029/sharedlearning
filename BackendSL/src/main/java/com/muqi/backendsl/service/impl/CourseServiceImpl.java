@@ -64,18 +64,6 @@ public class CourseServiceImpl extends ServiceImpl<CourseMapper, Course>
         return null;
     }
 
-//    @Override
-//    public boolean userSaveCourse(int userID, int courseID) {
-//        UserCourse userCourse = new UserCourse();
-//        userCourse.setCourseID(courseID);
-//        userCourse.setUserID(userID);
-//        userCourse.setIsValid(1);
-//        int insert = userCourseMapper.insert(userCourse);
-//        if (insert > 0) {
-//            return true;
-//        }
-//        return false;
-//    }
 
 
 }

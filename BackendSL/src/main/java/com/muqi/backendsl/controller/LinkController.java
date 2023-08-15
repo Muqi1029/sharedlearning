@@ -32,7 +32,6 @@ public class LinkController {
 
     @GetMapping("/recommend/{userID}")
     public ResultVO<RecommendLinkVO> getCommendURL(@PathVariable("userID") Integer userID) {
-//        return ResultVO.ok(linkService.getRecommendURL(userID));
         return null;
     }
 

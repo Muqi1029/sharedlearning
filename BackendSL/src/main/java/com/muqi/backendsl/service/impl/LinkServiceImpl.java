@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.muqi.backendsl.entity.Link;
-import com.muqi.backendsl.entity.Tag;
-import com.muqi.backendsl.mapper.TagMapper;
 import com.muqi.backendsl.mapper.UserCourseMapper;
 import com.muqi.backendsl.model.dto.LinkDTO;
 import com.muqi.backendsl.model.request.LinkRequest;
@@ -43,8 +41,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
     @Autowired
     private UserCourseMapper userCourseMapper;
 
-    @Autowired
-    private TagMapper tagMapper;
+
 
     @Override
     public LinkDTO listLinkByCourseIDOpen(int courseID) {
@@ -66,56 +63,9 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
 
     @Override
     public RecommendLinkVO getRecommendURL(Integer userID) {
-
-
-        // 1. 根据userID获取最感兴趣的courseID
-        int courseID = userCourseMapper.getMaximumCourseIDByClick(userID);
-
-        // 2. 根据courseID随机获取对应的tag
-        QueryWrapper<Tag> tagQueryWrapper = new QueryWrapper<>();
-        tagQueryWrapper.eq("courseID", courseID);
-        List<Tag> tags = tagMapper.selectList(tagQueryWrapper);
-
-        if (tags.size() == 0) {
-            log.error("id为%d的课程的tag为空", courseID);
-        }
-
-        Random random = new Random();
-        int r = random.nextInt(tags.size());
-
-        /**
-         * 最终获取到的tag
-         */
-        Tag tag = tags.get(r);
-        int tagID = tag.getId();
-        String tagName = tag.getTag_name();
-
-        RecommendLinkVO recommendLinkVO = new RecommendLinkVO();
-        List<Link> githubList = new ArrayList<>();
-        List<Link> articleList = new ArrayList<>();
-
-        QueryWrapper<Link> linkQueryWrapper = new QueryWrapper<>();
-
-        linkQueryWrapper.eq("tagID", tagID);
-
-        List<Link> links = linkMapper.selectList(linkQueryWrapper);
-
-        for (Link link : links) {
-            int i = link.getSource();
-            if (i == 0) {
-                githubList.add(link);
-            } else if (i == 1) {
-                articleList.add(link);
-            }
-        }
-
-        recommendLinkVO.setGithubList(githubList);
-        recommendLinkVO.setArticleList(articleList);
-
-
-        return recommendLinkVO;
-
+        return null;
     }
+
 
     @Override
     public boolean saveLink(LinkRequest linkRequest) {

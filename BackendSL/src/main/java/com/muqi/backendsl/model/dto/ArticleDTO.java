@@ -85,6 +85,7 @@ public class ArticleDTO {
      */
     private String category;
 
+    private Integer articleStatus;
 
 
 }

@@ -75,8 +75,8 @@ CREATE TABLE t_article
     id             bigint auto_increment primary key,
     userID         bigint                               not null comment '文章作者',
     articleCover   varchar(1024)                        null comment '文章缩略图',
-    articleTitle   varchar(50)                          not null comment '标题',
-    articleContent longtext                             not null comment '文章内容',
+    articleTitle   varchar(50) default '文章标题'                         not null comment '标题',
+    articleContent longtext                            not null comment '文章内容',
     isTop          tinyint(1) default 0                 not null comment '0 - 不置顶
 1 - 置顶',
     isDelete       tinyint    default 0                 not null comment '0 - 未删除

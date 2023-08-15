@@ -44,45 +44,35 @@ public class UserController {
     @PostMapping("/register")
 
     public Long userRegister(@RequestParam("loginAccount") String loginAccount, @RequestParam("loginPassword") String loginPassword, String checkPassword) {
-        // 检查用户请求体的内容（预处理）
         if (StringUtils.isAnyBlank(loginAccount, loginPassword, checkPassword)) {
             return null;
         }
-        // handle the user register
         return userService.userRegister(loginAccount, loginPassword, checkPassword);
     }
 
     @PostMapping("/login")
     public ResultVO<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
-        // DONE
         String loginAccount = userLoginRequest.getLoginAccount();
         String loginPassword = userLoginRequest.getLoginPassword();
-        Integer userAuthority=userLoginRequest.getUserAuthority();
 
 
         User user = userService.userLogin(loginAccount, loginPassword, request);
-
-
+        int userAuthority= user.getUserAuthority();
 
         if (userAuthority == 0) {
-            // This is a normal user login
             return ResultVO.ok(user, "user");
         } else if (userAuthority == 1) {
-            // This is an administrator login
             return ResultVO.ok(user, "admin");
         }
 
         if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
             return null;
         }
-//
-//        /** handle user login */
         return ResultVO.ok(userService.userLogin(loginAccount, loginPassword, request));
     }
 
     @GetMapping("/search")
     public List<User> searchUsers(String loginName, HttpServletRequest request) {
-        // 仅管理员可查询
         if (!isAdmin(request)) {
             return new ArrayList<>();
         }
@@ -96,7 +86,6 @@ public class UserController {
 
     @PostMapping("/delete")
     public boolean deleteUser(@RequestBody long id, HttpServletRequest request) {
-        // 仅管理员可删除
         if (!isAdmin(request)) return false;
         if (id <= 0) {
             return false;

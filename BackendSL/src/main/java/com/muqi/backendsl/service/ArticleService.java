@@ -31,10 +31,12 @@ public interface ArticleService extends IService<Article> {
 
     PageResultDTO<ArticleCardDTO> listArticlesByCourseId(Long courseID);
 
-//    List<ArticleSearchDTO> listArticlesBySearch(ConditionVO condition);
 
     List<Article> getPendingArticles();
-//    ResultVO<User> userLogin(String loginAccount, String loginPassword);
+
+
+
+
 
 
 }
