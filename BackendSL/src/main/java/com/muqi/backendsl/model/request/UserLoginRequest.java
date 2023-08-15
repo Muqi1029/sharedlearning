@@ -15,7 +15,5 @@ public class UserLoginRequest implements Serializable {
 
     private String loginPassword;
 
-    private String userAuthority;
-
     private static final long serialVersionUID = 1L;
 }

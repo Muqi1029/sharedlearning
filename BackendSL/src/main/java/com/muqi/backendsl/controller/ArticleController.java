@@ -1,5 +1,6 @@
 package com.muqi.backendsl.controller;
 
+import com.muqi.backendsl.entity.Article;
 import com.muqi.backendsl.model.dto.ArticleCardDTO;
 import com.muqi.backendsl.model.dto.ArticleDTO;
 import com.muqi.backendsl.model.dto.PageResultDTO;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Api(tags = "文章板块")
 @RestController
@@ -42,6 +44,12 @@ public class ArticleController {
     @RequestMapping("/{articleId}")
     public ResultVO<ArticleDTO> getArticleById(@PathVariable("articleId") Long articleId) {
         return ResultVO.ok(articleService.getArticleById(articleId));
+    }
+
+    @GetMapping("/admin/pending-articles")
+    public ResultVO<List<Article>> getPendingArticles() {
+        List<Article> pendingArticles = articleService.getPendingArticles();
+        return ResultVO.ok(pendingArticles);
     }
 
 }

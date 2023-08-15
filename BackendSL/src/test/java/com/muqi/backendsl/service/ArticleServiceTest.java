@@ -51,4 +51,10 @@ public class ArticleServiceTest {
 
         System.out.println(articleById.getUserDetailsDTO());
     }
+
+    @Test
+    public void getPendingArticleTest() {
+        System.out.println(articleService.getPendingArticles());
+    }
+
 }

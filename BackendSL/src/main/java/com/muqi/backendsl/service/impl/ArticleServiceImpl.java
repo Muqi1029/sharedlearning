@@ -31,10 +31,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Resource
     private ArticleMapper articleMapper;
 
-
-    private final List<String> tags = null;
-
-
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void saveOrUpdateArticle(ArticleVO articleVO, Integer userID) {
@@ -67,11 +63,11 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return new PageResultDTO<>(articleCardDTOList, asyncCount.get().intValue());
     }
 
+    @Override
+    public List<Article> getPendingArticles() {
+        return articleMapper.findByArticleStatus(1);
+    }
 
-//    @Override
-//    public List<ArticleSearchDTO> listArticlesBySearch(ConditionVO condition) {
-//        return searchStrategyContext.executeSearchStrategy(condition.getKeywords());
-//    }
 
 }
 

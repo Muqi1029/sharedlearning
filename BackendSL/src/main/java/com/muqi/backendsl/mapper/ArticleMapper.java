@@ -22,6 +22,9 @@ public interface ArticleMapper extends BaseMapper<Article> {
     List<ArticleCardDTO> listArticlesByCourseId(@Param("courseID") Long courseID);
 
     ArticleDTO getArticleById(@Param("articleID") Long articleID);
+    List<Article> findByArticleStatus(@Param("status") Integer articleStatus);
+
+
 }
 
 
