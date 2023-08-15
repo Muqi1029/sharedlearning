@@ -5,6 +5,7 @@ import com.muqi.backendsl.mapper.ArticleMapper;
 import com.muqi.backendsl.model.dto.ArticleCardDTO;
 import com.muqi.backendsl.model.dto.ArticleDTO;
 import com.muqi.backendsl.model.dto.PageResultDTO;
+import com.muqi.backendsl.model.vo.ArticleVO;
 import com.muqi.backendsl.strategy.context.ArticleImportStrategyContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +34,6 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void importTest() {
-        byte[] content = "hello, world".getBytes();
-        String name = "file.txt";
-        String originalFileName = "file.txt";
-        String contentType = "text/plain";
-
-        MultipartFile result = new MockMultipartFile(name,
-                originalFileName, contentType, content);
-        articleImportStrategyContext.importArticles(result, null, 12);
-    }
-
-    @Test
     public void getArticleByIDTest() {
         int articleID = 1;
         ArticleDTO articleById = articleService.getArticleById((long) articleID);
@@ -57,4 +46,23 @@ public class ArticleServiceTest {
         System.out.println(articleService.getPendingArticles());
     }
 
-}
+    @Test
+    public void importArticle() {
+        ArticleVO article = new ArticleVO(1122256122L, 111633444L, 111666777L,"weq","wdwd","qas",2,0,"wer",1);
+
+        articleService.saveOrUpdateArticle(article,122345);
+        System.out.println(article.getArticleStatus());
+    }
+
+    @Test
+    public void changeArticleStatus() {
+        ArticleVO article = new ArticleVO(1122256122L, 111633444L, 111666777L,"weq","wdwd","qas",2,0,"wer",2);
+
+        articleService.saveOrUpdateArticle(article,122345);
+        System.out.println(article.getArticleStatus());
+
+    }
+
+
+
+    }

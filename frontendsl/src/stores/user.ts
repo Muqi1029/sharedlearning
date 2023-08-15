@@ -11,6 +11,7 @@ export const useUserStore = defineStore("userStore", {
       userID: "",
       avatarURL: "",
       introduction: "",
+      userAuthority: 0,
       roles: [],
       userInfo: "",
       isHave: false,
@@ -30,6 +31,7 @@ export const useUserStore = defineStore("userStore", {
               this.name = data.userName;
               this.userID = data.id;
               this.isHave = true;
+              this.userAuthority = data.userAuthority;
               resolve(data.userAuthority as number); // 表示回调成功,改变返回的promise对象的状态
             } else {
               reject();

@@ -38,13 +38,10 @@ public class UserController {
      * @return userID
      */
     @PostMapping("/register")
-
     public Long userRegister(@RequestParam("loginAccount") String loginAccount, @RequestParam("loginPassword") String loginPassword, String checkPassword) {
-        // 检查用户请求体的内容（预处理）
         if (StringUtils.isAnyBlank(loginAccount, loginPassword, checkPassword)) {
             return null;
         }
-        // handle the user register
         return userService.userRegister(loginAccount, loginPassword, checkPassword);
     }
 
@@ -53,30 +50,14 @@ public class UserController {
     public ResultVO<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
         String loginAccount = userLoginRequest.getLoginAccount();
         String loginPassword = userLoginRequest.getLoginPassword();
-
         User user = userService.userLogin(loginAccount, loginPassword, request);
-        int userAuthority = user.getUserAuthority();
-        System.out.println(userAuthority);
-        assert userAuthority == 1;
+        int userAuthority= user.getUserAuthority();
+
         if (userAuthority == 0) {
-            // This is a normal user login
             return ResultVO.ok(user, "user");
         } else if (userAuthority == 1) {
-            // This is an administrator login
-//            return ResultVO.ok(user, "admin");
-            return ResultVO.ok(user);
+            return ResultVO.ok(user, "admin");
         }
-
-
-        /**
-         * 1. 用户登录：输入账号和密码
-         * 2. 根据账号和密码去查询数据库 同时将userAuthority拿出来，判断这是个普通用户登录还是管理员登录
-         * 3. 想一个类似于flag的属性，用ResultVO包装，返回给前端
-         * 4. 前端收到flag，根据其用户的权限导航到不同的页面
-         * 5. 管理员页面要显示对应待审核的数据 type == 0 # 设计对应的URL供前端使用
-         * 6. 返回type==0的文章数据给前端渲染
-         */
-
 
         if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
             return null;
@@ -86,7 +67,6 @@ public class UserController {
 
     @GetMapping("/search")
     public List<User> searchUsers(String loginName, HttpServletRequest request) {
-        // 仅管理员可查询
         if (!isAdmin(request)) {
             return new ArrayList<>();
         }
@@ -100,7 +80,6 @@ public class UserController {
 
     @PostMapping("/delete")
     public boolean deleteUser(@RequestBody long id, HttpServletRequest request) {
-        // 仅管理员可删除
         if (!isAdmin(request)) return false;
         if (id <= 0) {
             return false;

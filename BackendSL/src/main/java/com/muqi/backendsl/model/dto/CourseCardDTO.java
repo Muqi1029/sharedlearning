@@ -1,7 +1,5 @@
 package com.muqi.backendsl.model.dto;
 
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.muqi.backendsl.entity.Tag;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -55,7 +53,6 @@ public class CourseCardDTO {
     /**
      * 课程是否删除
      */
-//    private Integer isDelete;
 
     /**
      * 0 公开 1 私密
@@ -67,9 +64,6 @@ public class CourseCardDTO {
      */
     private String courseCover;
 
-    /**
-     *
-     */
-    private Tag[] tags;
+
 
 }

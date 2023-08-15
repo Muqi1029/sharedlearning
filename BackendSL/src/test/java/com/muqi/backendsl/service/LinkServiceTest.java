@@ -1,8 +1,6 @@
 package com.muqi.backendsl.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.muqi.backendsl.entity.Tag;
-import com.muqi.backendsl.mapper.TagMapper;
 import com.muqi.backendsl.mapper.UserCourseMapper;
 import com.muqi.backendsl.model.request.LinkRequest;
 import com.muqi.backendsl.model.vo.RecommendLinkVO;
@@ -26,26 +24,8 @@ public class LinkServiceTest {
     @Autowired
     private UserCourseMapper userCourseMapper;
 
-    @Autowired
-    private TagMapper tagMapper;
 
-    @Test
-    public void getRecommendURLTest() {
-        int userID = 12;
 
-        // 1. 根据userID获取最感兴趣的courseID
-        int courseID = userCourseMapper.getMaximumCourseIDByClick(userID);
-
-        // 2. 根据courseID随机获取对应的tag
-        QueryWrapper<Tag> tagQueryWrapper = new QueryWrapper<>();
-        tagQueryWrapper.eq("courseID", courseID);
-        List<Tag> tags = tagMapper.selectList(tagQueryWrapper);
-
-        Random random = new Random();
-        int r = random.nextInt(tags.size());
-
-        System.out.println(tags.get(r));
-    }
 
     @Test
     public void LinkPreview() {
@@ -63,11 +43,7 @@ public class LinkServiceTest {
         }
     }
 
-    @Test
-    public void getRecommendURLTestGPT() {
-        int userID = 12;
-        RecommendLinkVO recommendURL = linkService.getRecommendURL(userID);
-    }
+
 
     @Test
     public void insertLinkTest() {

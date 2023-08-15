@@ -37,7 +37,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Article article = BeanCopyUtil.copyObject(articleVO, Article.class);
         article.setUserID(Long.valueOf(userID));
         article.setCourseID(1L);
-        // save the article to t_article
+
         this.saveOrUpdate(article);
     }
 
@@ -67,7 +67,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public List<Article> getPendingArticles() {
         return articleMapper.findByArticleStatus(1);
     }
-
 
 }
 

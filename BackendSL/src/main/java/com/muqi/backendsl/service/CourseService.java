@@ -21,5 +21,4 @@ public interface CourseService extends IService<Course> {
 
     PageResultDTO<CourseCardDTO> listCoursesByTag();
 
-//    boolean userSaveCourse(int userID, int courseID);
 }

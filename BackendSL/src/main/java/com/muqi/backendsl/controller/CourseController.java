@@ -30,9 +30,7 @@ public class CourseController {
     @Resource
     private ArticleService articleService;
 
-    /**
-     *  get all courses
-     */
+
     @ApiOperation("获取所有课程")
     @GetMapping("/all")
     public ResultVO<PageResultDTO<CourseCardDTO>> listCourse() {
@@ -59,17 +57,7 @@ public class CourseController {
     }
 
 
-//    @ApiOperation("用户收藏课程")
-//    @PostMapping("/saveCourse")
-//    public ResultVO<?> userSaveCourse(@RequestBody HashMap<String, Object> hashMap) {
-//        //TODO need to be tested
-//        int courseID = (int) hashMap.get("courseID");
-//        int userID = (int) hashMap.get("userID");
-//        if (courseService.userSaveCourse(userID, courseID)) {
-//            return ResultVO.ok();
-//        }
-//        return ResultVO.fail();
-//    }
+
 
 
 

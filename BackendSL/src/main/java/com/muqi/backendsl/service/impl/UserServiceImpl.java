@@ -50,34 +50,27 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
      */
     @Override
     public long userRegister(String loginAccount, String loginPassword, String checkPassword) {
-        // 不能输入空值
         if (StringUtils.isAnyBlank(loginAccount, loginPassword, checkPassword)) {
             return -1;
-            // TODO 返回值
         }
-        // 用户账号长度不能小于4
         if (loginAccount.length() < 4) {
             return -1;
         }
 
-        // 用户密码长度不能小于8
         if (loginPassword.length() < 8 || checkPassword.length() < 8){
             return -1;
         }
 
-        // 账户不能包含特殊字符
         String validPattern = "[`~!@#$%^&*()+=|{}':;',//[//].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。，、？]";
         Matcher matcher = Pattern.compile(validPattern).matcher(loginAccount);
         if (matcher.find()){
             return -1;
         }
 
-        // 密码和校验密码要相同
         if (!checkPassword.equals(loginPassword)){
             return -1;
         }
 
-        // 账号不能重复
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("loginAccount", loginAccount);
         long count = userMapper.selectCount(queryWrapper);
@@ -85,10 +78,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
             return -1;
         }
 
-        // 用户加密
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + loginPassword).getBytes(StandardCharsets.UTF_8));
 
-        // 插入数据
         User user = new User();
         user.setLoginAccount(loginAccount);
         user.setLoginPassword(encryptPassword);

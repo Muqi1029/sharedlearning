@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { IArticle } from "@/types/types";
 import { getPendingArticle } from "@/api/article";
+import { useUserStore } from "@/stores/user";
+import { ref } from "vue";
+
+const userStore = useUserStore();
 
 const handlePass = (id: number) => {
   // invoke api
@@ -11,13 +15,11 @@ const handleDelete = (id: number) => {
   alert(`id为${id}的文章被删除`);
 };
 
-let tableData: IArticle[] = [
-  { id: 1, articleTitle: "hello", articleContent: "world" },
-];
+let tableData = ref([]);
 
-getPendingArticle().then(
+getPendingArticle(userStore.userAuthority).then(
   (res) => {
-    tableData = res.data;
+    tableData.value = res.data;
   },
   (err) => {
     console.log(err);

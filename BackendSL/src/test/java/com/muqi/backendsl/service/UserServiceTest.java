@@ -37,8 +37,8 @@ public class UserServiceTest {
     public void testAddUser(){
         User user = new User();
         user.setUserName("test");
-        user.setLoginAccount("12345678");
-        String loginPassword = "12345678";
+        user.setLoginAccount("123456789");
+        String loginPassword = "123456789";
 
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + loginPassword).getBytes(StandardCharsets.UTF_8));
         user.setLoginPassword(encryptPassword);
@@ -46,7 +46,6 @@ public class UserServiceTest {
         user.setUserPhone("1875685");
         user.setAvatarURL("");
         user.setGender(0);
-        user.setUserAuthority(1);
         user.setUserStatus(1);
         user.setIsDelete(0);
         user.setCreateTime(new Date());

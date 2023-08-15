@@ -11,6 +11,5 @@ public interface UserConstant {
     String SALT = "muqi";
 
     int DEFAULT_ROLE = 0;
-
     int ADMIN_ROLE = 1;
 }

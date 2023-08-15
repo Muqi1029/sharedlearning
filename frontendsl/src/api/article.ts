@@ -14,9 +14,10 @@ export function getArticleByCourseId(id: number) {
   });
 }
 
-export function getPendingArticle() {
+export function getPendingArticle(userAuthority: number) {
   return request({
-    url: "getPendingArticle",
-    method: "get",
+    url: "article/admin/articles",
+    method: "post",
+    data: { userAuthority },
   });
 }

@@ -18,7 +18,8 @@ public interface UserService extends IService<User> {
 
     /**
      * 处理用户注册
-     * @param loginAccount 用户账号
+     *
+     * @param loginAccount  用户账号
      * @param loginPassword 用户密码
      * @param checkPassword 验证密码
      * @return UserID
@@ -28,21 +29,15 @@ public interface UserService extends IService<User> {
 
     /**
      * 处理用户登录
-     * @param loginAccount 用户账号
+     *
+     * @param loginAccount  用户账号
      * @param loginPassword 用户密码
-     * @param request 带有cookie的Http请求
+     * @param request       带有cookie的Http请求
      * @return 用户
      */
     User userLogin(String loginAccount, String loginPassword, HttpServletRequest request);
 
     User getUserInfoByID(Integer userID);
 
-
-//    /**
-//     * 保存用户收藏的文章
-//     * @param favList 收藏文章ID
-//     * @param userID userID
-//     * @return the operating result
-//     */
-//    boolean reserveCourse(List<Integer> favList, Long userID);
 }
+
