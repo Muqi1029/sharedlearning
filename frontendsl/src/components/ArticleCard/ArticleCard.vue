@@ -43,19 +43,20 @@
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import { defineComponent, computed, provide } from "vue";
 
 import { useRouter } from "vue-router";
 import { useAppStore } from "@/stores/app";
 
 export default defineComponent({
   name: "",
-  components: {},
+  components: { Comment },
 
   props: {
     data: {

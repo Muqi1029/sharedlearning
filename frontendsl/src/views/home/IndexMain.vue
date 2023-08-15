@@ -116,6 +116,12 @@
               ></CourseCard>
             </li>
           </template>
+          <template v-else>
+            <div>
+              xixixixixixixixi
+            </div>
+
+          </template>
         </ul>
       </div>
 

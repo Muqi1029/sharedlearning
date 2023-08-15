@@ -1,12 +1,12 @@
 <template>
   <div>
     <div class="flex space-x-3 xl:space-x-5">
-      <img v-if="userStore.avatar" :class=avatarClass :src="userStore.avatar"/>
+      <img v-if="userStore.avatarURL" :class=avatarClass :src="userStore.avatarURL"/>
       <img v-else :class="avatarClass" src="@/assets/daselogo.png" alt="" />
       <div class="reply bg-white flex flex-col p-3 rounded-md relative shadow-md">
         <p class="commentContent" v-html="commentContent.replaceAll('\n', '<br>')" />
         <div class="flex justify-between mt-2 text-xs text-gray-400 space-x-3 md:space-x-16">
-          <span> {{ reply.nickname }} | {{ time }}</span>
+          <span> {{ comment.userID }} | {{ time }}</span>
           <div>
             <span @click="clickOnSonReply" class="cursor-pointer reply-button">Reply</span>
           </div>
@@ -17,9 +17,8 @@
     <CommentReplyForm
       class="mt-5"
       v-show="show"
-      :replyUserId="reply.userId"
-      :replynickname="reply.nickname"
       :initialContent="replyContent"
+      :replyID="comment.parentId"
       @changeShow="changeShow" />
   </div>
 </template>
@@ -34,24 +33,25 @@ export default defineComponent({
   components: {
     CommentReplyForm
   },
-  props: ['reply', 'commentUserId'],
+  props: ['comment'],
   setup(props) {
+    
     const userStore = useUserStore()
     const appStore = useAppStore()
     const formatTime = (time: any): any => {
-      let date = new Date(time)
-      let year = date.getFullYear()
-      let month = date.getMonth() + 1
-      let day = date.getDate()
-      return year + '-' + month + '-' + day
-    }
+      let date = new Date(time);
+      let year = date.getFullYear();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+      return year + "-" + month + "-" + day;
+    };
     const reactiveData = reactive({
       replyContent: '' as any,
-      time: formatTime(props.reply.createTime) as any,
-      show: false as any
+      show: false as any,
+      time: formatTime(props.comment.createTime) as any,
     })
     const clickOnSonReply = () => {
-      reactiveData.replyContent = '@' + props.reply.nickname
+      reactiveData.replyContent = '@' + props.comment.userID
       reactiveData.show = true
     }
     const changeShow = () => {
@@ -59,7 +59,7 @@ export default defineComponent({
     }
     const commentContent = computed(() => {
         return (
-          "回复 " + props.reply.replynickname +":"+ props.reply.commentContent
+          "回复 " + props.comment.parentID +":"+ props.comment.content
         ) 
     })
     return {

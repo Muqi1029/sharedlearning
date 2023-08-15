@@ -24,19 +24,20 @@
             </div>
           </div>
         </div>
+
         <CommentReplyForm
           v-show="show"
           :replyID="comment.id"
           :initialContent="replyContent"
           @changeShow="changeShow"
         />
+
         <transition-group name="fade">
-          <CommentReplyItem
-            v-for="reply in comment.replyDTOs"
-            :key="reply.id"
-            :reply="reply"
-            :commentUserId="comment.userID"
-          />
+          <ul>
+            <li v-for="comment in comments" :key="comment.id" v-show="comment.parentID == commentid">
+              <CommentReplyItem   :comment="comment"/>
+            </li>
+          </ul>  
         </transition-group>
       </div>
     </div>
@@ -44,10 +45,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, provide, computed } from "vue";
+import { defineComponent, reactive, toRefs, provide, computed,inject } from "vue";
 import CommentReplyItem from "./CommentReplyItem.vue";
 import CommentReplyForm from "./CommentReplyForm.vue";
 import { useAppStore } from "@/stores/app";
+import { saveComment,getComments } from "@/api/comment";
 
 export default defineComponent({
   components: {
@@ -62,8 +64,7 @@ export default defineComponent({
   },
   setup(props) {
     const appStore = useAppStore();
-    //提供给子组件CommentReplyItem  作为其parentId
-    provide("parentId", props.comment.id);
+    const articleId = inject("articleId");
     const formatTime = (time: any): any => {
       let date = new Date(time);
       let year = date.getFullYear();
@@ -72,10 +73,19 @@ export default defineComponent({
       return year + "-" + month + "-" + day;
     };
     const reactiveData = reactive({
+      comments: [] as any,
       replyContent: "" as any,
       time: formatTime(props.comment.createTime) as any,
       show: false as any,
+    })
+    getComments(articleId).then(res => {
+      console.log(res);
+      reactiveData.comments = res.data;
+      console.log("List1", reactiveData.comments);
     });
+    //提供给子组件CommentReplyItem  作为其parentId  作用于CommentReplyForm
+    provide("parentId", props.comment.id);
+    
     const changeShow = () => {
       reactiveData.show = false;
     };
@@ -83,10 +93,12 @@ export default defineComponent({
       reactiveData.replyContent = "add reply...";
       reactiveData.show = true;
     };
+    const commentid = props.comment.id
     return {
       ...toRefs(reactiveData),
       clickOnReply,
       changeShow,
+      commentid,
       avatarClass: computed(() => {
         return {
           "ob-avatar": true,

@@ -95,7 +95,7 @@
 
           <!-- <link-card></link-card> -->
 
-          <button @click="alert('待完成')">上传</button>
+          <button>上传</button> <!-- todo -->
         </div>
       </aside>
     </div>
@@ -108,6 +108,7 @@ import { useRoute } from "vue-router";
 import { useArticleStore } from "@/stores/article";
 import LinkCard from "@/components/LinkCard/LinkCard.vue";
 import ArticleCard from "@/components/ArticleCard/ArticleCard.vue";
+import Comment from "@/components/Comment/Comment.vue"
 import { useCourseStore } from "@/stores/course";
 import { useLinkStore } from "@/stores/link";
 import type { FormInstance, FormRules } from "element-plus";
@@ -119,6 +120,7 @@ export default defineComponent({
   components: {
     ArticleCard,
     LinkCard,
+    Comment
   },
   setup() {
     let md = require("markdown-it")();
