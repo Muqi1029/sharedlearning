@@ -1,9 +1,7 @@
 package com.muqi.backendsl.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-
 import com.muqi.backendsl.entity.User;
-import com.muqi.backendsl.entity.UserCourse;
 import com.muqi.backendsl.model.request.UserCourseRequest;
 import com.muqi.backendsl.model.request.UserLoginRequest;
 import com.muqi.backendsl.model.vo.ResultVO;
@@ -17,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,53 +31,43 @@ public class UserController {
     private UserCourseService userCourseService;
 
 
-//    /**
-//     *
-//     * @param map favList uploaded by users
-//     * @param userID userID
-//     * @return operating result
-//     */
-//    @PostMapping("/reserveCourse/{userID}")
-//    public ResultVO<?> reserveCourse(@RequestBody HashMap<String, Object> map, @PathVariable("userID") Long userID) {
-//        List<Integer> favList = (List<Integer>) map.get("favList");
-//        userService.reserveCourse(favList, userID);
-//        return ResultVO.fail();
-//    }
-
     /**
      * 用户注册接口
      *
-     * @param
      * @return userID
      */
     @PostMapping("/register")
-
     public Long userRegister(@RequestParam("loginAccount") String loginAccount, @RequestParam("loginPassword") String loginPassword, String checkPassword) {
-        // 检查用户请求体的内容（预处理）
         if (StringUtils.isAnyBlank(loginAccount, loginPassword, checkPassword)) {
             return null;
         }
-        // handle the user register
         return userService.userRegister(loginAccount, loginPassword, checkPassword);
     }
 
+
     @PostMapping("/login")
     public ResultVO<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
-        // DONE
         String loginAccount = userLoginRequest.getLoginAccount();
         String loginPassword = userLoginRequest.getLoginPassword();
-
         if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
-            return null;
+            return ResultVO.fail();
+        }
+        User user = userService.userLogin(loginAccount, loginPassword, request);
+        int userAuthority;
+        if (user == null) {
+            return ResultVO.fail();
+        } else {
+            userAuthority = user.getUserAuthority();
         }
 
-        /** handle user login */
-        return ResultVO.ok(userService.userLogin(loginAccount, loginPassword, request));
+        if (userAuthority == 0) {
+            return ResultVO.ok(user, "user");
+        }
+        return ResultVO.ok(user, "admin");
     }
 
     @GetMapping("/search")
     public List<User> searchUsers(String loginName, HttpServletRequest request) {
-        // 仅管理员可查询
         if (!isAdmin(request)) {
             return new ArrayList<>();
         }
@@ -94,7 +81,6 @@ public class UserController {
 
     @PostMapping("/delete")
     public boolean deleteUser(@RequestBody long id, HttpServletRequest request) {
-        // 仅管理员可删除
         if (!isAdmin(request)) return false;
         if (id <= 0) {
             return false;

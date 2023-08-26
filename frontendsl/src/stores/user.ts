@@ -11,28 +11,27 @@ export const useUserStore = defineStore("userStore", {
       userID: "",
       avatarURL: "",
       introduction: "",
+      userAuthority: 0,
       roles: [],
       userInfo: "",
-      reservedClass: [],
       isHave: false,
     };
   },
 
   actions: {
-    userLogin({ username, password }: ILoginForm) {
-      return new Promise<void>((resolve, reject) => {
-        login({ loginAccount: username, loginPassword: password })
-          // 结果调then
-          .then((response) => {
-            const { data } = response;
-            console.log("服务器返回的信息为", data);
+    userLogin({ userName, password }: ILoginForm) {
+      return new Promise<number>((resolve, reject) => {
+        login({ loginAccount: userName, loginPassword: password })
+          .then((res) => {
+            const { data } = res;
             if (data.id > 0) {
               setToken(data.id); // 在浏览器中设置token
               this.avatarURL = data.avatarURL;
               this.name = data.userName;
               this.userID = data.id;
               this.isHave = true;
-              resolve(); // 表示回调成功,改变返回的promise对象的状态
+              this.userAuthority = data.userAuthority;
+              resolve(data.userAuthority as number);
             } else {
               reject();
             }

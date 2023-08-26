@@ -5,23 +5,21 @@ import com.muqi.backendsl.model.dto.CommentDTO;
 import com.muqi.backendsl.model.request.CommentRequest;
 import com.muqi.backendsl.model.vo.ResultVO;
 import com.muqi.backendsl.service.CommentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @RestController
 @RequestMapping("/comment")
 public class CommentController {
 
-//    @RequestMapping("/{courseID}")
-//    public ResultVO<CommentDTO>
-    @Autowired
+    @Resource
     private CommentService commentService;
 
 
     @GetMapping("/search/{articleID}")
-    public ResultVO<List<CommentDTO>> listCommentByArticleID(@PathVariable("articleID")Integer articleID) {
+    public ResultVO<List<CommentDTO>> listCommentByArticleID(@PathVariable("articleID") Integer articleID) {
         List<CommentDTO> commentDTOS = commentService.listCommentByArticleID(articleID);
         return ResultVO.ok(commentDTOS);
     }
@@ -51,7 +49,6 @@ public class CommentController {
     public ResultVO<List<CommentDTO>> listCommentRepliesByID(@PathVariable("id") Integer id) {
         return null;
     }
-
 
 
 }

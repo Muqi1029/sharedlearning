@@ -22,9 +22,6 @@ public class Article implements Serializable {
     private Long id;
 
 
-
-    private Integer status;
-
     /**
      * 文章作者
      */
@@ -45,11 +42,8 @@ public class Article implements Serializable {
      */
     private String articleContent;
 
-    /**
-     * 0 - 不置顶
-1 - 推荐
-     */
-    private Integer isFeatured;
+
+    private Integer isTop;
 
     /**
      * 0 - 未删除

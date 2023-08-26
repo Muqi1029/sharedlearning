@@ -5,13 +5,13 @@ package com.muqi.backendsl.model.vo;
 
 
 import com.muqi.backendsl.enums.StatusCodeEnum;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static com.muqi.backendsl.enums.StatusCodeEnum.*;
+import static com.muqi.backendsl.enums.StatusCodeEnum.FAIL;
+import static com.muqi.backendsl.enums.StatusCodeEnum.SUCCESS;
 
 
 /**
@@ -28,7 +28,7 @@ import static com.muqi.backendsl.enums.StatusCodeEnum.*;
 public class ResultVO<T> {
 
     /**
-     *  the return state
+     * the return state
      */
     private Boolean flag;
 
@@ -49,8 +49,9 @@ public class ResultVO<T> {
 
     /**
      * static method
-     * @return
+     *
      * @param <T>
+     * @return
      */
     public static <T> ResultVO<T> ok() {
         return resultVO(true, SUCCESS.getCode(), SUCCESS.getDesc(), null);
@@ -95,7 +96,9 @@ public class ResultVO<T> {
                 .message(message).build();
     }
 
-    /** constructer method: initialize the object */
+    /**
+     * constructer method: initialize the object
+     */
     private static <T> ResultVO<T> resultVO(Boolean flag, Integer code, String message, T data) {
         return ResultVO.<T>builder()
                 .flag(flag)

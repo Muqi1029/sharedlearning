@@ -11,16 +11,6 @@ export default {
       children: [],
     },
     {
-      name: "Market",
-      path: "/market",
-
-      i18n: {
-        cn: "交易市场",
-        en: "Market",
-      },
-      children: [],
-    },
-    {
       name: "Account",
       path: "/account",
 

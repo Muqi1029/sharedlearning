@@ -1,5 +1,4 @@
-
-CREATE DATABASE IF NOT EXISTS  sharedlearning;
+CREATE DATABASE IF NOT EXISTS sharedlearning;
 USE sharedlearning;
 
 
@@ -55,13 +54,14 @@ CREATE TABLE t_course
     courseStatus tinyint     default 0                 null comment '0 公开 1 私密 ',
     courseCover  varchar(300)                          null
 )
-COMMENT '课程类' engine = InnoDB;
+    COMMENT '课程类' engine = InnoDB;
 
 -- --------------------------
 -- Records of t_course
 -- ------------------------
 insert into t_course (term, category, professor, intro, title)
-VALUES ('大一下', '概率论', '倪葎', '概率论与数理统计', '概率论与数理统计');
+VALUES ('大一下', '概率论', '倪葎', '概率论与数理统计', '概率论与数理统计')
+;
 
 
 
@@ -70,13 +70,14 @@ VALUES ('大一下', '概率论', '倪葎', '概率论与数理统计', '概率�
 -- ------------------------------
 DROP TABLE IF EXISTS t_article;
 
-CREATE TABLE t_article
+create table t_article
 (
-    id             bigint auto_increment primary key,
+    id             bigint auto_increment
+        primary key,
     userID         bigint                               not null comment '文章作者',
     articleCover   varchar(1024)                        null comment '文章缩略图',
-    articleTitle   varchar(50)                          not null comment '标题',
-    articleContent longtext                             not null comment '文章内容',
+    articleTitle   varchar(50) default '文章标题'                         not null comment '标题',
+    articleContent longtext                            not null comment '文章内容',
     isTop          tinyint(1) default 0                 not null comment '0 - 不置顶
 1 - 置顶',
     isDelete       tinyint    default 0                 not null comment '0 - 未删除
@@ -90,9 +91,13 @@ CREATE TABLE t_article
     originalURL    varchar(255)                         null comment '原文链接',
     createTime     datetime   default CURRENT_TIMESTAMP not null comment '发表时间',
     updateTime     datetime   default CURRENT_TIMESTAMP not null comment '更新时间',
-    courseID       bigint                               not null comment '0 独立文章 >= 1 课程文章'
-)
-    engine = InnoDB;
+    courseID       bigint                               not null comment '0 独立文章 >= 1 课程文章',
+    rewardCount    int        default 0                 not null comment '打赏数',
+    thumbUpCount   int        default 0                 not null comment '点赞数',
+    commentCount   int        default 0                 not null comment '评论数',
+    viewCount      int        default 0                 not null comment '观看数'
+);
+
 
 -- ------------------------
 -- table structure for t_tag

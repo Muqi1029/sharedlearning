@@ -4,29 +4,30 @@
       <!-- image of article card -->
       <div class="article-thumbnail" @click="toArticle">
         <img
-          v-if="data.articleCover"
-          v-lazy="data.articleCover"
-          alt="文章图片"
+            v-if="data.articleCover"
+            v-lazy="data.articleCover"
+            alt="文章图片"
         />
-        <img v-else src="@/assets/default-cover.jpg" />
+        <img v-else src="@/assets/default-cover.jpg"/>
         <span class="thumbnail-screen" :style="gradientBackground"></span>
       </div>
 
       <div class="article-content">
-        <p class="pt-7" @click="toArticle"><div class="text-2xl"> {{ data.articleTitle }} </div>{{ data.articleContent }}</p>
+        <p class="pt-7" @click="toArticle">
+          <div class="text-2xl">{{ data.articleTitle }}</div>
+          {{ data.articleContent }}
+        </p>
 
         <div class="article-footer flex flex-row justify-between mt-3">
           <div class="flex flex-row items-center">
             <img
-              class="hover:opacity-50 cursor-pointer"
-              :src="data.userInfo.avatarURL || ''"
-              alt="author avatar"
-              @click="handleAuthorClick"
+                class="hover:opacity-50 cursor-pointer"
+                :src="data.userInfo.avatarURL || ''"
+                alt="author avatar"
             />
             <span class="text-ob-dim">
               <strong
-                class="text-ob-normal pr-1.5 hover:text-ob hover:opacity-50 cursor-pointer"
-                @click="handleAuthorClick"
+                  class="text-ob-normal pr-1.5 hover:text-ob hover:opacity-50 cursor-pointer"
               >
                 {{ data.userInfo.userName }}
               </strong>
@@ -35,16 +36,16 @@
 
           <div class="justify-end flex mb-1 text-lg">
             <span class="pr-2.5"
-              ><button @click="" class="hover:opacity-50">点赞：</button
-              >{{ data.thumbUpCount }}</span
+            ><button @click="" class="hover:opacity-50">点赞：</button
+            >{{ data.thumbUpCount }}</span
             >
             <span class="pr-2.5"
-              ><button @click="" class="hover:opacity-50">评论：</button
-              >{{ data.commentCount }}</span
+            ><button @click="" class="hover:opacity-50">评论：</button
+            >{{ data.commentCount }}</span
             >
             <span class="pr-2.5"
-              ><button @click="" class="hover:opacity-50">打赏：</button
-              >{{ data.rewardCount }}</span
+            ><button @click="" class="hover:opacity-50">打赏：</button
+            >{{ data.rewardCount }}</span
             >
           </div>
         </div>
@@ -54,10 +55,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from "vue";
+import {defineComponent, computed} from "vue";
 
-import { useRouter } from "vue-router";
-import { useAppStore } from "@/stores/app";
+import {useRouter} from "vue-router";
+import {useAppStore} from "@/stores/app";
 
 export default defineComponent({
   name: "",
@@ -75,8 +76,6 @@ export default defineComponent({
     const router = useRouter();
     const appStore = useAppStore();
 
-    const handleAuthorClick = () => {};
-
     // get into article
     const toArticle = () => {
       router.push({
@@ -86,9 +85,8 @@ export default defineComponent({
 
     return {
       toArticle,
-      handleAuthorClick,
       gradientBackground: computed(
-        () => appStore.themeConfig.header_gradient_css
+          () => appStore.themeConfig.header_gradient_css
       ),
     };
   },

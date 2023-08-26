@@ -1,49 +1,29 @@
 package com.muqi.backendsl.controller;
 
-import com.muqi.backendsl.model.dto.ArticleDTO;
+import com.muqi.backendsl.entity.Article;
 import com.muqi.backendsl.model.dto.ArticleCardDTO;
+import com.muqi.backendsl.model.dto.ArticleDTO;
 import com.muqi.backendsl.model.dto.PageResultDTO;
+import com.muqi.backendsl.model.vo.ArticleVO;
 import com.muqi.backendsl.model.vo.ResultVO;
-
-import com.muqi.backendsl.model.vo.ConditionVO;
 import com.muqi.backendsl.service.ArticleService;
-import com.muqi.backendsl.strategy.context.ArticleImportStrategyContext;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import javax.annotation.Resource;
 import java.util.List;
-
-/**
- * 1. 参数传递不要使用HashMap, 建议使用数据模型定义
- * 2. 可以做参数校验，异常抛出等操作，但不要放太多业务逻辑，业务逻辑尽量放到Service层做
- */
-
+import java.util.Map;
 
 @Api(tags = "文章板块")
 @RestController
 @RequestMapping("/article")
 public class ArticleController {
-    @Autowired
-    private ArticleImportStrategyContext articleImportStrategyContext;
 
-    @Autowired
+
+    @Resource
     private ArticleService articleService;
 
-    //TODO import article
-    @ApiOperation("上传文章")
-    @PostMapping("/import/{userID}")
-    public ResultVO<?> importArticles(MultipartFile file, @RequestParam(required = false) String type, @PathVariable("userID") String userID) {
-        articleImportStrategyContext.importArticles(file, type, Integer.valueOf(userID));
-        return ResultVO.ok();
-    }
-
-
-    //TODO search article
 
     @ApiOperation("list articles by courseId")
     @GetMapping("/course/{courseID}")
@@ -57,6 +37,41 @@ public class ArticleController {
     public ResultVO<ArticleDTO> getArticleById(@PathVariable("articleId") Long articleId) {
         return ResultVO.ok(articleService.getArticleById(articleId));
     }
+
+
+    @PostMapping("/admin/articles")
+    public ResultVO<List<Article>> getPendingArticles(@RequestBody Map<String, Integer> requestBody) {
+        int userAuthority = requestBody.getOrDefault("userAuthority", 0);
+        if (userAuthority == 1) {
+            List<Article> pendingArticles = articleService.getPendingArticles();
+            return ResultVO.ok(pendingArticles);
+        } else {
+            return ResultVO.fail();
+        }
+    }
+
+
+    @PostMapping("/import-article")
+    public void importArticle(ArticleVO article, Integer userId) {
+        article.setArticleStatus(1);
+
+        articleService.saveOrUpdateArticle(article, userId);
+    }
+
+
+    @PostMapping("/change-article-status")
+    public boolean changeArticleStatus(ArticleVO article, Integer userId) {
+
+        if (article != null) {
+            article.setArticleStatus(0);
+
+            articleService.saveOrUpdateArticle(article, userId);
+            return true;
+        } else {
+            return false;
+        }
+    }
+//    articleStatus  '0 - 公开1 - 私密2 - 草稿',
 
 
 }

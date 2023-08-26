@@ -1,56 +1,50 @@
-const { defineConfig } = require('@vue/cli-service')
+const { defineConfig } = require("@vue/cli-service");
 
-const path = require('path')
+const path = require("path");
 
 function resolve(dir) {
-  return path.join(__dirname, dir)
+  return path.join(__dirname, dir);
 }
 
-// CommonJS规范 module is an object
+//  config the proxy to solve CORS
 module.exports = defineConfig({
   devServer: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
+      "/api": {
+        target: "http://localhost:8000",
         changeOrigin: true,
         ws: true,
         // pathRewrite: {
         //   '^/api': ''
         // }
-      }
+      },
     },
   },
 
   configureWebpack: {
     resolve: {
       alias: {
-        '@': resolve('src')
-      }
-    }
+        "@": resolve("src"),
+      },
+    },
   },
 
   chainWebpack(config) {
-
     // when there are many pages, it will cause too many meaningless requests
-    config.plugins.delete('prefetch')
+    config.plugins.delete("prefetch");
 
     // set svg-sprite-loader
+    config.module.rule("svg").exclude.add(resolve("src/icons")).end();
     config.module
-      .rule('svg')
-      .exclude.add(resolve('src/icons'))
-      .end()
-    config.module
-      .rule('icons')
+      .rule("icons")
       .test(/\.svg$/)
-      .include.add(resolve('src/icons'))
+      .include.add(resolve("src/icons"))
       .end()
-      .use('svg-sprite-loader')
-      .loader('svg-sprite-loader')
+      .use("svg-sprite-loader")
+      .loader("svg-sprite-loader")
       .options({
-        symbolId: 'icon-[name]'
+        symbolId: "icon-[name]",
       })
-      .end()
-  }
-
-
-})
+      .end();
+  },
+});

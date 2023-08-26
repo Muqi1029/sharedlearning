@@ -33,7 +33,6 @@ router.beforeEach(async (to, from, next) => {
   } else {
     // don't have token
     if (to.path === "/login") {
-      // console.log(to.path);
       next();
     } else {
       next({

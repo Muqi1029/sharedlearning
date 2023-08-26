@@ -23,7 +23,7 @@ export default defineComponent({
       required: true,
       type: Object as () => any[],
     },
-    hasCourses: {
+    haveCourses: {
       required: true,
       type: Boolean,
     },
@@ -34,7 +34,7 @@ export default defineComponent({
 
     // watch
     watch(
-      () => props.hasCourses,
+      () => props.haveCourses,
       (newValue) => {
         if (newValue) {
           ReservedClass.value = courseStore.getFavCourse(props.favList);

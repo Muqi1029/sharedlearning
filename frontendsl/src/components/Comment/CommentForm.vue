@@ -32,10 +32,8 @@
 </template>
 <script lang="ts">
 import { defineComponent, toRefs, reactive, computed } from "vue";
-import SubTitle from "@/components/Title/SubTitle.vue";
 import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
-import { useCommentStore } from "@/stores/comment";
 import { useAppStore } from "@/stores/app";
 import { saveComment } from "@/api/comment";
 
@@ -44,7 +42,6 @@ export default defineComponent({
   components: {},
   setup() {
     const userStore = useUserStore();
-    const commentStore = useCommentStore();
     const appStore = useAppStore();
     const route = useRoute();
     const reactiveData = reactive({
@@ -65,17 +62,10 @@ export default defineComponent({
         articleID: route.params.articleId,
         userID: userStore.userID,
       };
-      //todo  post上传数据？
-      // saveComment(params).then(({ data }: { data: any }) => {
-      //   //清空输入框
-      //   reactiveData.commentContent = "";
-      // });
-
       const data = await saveComment(params);
       if ((data as any).flag) {
         reactiveData.commentContent = "";
         alert("回复成功");
-
       }
       // console.log(data);
     };

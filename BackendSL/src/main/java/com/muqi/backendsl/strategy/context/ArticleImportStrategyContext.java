@@ -1,6 +1,5 @@
 package com.muqi.backendsl.strategy.context;
 
-import com.muqi.backendsl.enums.MarkdownTypeEnum;
 import com.muqi.backendsl.strategy.ArticleImportStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,6 @@ public class ArticleImportStrategyContext {
 
 
     public void importArticles(MultipartFile file, String type, Integer userID) {
-//        articleImportStrategyMap.get(MarkdownTypeEnum.getMarkdownType(type)).importArticles(file);
         articleImportStrategy.importArticles(file, userID);
     }
 }

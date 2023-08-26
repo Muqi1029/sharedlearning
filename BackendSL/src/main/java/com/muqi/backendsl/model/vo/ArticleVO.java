@@ -34,13 +34,15 @@ public class ArticleVO {
     @ApiModelProperty(name = "isFeatured", value = "否", dataType = "Integer")
     private Integer isFeatured;
 
-    @ApiModelProperty(name = "articleStatus", value = "文章状态", dataType = "String")
-    private Integer articleStatus;
-
     @ApiModelProperty(name = "articleType", value = "文章类型", dataType = "Integer")
     private Integer articleType;
 
     @ApiModelProperty(name = "originalURL", value = "原文链接", dataType = "String")
     private String originalURL;
+
+    @ApiModelProperty(name = "articleStatus", value = "文章状态", dataType = "Integer")
+    private Integer articleStatus;
+
+
 
 }

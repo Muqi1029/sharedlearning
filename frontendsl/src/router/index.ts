@@ -8,74 +8,43 @@ const routes = [
   {
     name: "login",
     path: "/login",
-    component: () => import("../views/login/UserLogin.vue"),
+    component: () => import("../views/Login.vue"),
   },
   {
     name: "home",
     path: "/home",
-    component: () => import("../views/home/IndexMain.vue"),
-  },
-  {
-    name: "market",
-    path: "/market",
-    component: () => import("../views/market/MarketInfo.vue"),
+    component: () => import("../views/Home.vue"),
   },
   {
     name: "account",
     path: "/account",
-    component: () => import("../views/account/AccountInfo.vue"),
+    component: () => import("../views/Account.vue"),
   },
   {
-    // get articles by couseID
+    // get articles by courseID
     path: "/course/:courseId",
-    name: "ArticleList",
-    component: () => import("../views/articlelist/ArticleList.vue"),
+    component: () => import("../views/Course.vue"),
   },
   {
     path: "/article/:articleId",
     name: "articles",
-    component: () => import("../views/article/Article.vue"),
+    component: () => import("../views/Article.vue"),
   },
-  // {
-  //     path: '/article-list/:tagId',
-  //     name: 'ArticleList',
-  //     component: () => import('../views/ArticleList.vue')
-  // },
-  // {
-  //     path: '/tags',
-  //     name: 'Tags',
-  //     component: () => import('../views/Tags.vue')
-  // },
-  // {
-  //     path: '/about',
-  //     name: 'About',
-  //     component: () => import('../views/About.vue')
-  // },
   {
     path: "/message",
     name: "Message",
-    component: () => import("../views/message/index.vue"),
+    component: () => import("../views/Message.vue"),
   },
-  // {
-  //     path: '/friends',
-  //     name: 'Friends',
-  //     component: () => import('../views/FriendLink.vue')
-  // },
-  // {
-  //     path: '/photos/:albumId',
-  //     name: 'Photos',
-  //     component: () => import('../views/Photos.vue')
-  // },
   {
     path: "/404",
     name: "404",
-    component: () => import("../views/error-page/404.vue"),
+    component: () => import("../views/404.vue"),
   },
-  // {
-  //     path: '/oauth/login/qq',
-  //     name: 'qqLogin',
-  //     component: () => import('../components/OauthLogin.vue')
-  // },
+  {
+    path: "/admin",
+    name: "admin",
+    component: import("../views/Admin.vue"),
+  },
   {
     path: "/:catchAll(.*)",
     redirect: "/404",
@@ -83,11 +52,10 @@ const routes = [
   },
 ];
 
-// @ts-ignore <- ignore it
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   // the correct type for routes is RouteRecordRaw
   routes: routes as RouteRecordRaw[],
 });
 
-export default router
+export default router;

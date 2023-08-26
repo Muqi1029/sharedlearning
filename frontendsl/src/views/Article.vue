@@ -97,7 +97,7 @@
       </div>
 
       <div>
-        <Comment />
+        <Comment></Comment>
       </div>
     </div>
   </div>
@@ -143,7 +143,6 @@ export default defineComponent({
     const articleRef = ref();
 
     const articleStore = useArticleStore();
-    const commentStore = useCommentStore();
 
     const reactiveData = reactive({
       articleId: "" as any,
@@ -216,24 +215,11 @@ export default defineComponent({
         });
       }
     };
-
-    /**
-     * 获取评论
-     */
-    const fetchComment = async () => {
-      comments.value = await commentStore.getComments(
-        parseInt(route.params.articleId as string)
-      );
-    };
-
-    /**
-     * 注入评论
-     */
-    provide("comments", comments);
+    provide("articleId", route.params.articleId);
 
     onMounted(() => {
       reactiveData.articleId = route.params.articleId;
-
+      
       /**
        * 根据路由的文章id信息获取文章
        */
@@ -261,7 +247,6 @@ export default defineComponent({
 
       toPageTop();
 
-      fetchComment();
     });
 
     onUnmounted(() => {

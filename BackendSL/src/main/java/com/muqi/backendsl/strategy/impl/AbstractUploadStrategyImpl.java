@@ -14,18 +14,12 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
     @Override
     public String uploadFile(MultipartFile file, String path) {
         try {
-            // 获取文件md5值
             String md5 = FileUtil.getMd5(file.getInputStream());
-            // 获取文件扩展名
             String extName = FileUtil.getExtName(file.getOriginalFilename());
-            // 重新生成文件名
             String fileName = md5 + extName;
-            // 判断文件是否已存在
             if (!exists(path + fileName)) {
-                // 不存在则继续上传
                 upload(path, fileName, file.getInputStream());
             }
-            // 返回文件访问路径
             return getFileAccessUrl(path + fileName);
         } catch (Exception e) {
             e.printStackTrace();
@@ -34,16 +28,10 @@ public abstract class AbstractUploadStrategyImpl implements UploadStrategy {
     }
 
     @Override
-    /*
-使用输入流将文件上传到具有提供的文件名的指定路径。
-返回上传文件的访问 URL。
-如果发生异常，它将引发带有消息“文件上传失败”的 BizException，并打印异常的堆栈跟踪。
-     */
+  
     public String uploadFile(String fileName, InputStream inputStream, String path) {
         try {
-            // 上传文件
             upload(path, fileName, inputStream);
-            // 返回文件访问路径
             return getFileAccessUrl(path + fileName);
         } catch (Exception e) {
             e.printStackTrace();
