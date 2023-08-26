@@ -38,7 +38,7 @@ import Header from "./components/Header/Header.vue";
 // import Logo from "./components/Header/Logo.vue";
 
 import { useRoute } from "vue-router";
-import { ref, watch, computed } from "vue";
+import { ref, watch, computed, createApp } from "vue";
 
 import { useAppStore } from "./stores/app";
 import { useCommonStore } from "./stores/common";
@@ -46,6 +46,7 @@ import { useCommonStore } from "./stores/common";
 import { marked } from "marked";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
+
 
 export default {
   name: "App",
@@ -86,6 +87,7 @@ export default {
         },
       });
     });
+
 
     return {
       isShowHeader,

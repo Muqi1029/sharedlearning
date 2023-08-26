@@ -1,53 +1,69 @@
 <template>
   <div class="flex space-x-3 xl:space-x-5">
-    <!-- 头像 -->
     <img
       v-if="userStore.avatarURL"
       :class="avatarClass"
       :src="userStore.avatarURL"
     />
     <img v-else :class="avatarClass" src="@/assets/daselogo.png" alt="" />
-    <!-- 评论输入框 -->
-    <div class="comment flex flex-col flex-wrap-reverse w-full max-w-full-calc">
+    <div
+      class="reply flex flex-col flex-wrap-reverse w-full max-w-full-calc"
+      style="width: fit-content"
+    >
       <textarea
         v-model="commentContent"
         class="w-full shadow-md rounded-md p-4 focus:outline-none input"
-        placeholder="快发表你的评论吧..."
+        :placeholder="initialContent"
         cols="30"
         rows="5"
       />
-      <!-- 发表按钮 -->
       <div class="justify-between" style="text-align: right">
         <button
-          @click="savenewComment"
+          @click="savenewReply"
           id="submit-button"
-          class="mt-5 w-32 text-white p-2 rounded-lg shadow-lg transition transform hover:scale-105 flex float-right"
+          class="mt-5 w-16 text-white p-2 rounded-lg shadow-lg transition transform hover:scale-105 flex float-right"
         >
-          <span class="text-center flex-grow commit">Add Comment</span>
+          <span class="text-center flex-grow commit">Reply</span>
+        </button>
+        <button
+          @click="CancelReply"
+          id="submit-button"
+          class="mt-5 mr-3 w-16 text-white p-2 rounded-lg shadow-lg transition transform hover:scale-105 flex float-right"
+        >
+          <span class="text-center flex-grow commit">Cancel</span>
         </button>
       </div>
-      <div class="w-full border-b-2 mt-6 wire"></div>
     </div>
   </div>
 </template>
+
 <script lang="ts">
-import { defineComponent, toRefs, reactive, computed } from "vue";
+import {
+  defineComponent,
+  toRefs,
+  reactive,
+  getCurrentInstance,
+  inject,
+  computed,
+} from "vue";
 import { useUserStore } from "@/stores/user";
-import { useRoute } from "vue-router";
 import { useAppStore } from "@/stores/app";
+import { useRoute } from "vue-router";
 import { saveComment } from "@/api/comment";
 
 export default defineComponent({
-  name: "CommentItem",
+  name: "Reply",
   components: {},
-  setup() {
+  props: ["replyID", "initialContent"],
+  setup(props, { emit }) {
     const userStore = useUserStore();
     const appStore = useAppStore();
     const route = useRoute();
     const reactiveData = reactive({
       commentContent: "" as any,
     });
-    const savenewComment = async () => {
+    const parentId = inject("parentId");
+    const savenewReply = () => {
       if (userStore.userID === "") {
         alert("请登录后评论！");
         return;
@@ -56,22 +72,28 @@ export default defineComponent({
         alert("评论内容不能为空！");
         return;
       }
-      //传输参数包括了评论内容以及文章id以及评论时间
       const params: any = {
+        parentID: parentId,
+        userID: userStore.userID,
         commentContent: reactiveData.commentContent,
         articleID: route.params.articleId,
-        userID: userStore.userID,
       };
-      const data = await saveComment(params);
-      if ((data as any).flag) {
-        reactiveData.commentContent = "";
-        alert("回复成功");
-
-      }
-      // console.log(data);
+      //todo  post上传数据？
+      saveComment(params).then((data: any) => {
+        if (data.flag) {
+          //changeshow用于隐藏评论输入框
+          emit("changeShow");
+          //清空输入框内容
+          reactiveData.commentContent = "";
+          // alert("回复成功");
+        }
+      });
     };
-
+    const CancelReply = () => {
+      emit("changeShow");
+    };
     return {
+      ...toRefs(reactiveData),
       userStore,
       avatarClass: computed(() => {
         return {
@@ -79,14 +101,25 @@ export default defineComponent({
           [appStore.themeConfig.profile_shape]: true,
         };
       }),
-      ...toRefs(reactiveData),
-      savenewComment,
+      savenewReply,
+      CancelReply,
     };
   },
 });
 </script>
-
 <style lang="scss" scoped>
+.reply::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-right: 8px solid var(--background-primary);
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+  left: -8px;
+  top: 14px;
+}
+
 .input {
   background: var(--background-primary);
   resize: none;

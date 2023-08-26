@@ -25,7 +25,7 @@
           </div>
         </div>
 
-        <CommentReplyForm
+        <ReplyForm
           v-show="show"
           :replyID="comment.id"
           :initialContent="replyContent"
@@ -35,7 +35,7 @@
         <transition-group name="fade">
           <ul>
             <li v-for="comment in comments" :key="comment.id" v-show="comment.parentID == commentid">
-              <CommentReplyItem   :comment="comment"/>
+              <CommentItem   :comment="comment"/>
             </li>
           </ul>  
         </transition-group>
@@ -46,15 +46,13 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, provide, computed,inject } from "vue";
-import CommentReplyItem from "./CommentReplyItem.vue";
-import CommentReplyForm from "./CommentReplyForm.vue";
+import Reply from "./Reply.vue";
 import { useAppStore } from "@/stores/app";
 import { saveComment,getComments } from "@/api/comment";
 
 export default defineComponent({
   components: {
-    CommentReplyItem,
-    CommentReplyForm,
+    Reply
   },
   props: {
     comment: {
