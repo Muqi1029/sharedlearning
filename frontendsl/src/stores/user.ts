@@ -19,10 +19,9 @@ export const useUserStore = defineStore("userStore", {
   },
 
   actions: {
-    userLogin({ username, password }: ILoginForm) {
+    userLogin({ userName, password }: ILoginForm) {
       return new Promise<number>((resolve, reject) => {
-        login({ loginAccount: username, loginPassword: password })
-          // 结果调then
+        login({ loginAccount: userName, loginPassword: password })
           .then((res) => {
             const { data } = res;
             if (data.id > 0) {
@@ -32,7 +31,7 @@ export const useUserStore = defineStore("userStore", {
               this.userID = data.id;
               this.isHave = true;
               this.userAuthority = data.userAuthority;
-              resolve(data.userAuthority as number); // 表示回调成功,改变返回的promise对象的状态
+              resolve(data.userAuthority as number);
             } else {
               reject();
             }

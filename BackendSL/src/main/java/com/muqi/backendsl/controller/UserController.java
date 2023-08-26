@@ -31,7 +31,6 @@ public class UserController {
     private UserCourseService userCourseService;
 
 
-
     /**
      * 用户注册接口
      *
@@ -50,19 +49,21 @@ public class UserController {
     public ResultVO<User> userLogin(@RequestBody UserLoginRequest userLoginRequest, HttpServletRequest request) {
         String loginAccount = userLoginRequest.getLoginAccount();
         String loginPassword = userLoginRequest.getLoginPassword();
+        if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
+            return ResultVO.fail();
+        }
         User user = userService.userLogin(loginAccount, loginPassword, request);
-        int userAuthority= user.getUserAuthority();
+        int userAuthority;
+        if (user == null) {
+            return ResultVO.fail();
+        } else {
+            userAuthority = user.getUserAuthority();
+        }
 
         if (userAuthority == 0) {
             return ResultVO.ok(user, "user");
-        } else if (userAuthority == 1) {
-            return ResultVO.ok(user, "admin");
         }
-
-        if (StringUtils.isAnyBlank(loginAccount, loginPassword)) {
-            return null;
-        }
-        return ResultVO.ok(userService.userLogin(loginAccount, loginPassword, request));
+        return ResultVO.ok(user, "admin");
     }
 
     @GetMapping("/search")

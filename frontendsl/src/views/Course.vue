@@ -15,9 +15,6 @@
         drag
       >
         <el-button type="primary">上传文章</el-button>
-        <!-- <template #tip>
-          <div class="el-upload__tip">sdah</div>
-        </template> -->
       </el-upload>
     </div>
 
@@ -92,10 +89,7 @@
 
         <div class="flex flex-col">
           <h1 class="text-center">私有的链接</h1>
-
-          <!-- <link-card></link-card> -->
-
-          <button @click="alert('待完成')">上传</button>
+          <button>上传</button>
         </div>
       </aside>
     </div>
@@ -108,6 +102,7 @@ import { useRoute } from "vue-router";
 import { useArticleStore } from "@/stores/article";
 import LinkCard from "@/components/LinkCard/LinkCard.vue";
 import ArticleCard from "@/components/ArticleCard/ArticleCard.vue";
+import Comment from "@/components/Comment/Comment.vue";
 import { useCourseStore } from "@/stores/course";
 import { useLinkStore } from "@/stores/link";
 import type { FormInstance, FormRules } from "element-plus";

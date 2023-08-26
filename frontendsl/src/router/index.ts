@@ -8,38 +8,37 @@ const routes = [
   {
     name: "login",
     path: "/login",
-    component: () => import("../views/login/UserLogin.vue"),
+    component: () => import("../views/Login.vue"),
   },
   {
     name: "home",
     path: "/home",
-    component: () => import("../views/home/IndexMain.vue"),
+    component: () => import("../views/Home.vue"),
   },
   {
     name: "account",
     path: "/account",
-    component: () => import("../views/account/AccountInfo.vue"),
+    component: () => import("../views/Account.vue"),
   },
   {
     // get articles by courseID
     path: "/course/:courseId",
-    name: "ArticleList",
-    component: () => import("../views/articlelist/ArticleList.vue"),
+    component: () => import("../views/Course.vue"),
   },
   {
     path: "/article/:articleId",
     name: "articles",
-    component: () => import("../views/article/Article.vue"),
+    component: () => import("../views/Article.vue"),
   },
   {
     path: "/message",
     name: "Message",
-    component: () => import("../views/message/index.vue"),
+    component: () => import("../views/Message.vue"),
   },
   {
     path: "/404",
     name: "404",
-    component: () => import("../views/error-page/404.vue"),
+    component: () => import("../views/404.vue"),
   },
   {
     path: "/admin",

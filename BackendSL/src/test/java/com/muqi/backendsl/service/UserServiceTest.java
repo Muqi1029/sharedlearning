@@ -36,9 +36,15 @@ public class UserServiceTest {
     @Test
     public void testAddUser(){
         User user = new User();
+<<<<<<< HEAD
         user.setUserName("test");
         user.setLoginAccount("123456789");
         String loginPassword = "123456789";
+=======
+        user.setUserName("xixixi");
+        user.setLoginAccount("002629");
+        String loginPassword = "002629";
+>>>>>>> origin/xpy
 
         String encryptPassword = DigestUtils.md5DigestAsHex((SALT + loginPassword).getBytes(StandardCharsets.UTF_8));
         user.setLoginPassword(encryptPassword);

@@ -55,3 +55,5 @@ export const languages = [
     value: "Js",
   },
 ];
+
+export const defaultImg = "api/image/courseCover/default-cover.jpg";

@@ -1,8 +1,6 @@
 <template>
-  <nav class="items-center flex-1 lg:flex">
-    <!-- hidden -->
+  <nav class="items-center flex-1 lg:flex bg-blue-400">
     <ul class="flex flex-row list-none px-2 text-white">
-      <!-- traverse the router -->
       <li
         class="not-italic font-medium text-xs h-full relative flex flex-col items-center justify-center cursor-pointer text-center py-4 px-2"
         v-for="route in routes"
@@ -42,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, toRef, toRefs } from "vue";
+import { defineComponent } from "vue";
 import { useRouter } from "vue-router";
 import { isExternal } from "@/utils/validate";
 
@@ -70,25 +68,8 @@ export default defineComponent({
       }
     };
 
-    // const reactiveData = reactive({
-    //   albums: [] as any,
-    // });
-
-    // onMounted(() => {
-    //   api.getAlbums().then(({ data }) => {
-    //     reactiveData.albums = data.data;
-    //   });
-    // });
-
-    // const openPhotoAlbum = (id: any): void => {
-    //   router.push("/photos/" + id);
-    // };
-
     return {
-      //   ...toRefs(reactiveData),
-
       routes: config.routes, // the route in config
-
       pushPage,
     };
   },

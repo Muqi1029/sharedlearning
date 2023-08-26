@@ -14,7 +14,7 @@
 
       <div class="article-content">
         <p class="pt-7" @click="toArticle">
-          <div class="text-2xl"> {{ data.articleTitle }}</div>
+          <div class="text-2xl">{{ data.articleTitle }}</div>
           {{ data.articleContent }}
         </p>
 
@@ -24,12 +24,10 @@
                 class="hover:opacity-50 cursor-pointer"
                 :src="data.userInfo.avatarURL || ''"
                 alt="author avatar"
-                @click="handleAuthorClick"
             />
             <span class="text-ob-dim">
               <strong
                   class="text-ob-normal pr-1.5 hover:text-ob hover:opacity-50 cursor-pointer"
-                  @click="handleAuthorClick"
               >
                 {{ data.userInfo.userName }}
               </strong>
@@ -78,9 +76,6 @@ export default defineComponent({
     const router = useRouter();
     const appStore = useAppStore();
 
-    const handleAuthorClick = () => {
-    };
-
     // get into article
     const toArticle = () => {
       router.push({
@@ -90,7 +85,6 @@ export default defineComponent({
 
     return {
       toArticle,
-      handleAuthorClick,
       gradientBackground: computed(
           () => appStore.themeConfig.header_gradient_css
       ),

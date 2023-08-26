@@ -6,7 +6,7 @@
  * LoginForm
  */
 export interface ILoginForm {
-  readonly username: string;
+  readonly userName: string;
   readonly password: string;
 }
 

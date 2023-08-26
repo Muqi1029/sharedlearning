@@ -91,6 +91,4 @@ components.forEach((component) => {
 
 registerSvgIcon(app);
 
-registerObSkeleton(app);
-
 app.mount("#app");
