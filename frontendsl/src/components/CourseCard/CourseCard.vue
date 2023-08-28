@@ -15,10 +15,10 @@ const toCourse = () => {
 </script>
 
 <template>
-  <div class="relative h-full rounded-2xl list-none">
+  <div class="relative h-full rounded-2xl list-none border-blue-500">
     <!--   course cover -->
     <div
-      class="relative cursor-pointer row-span-1 courseCover-container"
+      class="relative cursor-pointer courseCover-container h-52"
       @click="toCourse"
     >
       <img
@@ -27,9 +27,7 @@ const toCourse = () => {
         v-lazy="props.data.courseCover"
       />
       <img v-else :src="defaultImg" alt="" />
-      <span
-        class="z-30 absolute w-full h-12/10 left-0 pointer-events-none opacity-40"
-      />
+      <span class="z-30 absolute w-full left-0 opacity-40 mix-blend-screen" />
     </div>
 
     <!-- course info -->
@@ -42,7 +40,7 @@ const toCourse = () => {
 
       <div>{{ props.data.professor }}</div>
       <h1>{{ props.data.title }}</h1>
-      <p class="h-32 truncate line-clamp-5">
+      <p class="course-intro">
         {{ props.data.intro }}
       </p>
     </div>
@@ -51,8 +49,29 @@ const toCourse = () => {
 
 <style scoped lang="scss">
 .courseCover-container {
-  img {
-    @apply rounded-2xl;
+  &:after {
+    pointer-events: none;
+    content: "";
+    position: absolute;
+    z-index: 35;
+    top: 13%;
+    left: 0;
+    height: 120%;
+    width: 100%;
+    background: var(--article-cover);
   }
+
+  img {
+    @apply rounded-2xl block absolute z-20 bg-cover bg-no-repeat object-cover w-full h-12/10;
+  }
+}
+
+.course-intro {
+  height: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -web-kit-line-clamp: 5;
+  -webkit-box-orient: vertical;
 }
 </style>
