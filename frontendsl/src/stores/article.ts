@@ -46,8 +46,8 @@ export const useArticleStore = defineStore("articleStore", {
 
     getArticlesByCourseId(id: number) {
       return new Promise((resolve) => {
-        getArticleByCourseId(id).then(({ data }) => {
-          resolve(data);
+        getArticleByCourseId(id).then((data) => {
+          resolve(data.data);
         });
       });
     },

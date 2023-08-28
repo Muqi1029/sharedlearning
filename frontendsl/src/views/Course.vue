@@ -146,7 +146,8 @@ export default defineComponent({
       // get all articles
       articleStore.getArticlesByCourseId(reactiveData.id).then(
         (res: any) => {
-          if (res.records.length > 0) {
+          console.log(res);
+          if (res.length > 0) {
             reactiveData.hasArticles = true;
           }
           res.records.forEach((element: any) => {

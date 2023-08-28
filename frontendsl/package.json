@@ -9,6 +9,9 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
+    "@packy-tang/vue-tinymce": "^2.0.0-beta.1",
+    "@tinymce/tinymce-vue": "^4.0.7",
+    "@types/tinymce": "^4.6.5",
     "axios": "^0.27.2",
     "cheerio": "^1.0.0-rc.12",
     "core-js": "^3.8.3",
@@ -29,6 +32,7 @@
     "prettier": "^2.8.4",
     "prismjs": "^1.28.0",
     "sass": "^1.57.1",
+    "tinymce": "^6.6.2",
     "tocbot": "^4.20.1",
     "v3-img-preview": "^1.1.16",
     "vee-validate": "^4.8.4",
