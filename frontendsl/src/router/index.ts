@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     redirect: "/login",
@@ -21,9 +21,14 @@ const routes = [
     component: () => import("../views/Account.vue"),
   },
   {
-    // get articles by courseID
-    path: "/course/:courseId",
+    path: "/course/:courseID",
+    name: "courses",
     component: () => import("../views/Course.vue"),
+  },
+  {
+    path: "/editor",
+    name: "course_editor",
+    component: () => import("../views/Editor.vue"),
   },
   {
     path: "/article/:articleId",
@@ -43,19 +48,27 @@ const routes = [
   {
     path: "/admin",
     name: "admin",
-    component: import("../views/Admin.vue"),
+    component: () => import("../views/Admin.vue"),
+    children: [
+      {
+        path: "user",
+        component: () => import("@/components/Admin/UserAdmin.vue"),
+      },
+      {
+        path: "article",
+        component: () => import("@/components/Admin/ArticleAdmin.vue"),
+      },
+    ],
   },
   {
     path: "/:catchAll(.*)",
     redirect: "/404",
-    hidden: true,
   },
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
-  // the correct type for routes is RouteRecordRaw
-  routes: routes as RouteRecordRaw[],
+  history: createWebHistory(),
+  routes,
 });
 
 export default router;

@@ -6,14 +6,13 @@
       v-if="icon && side === 'left'"
       :icon-class="icon"
       class="inline-block mr-2"
-    ></svg-icon>
+    />
     <span :class="titleClass">{{ titleStr }}</span>
     <svg-icon
       v-if="icon && side === 'right'"
       :icon-class="icon"
       class="inline-block ml-2"
-    >
-    </svg-icon>
+    />
     <span :class="lineClass" :style="gradientBackground"></span>
   </p>
 </template>

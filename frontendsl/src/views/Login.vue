@@ -71,66 +71,84 @@ const forgetPwd = () => {
 </script>
 
 <template>
-  <div class="m-40 mx-auto w-1/4">
-    <h3 class="loginTitle text-center text-2xl font-bold shadow-md">
-      Sharedlearning
-    </h3>
+  <div class="h-screen flex justify-center items-center">
+    <div class="flex justify-around items-center w-full">
+      <img
+        src="http://localhost:8000/api/image/daselogo.png"
+        alt=""
+        class="w-1/8"
+      />
 
-    <el-form
-      label-width="80px"
-      label-position="right"
-      ref="loginFormRef"
-      :model="loginForm"
-      :rules="loginRules"
-      class="relative bg-white p-8"
-      size="large"
-    >
-      <el-form-item label="用户名：" prop="userName" class="mt-8" size="large">
-        <el-input
-          ref="userNameRef"
-          v-model="loginForm.userName"
-          placeholder="请输入您的账号"
-          tabindex="1"
-          @keyup.enter="handleLogin"
+      <div class="login-form w-1/3">
+        <h3 class="text-center text-2xl font-bold shadow-md">Sharedlearning</h3>
+
+        <el-form
+          label-width="80px"
+          label-position="right"
+          ref="loginFormRef"
+          :model="loginForm"
+          :rules="loginRules"
+          class="relative bg-white p-8"
           size="large"
-        />
-      </el-form-item>
+        >
+          <el-form-item
+            label="用户名："
+            prop="userName"
+            class="mt-8"
+            size="large"
+          >
+            <el-input
+              ref="userNameRef"
+              v-model="loginForm.userName"
+              placeholder="请输入您的账号"
+              tabindex="1"
+              @keyup.enter="handleLogin"
+              size="large"
+            />
+          </el-form-item>
 
-      <el-form-item label="密码：" prop="password">
-        <el-input
-          ref="passwordRef"
-          v-model="loginForm.password"
-          placeholder="请输入您的密码"
-          tabindex="2"
-          @keyup.enter="handleLogin"
-          show-password
-        />
-      </el-form-item>
-    </el-form>
+          <el-form-item label="密码：" prop="password">
+            <el-input
+              ref="passwordRef"
+              v-model="loginForm.password"
+              placeholder="请输入您的密码"
+              tabindex="2"
+              @keyup.enter="handleLogin"
+              show-password
+            />
+          </el-form-item>
+        </el-form>
 
-    <div class="flex justify-between">
-      <el-checkbox v-model="checkPwd" @change="rememberPwd"
-        >记住密码
-      </el-checkbox>
-      <span @click="forgetPwd" class="cursor-pointer hover:text-blue-300"
-        >忘记密码</span
-      >
-    </div>
+        <div class="flex justify-between">
+          <el-checkbox v-model="checkPwd" @change="rememberPwd"
+            >记住密码
+          </el-checkbox>
+          <span @click="forgetPwd" class="cursor-pointer hover:text-blue-300"
+            >忘记密码</span
+          >
+        </div>
 
-    <el-button
-      :loading="loading"
-      type="primary"
-      class="w-full mb-3 h-6"
-      @click.prevent="handleLogin(loginFormRef)"
-      >登录
-    </el-button>
+        <el-button
+          :loading="loading"
+          type="primary"
+          class="w-full mb-3 h-6"
+          @click.prevent="handleLogin(loginFormRef)"
+          >登录
+        </el-button>
 
-    <div class="relative flex justify-end">
-      <el-button class="absolute" type="info" @click="alert('QQ登录')"
-        >QQ登录
-      </el-button>
+        <div class="relative flex justify-end">
+          <el-button class="absolute" type="info" @click="alert('QQ登录')"
+            >QQ登录
+          </el-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.login-form {
+  border-left: 2px solid lightblue;
+  padding-left: 20px;
+}
+</style>

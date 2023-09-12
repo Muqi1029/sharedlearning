@@ -11,10 +11,12 @@ export const useLinkStore = defineStore("linkStore", {
   },
 
   actions: {
+    // delete!
     getLinkByCourseID(courseID: number) {
       return new Promise((resolve, reject) => {
         getLinkByCourseID(courseID).then(
           ({ data }) => {
+            console.log(data);
             resolve(data);
           },
           (reason) => {

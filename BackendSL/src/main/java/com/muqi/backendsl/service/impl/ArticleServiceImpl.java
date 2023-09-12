@@ -33,12 +33,9 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveOrUpdateArticle(ArticleVO articleVO, Integer userID) {
+    public boolean saveOrUpdateArticle(ArticleVO articleVO) {
         Article article = BeanCopyUtil.copyObject(articleVO, Article.class);
-        article.setUserID(Long.valueOf(userID));
-        article.setCourseID(1L);
-
-        this.saveOrUpdate(article);
+        return this.saveOrUpdate(article);
     }
 
     @Override
@@ -52,7 +49,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     public PageResultDTO<ArticleCardDTO> listArticlesByCourseId(Long courseID) {
         QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
 
-        queryWrapper.eq("courseID", courseID);
+        queryWrapper.eq("courseID", courseID).eq("articleStatus", 2);
 
         CompletableFuture<Long> asyncCount = CompletableFuture.supplyAsync(() ->
                 articleMapper.selectCount(queryWrapper)
@@ -66,6 +63,16 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
     @Override
     public List<Article> getPendingArticles() {
         return articleMapper.findByArticleStatus(1);
+    }
+
+    @Override
+    public boolean changeArticleStatus(Integer articleId, Integer articleStatus) {
+        Article article = articleMapper.selectById(articleId);
+        if (article == null) {
+            return false;
+        }
+        article.setArticleStatus(articleStatus);
+        return articleMapper.updateById(article) == 1;
     }
 
 }

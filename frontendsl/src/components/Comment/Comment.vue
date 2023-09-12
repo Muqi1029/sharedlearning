@@ -32,17 +32,21 @@
         <div class="w-full border-b-2 mt-6 wire"></div>
       </div>
     </div>
-    <div>
-      <ul>
-        <li
-          v-for="comment in comments"
-          :key="comment.id"
-          v-show="comment.parentID == 0"
-        >
-          <CommentItem :comment="comment"></CommentItem>
-        </li>
-      </ul>
-    </div>
+
+    <!--    <ul>-->
+    <!--      <li-->
+    <!--        v-for="comment in comments"-->
+    <!--        :key="comment.id"-->
+    <!--        v-show="comment.parentID == 0"-->
+    <!--      >-->
+    <CommentItem
+      v-for="comment in comments"
+      :key="comment.id"
+      v-show="comment.parentID === 0"
+      :comment="comment"
+    />
+    <!--      </li>-->
+    <!--    </ul>-->
   </div>
 </template>
 <script lang="ts">

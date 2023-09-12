@@ -50,6 +50,7 @@
         from t_article
                  left join (select id as Uid, userName, avatarURL from t_user) U on userID = U.Uid
         where isDelete = 0
+          and articleStatus = 2
           and courseID = #{courseID};
     </select>
 

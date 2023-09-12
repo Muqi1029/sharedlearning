@@ -1,95 +1,37 @@
+<script setup lang="ts">
+import { computed } from "vue";
+import { useAppStore } from "./stores/app";
+import "highlight.js/styles/atom-one-dark.css";
+
+const appStore = useAppStore();
+
+const headerBaseBackground = computed(() => {
+  return {
+    background: appStore.themeConfig.header_gradient_css,
+    opacity: 0.91,
+  };
+});
+</script>
+
 <template>
   <div class="">
-    <!-- header -->
-    <!--    <template v-if="isShowHeader">-->
-    <!--      <Header />-->
-    <!--    </template>-->
-
     <div class="app-banner app-banner-image"></div>
 
-    <div
-      class="app-banner app-banner-screen"
-      :style="headerBaseBackground"
-    ></div>
+    <div class="app-banner app-banner-screen" :style="headerBaseBackground" />
 
-    <!-- main -->
     <div class="relative z-10">
       <!-- 作用域插槽，子组件传递Component给父组件router-view -->
-      <router-view v-slot="{ Component }">
-        <!-- the transition animation of the router-view -->
-        <transition name="fade-slide-y" mode="out-in">
-          <!-- 一个用于渲染动态组件或元素的“元组件”。 -->
-          <component :is="Component"></component>
-        </transition>
-      </router-view>
+      <router-view />
+      <!--      <router-view v-slot="{ Component }">-->
+      <!--        &lt;!&ndash; the transition animation of the router-view &ndash;&gt;-->
+      <!--        <transition name="fade-slide-y" mode="out-in">-->
+      <!--          &lt;!&ndash; 一个用于渲染动态组件或元素的“元组件”。 &ndash;&gt;-->
+      <!--          <component :is="Component" />-->
+      <!--        </transition>-->
+      <!--      </router-view>-->
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import Header from "./components/Header/Header.vue";
-import { useRoute } from "vue-router";
-import { ref, watch, computed } from "vue";
-import { useAppStore } from "./stores/app";
-import { marked } from "marked";
-import hljs from "highlight.js";
-import "highlight.js/styles/atom-one-dark.css";
-import Login from "@/views/Login.vue";
-
-export default {
-  name: "App",
-  components: { Login, Header },
-
-  setup() {
-    const markdown = ref("");
-
-    const renderedMarkdown = ref("");
-
-    const route = useRoute();
-
-    let isShowHeader = ref(false);
-
-    const appStore = useAppStore();
-
-    watch(
-      route,
-      (newRoute: any) => {
-        if (newRoute.path !== "/login" && newRoute.path !== "/404") {
-          isShowHeader.value = true;
-        } else {
-          isShowHeader.value = false;
-        }
-      },
-      {
-        immediate: true,
-      }
-    );
-
-    watch(markdown, (newValue) => {
-      renderedMarkdown.value = marked(newValue, {
-        highlight: function (code: any, language: any) {
-          if (language && hljs.getLanguage(language)) {
-            return hljs.highlight(code, { language }).value;
-          }
-          return hljs.highlightAuto(code).value;
-        },
-      });
-    });
-
-    return {
-      isShowHeader,
-      headerBaseBackground: computed(() => {
-        return {
-          background: appStore.themeConfig.header_gradient_css,
-          opacity: 0.91,
-        };
-      }),
-      renderedMarkdown,
-      markdown,
-    };
-  },
-};
-</script>
 
 <style lang="scss">
 #app {

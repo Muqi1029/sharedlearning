@@ -30,7 +30,7 @@ export interface ICourse {
  * article
  */
 export interface IArticle {
-  id: number;
+  id?: number;
   articleContent: string;
   articleTitle: string;
   courseID?: number;
@@ -63,4 +63,10 @@ export interface IMarketCard {
   name: string;
   marketCover?: string;
   userInfo: IUserInfo;
+}
+
+export interface ArticleVO {
+  articleContent: string;
+  userId: number;
+  courseId: number;
 }

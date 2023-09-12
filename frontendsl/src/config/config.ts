@@ -1,46 +1,44 @@
-export default {
-  routes: [
-    {
-      name: "Home",
-      path: "/home",
+export const routes = [
+  {
+    name: "Home",
+    path: "/home",
 
-      i18n: {
-        cn: "首页",
-        en: "Home",
-      },
-      children: [],
+    i18n: {
+      cn: "首页",
+      en: "Home",
     },
-    {
-      name: "Account",
-      path: "/account",
+    children: [],
+  },
+  {
+    name: "Account",
+    path: "/account",
 
-      i18n: {
-        cn: "个人账号",
-        en: "Account",
-      },
-
-      children: [],
+    i18n: {
+      cn: "个人账号",
+      en: "Account",
     },
 
-    //------------------------------- TODO
-    // {
-    //     name: 'Message',
-    //     path: '/message',
+    children: [],
+  },
 
-    //     i18n: {
-    //         cn: '消息',
-    //         en: 'Message'
-    //     }
-    // },
+  //------------------------------- TODO
+  // {
+  //     name: 'Message',
+  //     path: '/message',
 
-    // {
-    //     name: 'Progress',
-    //     path: '/progress',
+  //     i18n: {
+  //         cn: '消息',
+  //         en: 'Message'
+  //     }
+  // },
 
-    //     i18n: {
-    //         cn: '发展历程',
-    //         en: 'Progress'
-    //     }
-    // }
-  ],
-};
+  // {
+  //     name: 'Progress',
+  //     path: '/progress',
+
+  //     i18n: {
+  //         cn: '发展历程',
+  //         en: 'Progress'
+  //     }
+  // }
+];

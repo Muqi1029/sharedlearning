@@ -18,24 +18,16 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { ILink } from "@/types/types";
 
 export default defineComponent({
   name: "LinkCard",
   components: {},
   props: {
     data: {
-      // type: Object as () => ILink,
       required: true,
     },
   },
-  setup(props) {
-    // const reactiveData = reactive({
-    //   title: "",
-    //   description: "",
-    //   image: "",
-    // });
-
+  setup() {
     /**
      * get the image and title by url
      */
@@ -56,8 +48,6 @@ export default defineComponent({
     // fetchData();
 
     return {
-      // ...toRefs(props.data),
-      // ...toRefs(reactiveData),
     };
   },
 });
@@ -69,12 +59,7 @@ export default defineComponent({
   transform-style: preserve-3d;
   background: #f9fafa;
   opacity: 30;
-  //color: #1e80ff;
-
-  //margin: 2px auto;
-
   &:hover {
-    //transform: scale(1.025);
     background: #e8f3ff;
   }
 }

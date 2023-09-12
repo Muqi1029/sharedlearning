@@ -4,6 +4,7 @@ import com.muqi.backendsl.entity.Article;
 import com.muqi.backendsl.model.dto.ArticleCardDTO;
 import com.muqi.backendsl.model.dto.ArticleDTO;
 import com.muqi.backendsl.model.dto.PageResultDTO;
+import com.muqi.backendsl.model.request.ArticleRequest;
 import com.muqi.backendsl.model.vo.ArticleVO;
 import com.muqi.backendsl.model.vo.ResultVO;
 import com.muqi.backendsl.service.ArticleService;
@@ -52,26 +53,26 @@ public class ArticleController {
 
 
     @PostMapping("/import-article")
-    public void importArticle(ArticleVO article, Integer userId) {
-        article.setArticleStatus(1);
-
-        articleService.saveOrUpdateArticle(article, userId);
+    public boolean importArticle(@RequestBody ArticleRequest articleRequest) {
+        ArticleVO articleVO = new ArticleVO();
+        articleVO.setArticleStatus(1);
+        articleVO.setArticleContent(articleRequest.getArticleContent());
+        articleVO.setCourseID(articleRequest.getCourseId());
+        articleVO.setUserID(articleRequest.getUserId());
+        return articleService.saveOrUpdateArticle(articleVO);
     }
 
 
-    @PostMapping("/change-article-status")
-    public boolean changeArticleStatus(ArticleVO article, Integer userId) {
-
-        if (article != null) {
-            article.setArticleStatus(0);
-
-            articleService.saveOrUpdateArticle(article, userId);
-            return true;
-        } else {
-            return false;
+    @PostMapping("/changeStatus")
+    public ResultVO<Boolean> changeArticleStatus(@RequestBody Map<String, Integer> requestBody) {
+        int aId = requestBody.getOrDefault("articleId", 0);
+        int sId = requestBody.getOrDefault("articleStatus", -1);
+        if (aId == 0 || sId == -1) {
+            return ResultVO.fail();
         }
+        if (articleService.changeArticleStatus(aId, sId)) {
+            return ResultVO.ok();
+        }
+        return ResultVO.fail();
     }
-//    articleStatus  '0 - 公开1 - 私密2 - 草稿',
-
-
 }

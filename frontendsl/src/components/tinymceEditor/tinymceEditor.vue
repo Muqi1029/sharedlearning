@@ -30,6 +30,8 @@ import axios from "axios";
 
 const emits = defineEmits(["getContent"]);
 //这里我选择将数据定义在props里面，方便在不同的页面也可以配置出不同的编辑器，当然也可以直接在组件中直接定义
+
+// eslint-disable-next-line no-undef
 const props = defineProps({
   value: {
     type: String,
@@ -76,6 +78,7 @@ const init = reactive({
   paste_auto_cleanup_on_paste: false,
   file_picker_types: "file image media",
   content_css: "/tinymce/skins/content/default/content.css", //以css文件方式自定义可编辑区域的css样式，css文件需自己创建并引入
+
   //图片上传
   images_upload_handler: (blobInfo, progress) =>
     new Promise((resolve, reject) => {

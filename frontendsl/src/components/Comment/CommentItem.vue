@@ -1,12 +1,14 @@
 <template>
   <div class="mt-5 max-w-full">
     <div class="flex space-x-3 xl:space-x-5">
+      <!-- avatar -->
       <img
         v-if="comment.userAvatar"
         :class="avatarClass"
         :src="comment.userAvatar"
       />
       <img v-else :class="avatarClass" src="@/assets/daselogo.png" alt="" />
+
       <div class="max-w-full-calc space-y-5">
         <div
           class="bg-white text-primary p-4 rounded-md relative shadow-md reply"
@@ -25,7 +27,7 @@
           </div>
         </div>
 
-        <ReplyForm
+        <Reply
           v-show="show"
           :replyID="comment.id"
           :initialContent="replyContent"

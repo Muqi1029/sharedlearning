@@ -58,7 +58,7 @@ service.interceptors.response.use(
         break;
     }
     if (response.data.flag) {
-      return response.data.data;
+      return response.data;
     }
   },
 

@@ -1,34 +1,28 @@
+<script setup lang="ts">
+import { defineEmits } from "@vue/runtime-core";
+
+const emits = defineEmits(["isFavHandle"]);
+// eslint-disable-next-line no-undef
+const props = defineProps({
+  isFav: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+});
+
+const onChangeStar = () => {
+  if (!props.isFav) emits("isFavHandle", true);
+  else emits("isFavHandle", false);
+};
+</script>
+
 <template>
-  <div class="right absolute -right-1.5 top-0">
+  <div>
     <img v-if="isFav" src="@/assets/star.png" @click="onChangeStar" />
     <img v-else src="@/assets/star_gray.png" @click="onChangeStar" />
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref } from "vue";
-
-export default defineComponent({
-  name: "Favorites",
-  emits: ["isFavHandle"],
-  props: {
-    isFav: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  components: {},
-  setup(props, { emit }) {
-    const onChangeStar = () => {
-      if (!props.isFav) emit("isFavHandle", true);
-      else emit("isFavHandle", false);
-    };
-    return {
-      onChangeStar,
-    };
-  },
-});
-</script>
 
 <style lang="scss" scoped>
 .right {

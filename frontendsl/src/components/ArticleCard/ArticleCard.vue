@@ -1,3 +1,34 @@
+<script setup lang="ts">
+import {computed} from "vue";
+import {useAppStore} from "@/stores/app";
+import {useRouter} from "vue-router";
+// eslint-disable-next-line no-undef
+const {data} = defineProps({
+  data: Object,
+})
+const appStore = useAppStore();
+const router = useRouter();
+
+
+// get into article
+const toArticle = () => {
+  let path = "/article/" + data.id;
+  console.log(path)
+  router.push({
+    path: "/article/" + data.id
+  });
+};
+
+const gradientBackground = computed(
+    () => appStore.themeConfig.header_gradient_css
+)
+
+const pendingHandle = () => {
+  alert("还未完成");
+}
+
+</script>
+
 <template>
   <div class="article-container cursor-pointer">
     <div class="article">
@@ -36,15 +67,15 @@
 
           <div class="justify-end flex mb-1 text-lg">
             <span class="pr-2.5"
-            ><button @click="" class="hover:opacity-50">点赞：</button
+            ><button @click="pendingHandle" class="hover:opacity-50">点赞：</button
             >{{ data.thumbUpCount }}</span
             >
             <span class="pr-2.5"
-            ><button @click="" class="hover:opacity-50">评论：</button
+            ><button @click="pendingHandle" class="hover:opacity-50">评论：</button
             >{{ data.commentCount }}</span
             >
             <span class="pr-2.5"
-            ><button @click="" class="hover:opacity-50">打赏：</button
+            ><button @click="pendingHandle" class="hover:opacity-50">打赏：</button
             >{{ data.rewardCount }}</span
             >
           </div>
@@ -53,45 +84,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import {defineComponent, computed} from "vue";
-
-import {useRouter} from "vue-router";
-import {useAppStore} from "@/stores/app";
-
-export default defineComponent({
-  name: "",
-  components: {},
-
-  props: {
-    data: {
-      required: true,
-      type: Object as any,
-      // type: Object as () => IArticle,
-    },
-  },
-
-  setup(props) {
-    const router = useRouter();
-    const appStore = useAppStore();
-
-    // get into article
-    const toArticle = () => {
-      router.push({
-        path: "/article/" + props.data.id,
-      });
-    };
-
-    return {
-      toArticle,
-      gradientBackground: computed(
-          () => appStore.themeConfig.header_gradient_css
-      ),
-    };
-  },
-});
-</script>
 
 <style lang="scss" scoped>
 .article-content {

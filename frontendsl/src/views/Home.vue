@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Navigation from "@/components/Header/Navigation.vue";
+import Header from "@/components/Header/Header.vue";
 import Recommend from "@/components/Recommend/Recommend.vue";
 import Title from "@/components/Title/Title.vue";
 import CourseCard from "@/components/CourseCard/CourseCard.vue";
@@ -18,12 +18,6 @@ const tabClass = reactive({
   tab: true,
   "expanded-tab": false,
 });
-
-const expanderClass = reactive({
-  "tab=expander": true,
-  expanded: false,
-});
-
 const changeReserve = () => {
   alert("改变收藏");
 };
@@ -32,14 +26,14 @@ const courses = ref([]);
 const favList = ref<number[]>([1]);
 const haveCourses = ref<boolean>(false);
 
-getCourses().then(({ records }: any) => {
-  courses.value = records;
+getCourses().then(({ data }) => {
+  courses.value = data.records;
   haveCourses.value = true;
 });
 </script>
 
 <template>
-  <navigation />
+  <Header />
 
   <recommend />
 
@@ -104,4 +98,17 @@ getCourses().then(({ records }: any) => {
   <bottom />
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.main-grid {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+  .main-grid {
+    display: grid;
+    gap: var(--gap);
+    grid-template-columns: minmax(0, 1fr) 320px;
+  }
+}
+</style>

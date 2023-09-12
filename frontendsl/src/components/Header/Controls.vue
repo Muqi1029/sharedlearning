@@ -1,50 +1,38 @@
-<template>
-  <div class="header-controls absolute right-4 flex flex-row top-7" tabindex="0">
-  
-      <!-- search-icon -->
-      <span class="hover:opacity-50" data-dia="search" @click="handleOpenModel">
-        <svg-icon icon-class="search"></svg-icon>
-      </span>
-
-      <template></template>
-
-      <span>
-        <div class="text-xl text-center hover:opacity-50" @click="handleLogout">LOGOUT</div>
-      </span>
-  </div>
-</template>
-<script lang="ts">
+<script lang="ts" setup>
 import { useRouter } from "vue-router";
-import { defineComponent } from "vue";
 import { removeToken } from "@/utils/auth";
-import { useSearchStore } from "@/stores/search";
 
-export default defineComponent({
-  components: {},
+const router = useRouter();
 
-  setup(props, context) {
+const handleLogout = () => {
+  removeToken();
+  router.push({
+    path: "/login",
+  });
+};
 
-    const router = useRouter()
-    const searchStore = useSearchStore()
-
-    const handleOpenModel:any = (status: boolean) => {
-      searchStore.setOpenModel(status)
-    }
-
-    const handleLogout = () => {
-      removeToken()
-
-      router.push({
-        path: '/login'
-      })
-    }
-    return {
-      handleLogout,
-      handleOpenModel
-    };
-  },
-});
+const showClick = () => {
+  alert("亲，我暂时还不支持搜索功能噢");
+};
 </script>
+
+<template>
+  <span
+    class="header-controls absolute right-4 flex flex-row top-7"
+    tabindex="0"
+  >
+    <!-- search-icon -->
+    <span class="hover:opacity-50 mr-1" @click="showClick">
+      <svg-icon icon-class="search"></svg-icon>
+    </span>
+    <span>
+      <span class="text-xl text-center hover:opacity-50" @click="handleLogout">
+        LOGOUT
+      </span>
+    </span>
+  </span>
+</template>
+
 <style lang="scss" scoped>
 .header-controls {
   span {
@@ -61,8 +49,6 @@ export default defineComponent({
     stroke: #fff;
     height: 2rem;
     width: 2rem;
-    margin-right: 0.5rem;
-    pointer-events: none;
   }
 }
 </style>

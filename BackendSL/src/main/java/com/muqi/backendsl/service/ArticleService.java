@@ -19,7 +19,7 @@ public interface ArticleService extends IService<Article> {
 
 
 
-    void saveOrUpdateArticle(ArticleVO articleVO, Integer userID);
+    boolean saveOrUpdateArticle(ArticleVO articleVO);
 
 
     /**
@@ -35,9 +35,6 @@ public interface ArticleService extends IService<Article> {
     List<Article> getPendingArticles();
 
 
-
-
-
-
+    boolean changeArticleStatus(Integer articleId, Integer articleStatus);
 }
 

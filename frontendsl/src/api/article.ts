@@ -1,4 +1,5 @@
 import request from "@/utils/request";
+import { ArticleVO } from "@/types/types";
 
 export function getArticleById(id: number) {
   return request({
@@ -19,5 +20,26 @@ export function getPendingArticle(userAuthority: number) {
     url: "article/admin/articles",
     method: "post",
     data: { userAuthority },
+  });
+}
+
+export function saveArticle(articleVO: ArticleVO) {
+  return request({
+    url: "article/import-article",
+    method: "post",
+    data: {
+      ...articleVO,
+    },
+  });
+}
+
+export function changeArticleStatus(articleId: number, articleStatus: number) {
+  return request({
+    url: "article/changeStatus",
+    method: "post",
+    data: {
+      articleId,
+      articleStatus,
+    },
   });
 }

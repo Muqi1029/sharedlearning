@@ -1,21 +1,7 @@
 import { createApp } from "vue";
-
-/**
- * Entry file
- */
-
 import v3ImgPreview from "v3-img-preview";
-
-/**
- * import root component
- */
 import App from "./App.vue";
-
-/**
- * import icons
- */
 import { registerSvgIcon } from "@/icons";
-import { registerObSkeleton } from "@/components/LoadingSkeleton";
 
 /**
  * import components, plugins from element-plus
@@ -35,7 +21,7 @@ pinia.use(piniaPluginPersistedstate);
  * import router we define
  */
 import router from "./router";
-import "@/router/guard";
+// import "@/router/guard";
 
 // import style --------------------------------------------------------
 
@@ -82,13 +68,9 @@ export const app = createApp(App)
   .use(VueClickAwayPlugin)
   .use(v3ImgPreview);
 
-/**
- * globally register component from element-ui-plus
- */
 components.forEach((component) => {
   app.component(component.name, component);
 });
-
 registerSvgIcon(app);
 
 app.mount("#app");

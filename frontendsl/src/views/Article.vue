@@ -1,3 +1,98 @@
+<script setup lang="ts">
+import { onUnmounted, ref, nextTick } from "vue";
+import { useRoute } from "vue-router";
+import { v3ImgPreviewFn } from "v3-img-preview";
+import { deleteHTMLTag } from "@/utils/html";
+import tocbot from "tocbot";
+import Prism from "prismjs";
+import { toPageTop } from "@/utils/html";
+import { getArticleById } from "@/api/article";
+import markdownToHtml from "@/utils/markdown";
+
+import ArticleHeader from "@/components/Header/ArticleHeader.vue";
+import Sticky from "@/components/Sticky.vue";
+import Comment from "@/components/Comment/Comment.vue";
+import Sidebar from "@/components/Sidebar/Sidebar.vue";
+
+const route = useRoute();
+const loading = ref(true);
+const articleRef = ref();
+const comments = ref<Array<any>>([]);
+const images = ref([]);
+
+const handlePreview = (index: number) => {
+  v3ImgPreviewFn({
+    images: images.value,
+    index: images.value.indexOf(index),
+  });
+};
+
+/**
+ * 文章目录渲染
+ */
+const initTocbot = () => {
+  let nodes = articleRef.value.children;
+  if (nodes.length) {
+    for (let i = 0; i < nodes.length; i++) {
+      let node = nodes[i];
+      let reg = /^H[1-4]{1}$/;
+      if (reg.exec(node.tagName)) {
+        node.id = i;
+      }
+    }
+  }
+  tocbot.init({
+    tocSelector: "#toc1",
+    contentSelector: ".post-html",
+    headingSelector: "h1, h2, h3",
+    onClick: function (e) {
+      e.preventDefault();
+    },
+  });
+
+  // get all img to get all picture preview
+  const imgs = articleRef.value.getElementsByTagName("img");
+  let i;
+  for (i = 0; i < imgs.length; i++) {
+    images.value.push(imgs[i].src);
+    imgs[i].addEventListener("click", function (e: any) {
+      handlePreview(e.target.currentSrc);
+    });
+  }
+};
+
+const article = ref();
+const articleId = ref();
+const wordNum = ref();
+const readTime = ref();
+
+articleId.value = route.params.articleId;
+getArticleById(articleId.value).then(
+  ({ data }) => {
+    console.log(data);
+    data.articleContent = markdownToHtml(data.articleContent);
+    article.value = data;
+    wordNum.value =
+      Math.round(deleteHTMLTag(data.articleContent).length / 100) / 10 + "k";
+    readTime.value =
+      Math.round(deleteHTMLTag(data.articleContent).length / 400) + "mins";
+    loading.value = false;
+    nextTick(() => {
+      Prism.highlightAll();
+      initTocbot(); /** 生成目录 */
+    });
+  },
+  (reason) => {
+    console.log("fail to get article, reason is ", reason);
+  }
+);
+toPageTop();
+
+onUnmounted(() => {
+  article.value = "";
+});
+</script>
+
 <template>
   <div class="article-content-container flex flex-col">
     <!-- articleHeader -->
@@ -6,7 +101,7 @@
       :loading="loading"
       :readTime="readTime"
       :wordNum="wordNum"
-    ></ArticleHeader>
+    />
 
     <hr />
     <!-- show the content of article -->
@@ -20,256 +115,34 @@
             v-html="article.articleContent"
           />
         </template>
+      </div>
 
-        <!-- if there is not article content, show skeleton -->
-        <div
-          v-else
-          class="bg-ob-deep-800 px-14 py-16 rounded-2xl shadow-xl block min-h-screen"
+      <sidebar>
+        <Sticky
+          :stickyTop="32"
+          endingElId="footer"
+          dynamicElClass="#sticky-sidebar"
         >
-          <ob-skeleton
-            tag="div"
-            :count="1"
-            height="36px"
-            width="150px"
-            class="mb-6"
-          />
-          <br />
-          <ob-skeleton
-            tag="div"
-            :count="35"
-            height="16px"
-            width="100px"
-            class="mr-2"
-          />
-          <br />
-          <br />
-          <ob-skeleton
-            tag="div"
-            :count="25"
-            height="16px"
-            width="100px"
-            class="mr-2"
-          />
-        </div>
-
-        <!-- //TODO:pre and next article card -->
-        <!-- <div
-          class="flex flex-col lg:flex-row justify-start items-end my-8 my-gap"
-        >
-          <div
-            class="w-full h-full self-stretch mr-0 lg:mr-4"
-            v-if="preArticleCard"
-          >
-            <SubTitle title="settings.paginator.pre" icon="arrow-left-circle" />
-            <ArticleCard class="pre-and-next-article" :data="preArticleCard" />
+          <div id="sticky-sidebar">
+            <transition name="fade-slide-y" mode="out-in">
+              <div class="sidebar-box mb-4">
+                <!--                <SubTitle :title="'titles.toc'" icon="toc" />-->
+                <div id="toc1"></div>
+              </div>
+            </transition>
           </div>
-          <div class="w-full h-full self-stretch mt-0" v-if="nextArticleCard">
-            <SubTitle
-              title="settings.paginator.next"
-              :side="!isMobile ? 'right' : 'left'"
-              icon="arrow-right-circle"
-            />
-            <ArticleCard class="pre-and-next-article" :data="nextArticleCard" />
-          </div>
-        </div>
-        <Comment /> -->
+        </Sticky>
+      </sidebar>
 
-        <!-- show sidebar, profile,  -->
-      </div>
-      <div>
-        <sidebar>
-          <Sticky
-            :stickyTop="32"
-            endingElId="footer"
-            dynamicElClass="#sticky-sidebar"
-          >
-            <div id="sticky-sidebar">
-              <transition name="fade-slide-y" mode="out-in">
-                <div class="sidebar-box mb-4">
-                  <SubTitle :title="'titles.toc'" icon="toc" />
-                  <div id="toc1"></div>
-                </div>
-              </transition>
-              <!--              <Navigator />-->
-            </div>
-          </Sticky>
-        </sidebar>
-      </div>
-
-      <div>
-        <Comment></Comment>
-      </div>
+      <Comment />
     </div>
   </div>
 </template>
-<script lang="ts">
-import {
-  defineComponent,
-  reactive,
-  onMounted,
-  onUnmounted,
-  toRefs,
-  ref,
-  nextTick,
-  provide,
-} from "vue";
-import { useRoute } from "vue-router";
-import { v3ImgPreviewFn } from "v3-img-preview";
-import ArticleHeader from "@/components/Header/ArticleHeader.vue";
-import { useArticleStore } from "@/stores/article";
-import { useCommentStore } from "@/stores/comment";
-import { deleteHTMLTag } from "@/utils/html";
-import Sticky from "@/components/Sticky.vue";
-import tocbot from "tocbot";
-import subTitle from "@/components/Title/SubTitle.vue";
-import Prism from "prismjs";
-import Comment from "@/components/Comment/Comment.vue";
-import Sidebar from "@/components/Sidebar/Sidebar.vue";
-import { toPageTop } from "@/utils/html";
 
-export default defineComponent({
-  name: "Article",
-  components: {
-    Sidebar,
-    Comment,
-    ArticleHeader,
-    Sticky,
-    subTitle,
-  },
-  setup() {
-    const route = useRoute();
-
-    const loading = ref(true);
-    const articleRef = ref();
-
-    const articleStore = useArticleStore();
-
-    const reactiveData = reactive({
-      articleId: "" as any,
-      article: "" as any,
-      wordNum: "" as any,
-      readTime: "" as any,
-      // comments: [] as any,
-      images: [] as any,
-      preArticleCard: "" as any,
-      nextArticleCard: "" as any,
-      haveMore: false as any,
-      isReload: false as any,
-    });
-
-    const comments = ref<any>([]);
-
-    /**
-     * 页面信息
-     */
-    const pageInfo = reactive({
-      current: 1,
-      size: 7,
-    });
-
-    /**
-     * 图片预览
-     * @param index
-     */
-    const handlePreview = (index: any) => {
-      v3ImgPreviewFn({
-        images: reactiveData.images,
-        index: reactiveData.images.indexOf(index),
-      });
-    };
-
-    /**
-     * 文章目录渲染
-     */
-    const initTocbot = () => {
-      let nodes = articleRef.value.children;
-      if (nodes.length) {
-        for (let i = 0; i < nodes.length; i++) {
-          let node = nodes[i];
-          let reg = /^H[1-4]{1}$/;
-          if (reg.exec(node.tagName)) {
-            node.id = i;
-          }
-        }
-      }
-      // console.log(nodes);
-
-      tocbot.init({
-        tocSelector: "#toc1",
-        contentSelector: ".post-html",
-        headingSelector: "h1, h2, h3",
-        onClick: function (e) {
-          e.preventDefault();
-        },
-      });
-
-      /**
-       * get all img to get all picture preview
-       */
-      const imgs = articleRef.value.getElementsByTagName("img");
-      let i;
-      for (i = 0; i < imgs.length; i++) {
-        reactiveData.images.push(imgs[i].src);
-        imgs[i].addEventListener("click", function (e: any) {
-          handlePreview(e.target.currentSrc);
-        });
-      }
-    };
-    provide("articleId", route.params.articleId);
-
-    onMounted(() => {
-      reactiveData.articleId = route.params.articleId;
-      
-      /**
-       * 根据路由的文章id信息获取文章
-       */
-      articleStore.getArticleById(reactiveData.articleId).then(
-        (article: any) => {
-          reactiveData.article = article;
-          reactiveData.wordNum =
-            Math.round(deleteHTMLTag(article.articleContent).length / 100) /
-              10 +
-            "k";
-          reactiveData.readTime =
-            Math.round(deleteHTMLTag(article.articleContent).length / 400) +
-            "mins";
-          loading.value = false;
-          nextTick(() => {
-            Prism.highlightAll();
-            initTocbot(); /** 生成目录 */
-          });
-          console.log("article:", reactiveData.article);
-        },
-        (reason) => {
-          console.log("fail to get article, reason is ", reason);
-        }
-      );
-
-      toPageTop();
-
-    });
-
-    onUnmounted(() => {
-      reactiveData.article = "";
-    });
-
-    return {
-      loading,
-      ...toRefs(reactiveData),
-      articleRef,
-      comments,
-    };
-  },
-});
-</script>
 <style lang="scss" scoped>
 .post-html {
   word-wrap: break-word;
   word-break: break-all;
-}
-
-.article-content-container {
-  //background: url("@/assets/login.jpg") top center no-repeat;
 }
 
 .banner-img {

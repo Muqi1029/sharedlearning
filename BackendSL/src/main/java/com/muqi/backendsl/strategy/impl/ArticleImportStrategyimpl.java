@@ -1,15 +1,15 @@
 package com.muqi.backendsl.strategy.impl;
 
+import cn.hutool.core.exceptions.ExceptionUtil;
+import cn.hutool.core.util.StrUtil;
+import com.muqi.backendsl.exception.BizException;
+import com.muqi.backendsl.model.vo.ArticleVO;
 import com.muqi.backendsl.service.ArticleService;
 import com.muqi.backendsl.strategy.ArticleImportStrategy;
 import lombok.extern.slf4j.Slf4j;
-import com.muqi.backendsl.exception.BizException;
-import com.muqi.backendsl.model.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import cn.hutool.core.exceptions.ExceptionUtil;
-import cn.hutool.core.util.StrUtil;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,6 +23,7 @@ import java.util.Objects;
 public class ArticleImportStrategyimpl implements ArticleImportStrategy {
     @Autowired
     private ArticleService articleService;
+
     @Override
     public void importArticles(MultipartFile file, Integer userID) {
         String articleTitle = Objects.requireNonNull(file.getOriginalFilename()).split("\\.")[0];
@@ -37,12 +38,11 @@ public class ArticleImportStrategyimpl implements ArticleImportStrategy {
         }
 
 
-
         ArticleVO articleVO = ArticleVO.builder()
                 .articleTitle(articleTitle)
                 .articleContent(articleContent.toString())
                 .build();
 
-        articleService.saveOrUpdateArticle(articleVO, userID);
+        articleService.saveOrUpdateArticle(articleVO);
     }
 }
