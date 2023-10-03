@@ -14,7 +14,6 @@ import com.muqi.backendsl.utils.BeanCopyUtil;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -40,7 +39,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
 
     @Override
     public ArticleDTO getArticleById(Long articleId) {
-
         return articleMapper.getArticleById(articleId);
     }
 

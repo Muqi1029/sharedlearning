@@ -6,34 +6,32 @@ DROP TABLE IF EXISTS `t_user`;
 -- --------------------------
 -- table structure for t_user
 -- ---------------------------
+
 CREATE TABLE t_user
 (
-    id            bigint auto_increment comment '用户ID'
+    id            int auto_increment comment '用户ID'
         primary key,
     userName      varchar(256)                       null comment '用户昵称',
-    loginAccount  varchar(256)                       not null comment '登录账号',
+    loginAccount  varchar(256)                       null comment '登录账号',
     loginPassword varchar(32)                        not null comment '登录密码',
     avatarURL     varchar(1024)                      null comment '用户头像',
     gender        tinyint                            null comment '0: male 1: female',
     userAuthority tinyint  default 0                 null comment '0：普通用户 1：管理员 2：root',
-    userStatus    tinyint  default 1                 not null comment '用户是否有效 0：无效 1：有效',
     isDelete      tinyint  default 0                 null comment '0：未删除 1：删除',
     userEmail     varchar(512)                       null comment '用户邮箱',
     createTime    datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     updateTime    datetime default CURRENT_TIMESTAMP not null comment '更新时间',
-    isSubscribe   tinyint  default 0                 null,
     intro         varchar(255)                       null,
     userPhone     varchar(30)                        null
-)
-    COMMENT '用户类' engine = InnoDB;
+) COMMENT '用户类' engine = InnoDB;
 
 -- --------------------
 -- Records of t_user
 -- --------------------
 
-INSERT INTO t_user (userName, loginAccount, loginPassword)
-VALUES ('test', 123456789, 123456789);
-
+INSERT INTO t_user (userName, loginAccount, loginPassword, avatarURL, userAuthority)
+VALUES ('test', '123456789', '0bc415306d4250a869dfa71a5ae86179', 'http://localhost:8000/api/image/userAvatar/test.jpg', 0)
+     , ('admin', '12345678', '2b772da1e8dc19e0d05948dc3e4dfa5c', 'http://localhost:8000/api/image/daselogo.png', 1);
 
 -- -------------------------------
 -- table structure for t_course
@@ -74,28 +72,28 @@ create table t_article
 (
     id             bigint auto_increment
         primary key,
-    userID         bigint                               not null comment '文章作者',
-    articleCover   varchar(1024)                        null comment '文章缩略图',
-    articleTitle   varchar(50) default '文章标题'                         not null comment '标题',
-    articleContent longtext                            not null comment '文章内容',
-    isTop          tinyint(1) default 0                 not null comment '0 - 不置顶
+    userID         bigint                                not null comment '文章作者',
+    articleCover   varchar(1024)                         null comment '文章缩略图',
+    articleTitle   varchar(50) default '文章标题'        not null comment '标题',
+    articleContent longtext                              not null comment '文章内容',
+    isTop          tinyint(1)  default 0                 not null comment '0 - 不置顶
 1 - 置顶',
-    isDelete       tinyint    default 0                 not null comment '0 - 未删除
+    isDelete       tinyint     default 0                 not null comment '0 - 未删除
 1 - 已删除',
-    articleStatus  tinyint    default 0                 null comment '0 - 公开
+    articleStatus  tinyint     default 0                 null comment '0 - 公开
 1 - 私密
 2 - 草稿',
-    articleType    tinyint    default 0                 not null comment '0 - 原创
+    articleType    tinyint     default 0                 not null comment '0 - 原创
 1 - 转载
 2 - 翻译',
-    originalURL    varchar(255)                         null comment '原文链接',
-    createTime     datetime   default CURRENT_TIMESTAMP not null comment '发表时间',
-    updateTime     datetime   default CURRENT_TIMESTAMP not null comment '更新时间',
-    courseID       bigint                               not null comment '0 独立文章 >= 1 课程文章',
-    rewardCount    int        default 0                 not null comment '打赏数',
-    thumbUpCount   int        default 0                 not null comment '点赞数',
-    commentCount   int        default 0                 not null comment '评论数',
-    viewCount      int        default 0                 not null comment '观看数'
+    originalURL    varchar(255)                          null comment '原文链接',
+    createTime     datetime    default CURRENT_TIMESTAMP not null comment '发表时间',
+    updateTime     datetime    default CURRENT_TIMESTAMP not null comment '更新时间',
+    courseID       bigint                                not null comment '0 独立文章 >= 1 课程文章',
+    rewardCount    int         default 0                 not null comment '打赏数',
+    thumbUpCount   int         default 0                 not null comment '点赞数',
+    commentCount   int         default 0                 not null comment '评论数',
+    viewCount      int         default 0                 not null comment '观看数'
 );
 
 

@@ -9,7 +9,6 @@ import com.muqi.backendsl.service.UserCourseService;
 import com.muqi.backendsl.service.UserService;
 import com.muqi.backendsl.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -18,13 +17,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.muqi.backendsl.constant.UserConstant.ADMIN_ROLE;
-import static com.muqi.backendsl.constant.UserConstant.USER_LOGIN_STATE;
+import static com.muqi.backendsl.constant.UserConstant.*;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @Autowired
+    @Resource
     private UserService userService;
 
     @Resource
@@ -60,7 +58,7 @@ public class UserController {
             userAuthority = user.getUserAuthority();
         }
 
-        if (userAuthority == 0) {
+        if (userAuthority == DEFAULT_ROLE) {
             return ResultVO.ok(user, "user");
         }
         return ResultVO.ok(user, "admin");
@@ -76,7 +74,7 @@ public class UserController {
             queryWrapper.like("loginName", loginName);
         }
         List<User> userList = userService.list(queryWrapper);
-        return userList.stream().map(user -> UserUtil.getSafeUser(user)).collect(Collectors.toList());
+        return userList.stream().map(UserUtil::getSafeUser).collect(Collectors.toList());
     }
 
     @PostMapping("/delete")

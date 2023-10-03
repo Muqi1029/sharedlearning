@@ -1,17 +1,12 @@
 package com.muqi.backendsl.service;
-
 import com.muqi.backendsl.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
-
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
 * @author muqi
 * @description 针对表【user】的数据库操作Service
 * @createDate 2022-11-27 11:08:11
- *
- * 继承了IService
 */
 public interface UserService extends IService<User> {
 

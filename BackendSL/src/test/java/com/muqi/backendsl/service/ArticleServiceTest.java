@@ -50,7 +50,6 @@ public class ArticleServiceTest {
     public void importArticle() {
         ArticleVO article = new ArticleVO(1122256122L, 111633444L, 111666777L,"weq","wdwd","qas",2,0,"wer",1);
 
-        articleService.saveOrUpdateArticle(article,122345);
         System.out.println(article.getArticleStatus());
     }
 
@@ -58,7 +57,6 @@ public class ArticleServiceTest {
     public void changeArticleStatus() {
         ArticleVO article = new ArticleVO(1122256122L, 111633444L, 111666777L,"weq","wdwd","qas",2,0,"wer",2);
 
-        articleService.saveOrUpdateArticle(article,122345);
         System.out.println(article.getArticleStatus());
 
     }

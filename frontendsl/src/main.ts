@@ -21,7 +21,7 @@ pinia.use(piniaPluginPersistedstate);
  * import router we define
  */
 import router from "./router";
-// import "@/router/guard";
+import "@/router/guard";
 
 // import style --------------------------------------------------------
 

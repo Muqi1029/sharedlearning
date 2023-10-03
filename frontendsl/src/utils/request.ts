@@ -58,7 +58,7 @@ service.interceptors.response.use(
         break;
     }
     if (response.data.flag) {
-      return response.data;
+      return response.data; // data property is the ResultVO Object
     }
   },
 

@@ -55,11 +55,6 @@ public class User implements Serializable {
     private Integer userAuthority;
 
     /**
-     * 用户是否有效 0：无效 1：有效
-     */
-    private Integer userStatus;
-
-    /**
      * 0：未删除 1：删除
      */
     @TableLogic     // 逻辑删除
@@ -79,14 +74,6 @@ public class User implements Serializable {
      * 更新时间
      */
     private Date updateTime;
-
-    /**
-     * 是否订阅
-     */
-    private Integer isSubscribe;
-
-
-
 
     @TableField(exist = false) // 指定属性对应的字段名
     private static final long serialVersionUID = 1L;

@@ -3,13 +3,20 @@ import { defineProps, ref } from "vue";
 import { defaultImg } from "@/constant/app";
 import { useRouter } from "vue-router";
 import Favorites from "@/components/Favorites/Favorites.vue";
+import { defineEmits } from "@vue/runtime-core";
 
 const props = defineProps({
   data: {
     type: Object,
     required: true,
   },
+  fav: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
+const emits = defineEmits(["courseID"]);
 const router = useRouter();
 const toCourse = () => {
   router.push({
@@ -17,10 +24,11 @@ const toCourse = () => {
   });
 };
 
+const val = ref<boolean>(props.fav);
 const changeFav = (arg: boolean) => {
   val.value = arg;
+  emits("courseID", props.data.id, arg);
 };
-const val = ref<boolean>(false);
 </script>
 
 <template>

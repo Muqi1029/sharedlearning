@@ -53,13 +53,13 @@ public class ArticleController {
 
 
     @PostMapping("/import-article")
-    public boolean importArticle(@RequestBody ArticleRequest articleRequest) {
+    public ResultVO<Boolean> importArticle(@RequestBody ArticleRequest articleRequest) {
         ArticleVO articleVO = new ArticleVO();
         articleVO.setArticleStatus(1);
         articleVO.setArticleContent(articleRequest.getArticleContent());
         articleVO.setCourseID(articleRequest.getCourseId());
         articleVO.setUserID(articleRequest.getUserId());
-        return articleService.saveOrUpdateArticle(articleVO);
+        return ResultVO.ok(articleService.saveOrUpdateArticle(articleVO));
     }
 
 

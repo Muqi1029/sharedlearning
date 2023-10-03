@@ -5,30 +5,36 @@ import { useUserStore } from "@/stores/user";
 
 const handlePass = (id: number) => {
   alert(`id为${id}的文章审核通过`);
-  changeArticleStatus(id, 2).then((res) => {
-    if (res.data) {
+  changeArticleStatus(id, 2).then(({ flag }) => {
+    if (flag) {
       alert("修改成功");
     } else {
       alert("修改失败");
     }
+    fun();
   });
 };
 const handleDelete = (id: number) => {
   alert(`id为${id}的文章被删除`);
   changeArticleStatus(id, 0);
+  fun();
 };
 
 let tableData = ref([]);
 
 const userStore = useUserStore();
-getPendingArticle(userStore.userAuthority).then(
-  (res) => {
-    tableData.value = res.data;
-  },
-  (err) => {
-    console.log(err);
-  }
-);
+
+const fun = () => {
+  getPendingArticle(userStore.userAuthority).then(
+    (res) => {
+      tableData.value = res.data;
+    },
+    (err) => {
+      console.log(err);
+    }
+  );
+};
+fun();
 </script>
 
 <template>

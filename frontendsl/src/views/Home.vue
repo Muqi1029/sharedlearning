@@ -4,38 +4,76 @@ import Recommend from "@/components/Recommend/Recommend.vue";
 import Title from "@/components/Title/Title.vue";
 import CourseCard from "@/components/CourseCard/CourseCard.vue";
 import Bottom from "@/components/Bottom.vue";
-import { reactive, ref } from "vue";
+import { reactive, ref, watch, watchEffect } from "vue";
 import { terms, languages } from "@/constant/app";
 import Sidebar from "@/components/Sidebar/Sidebar.vue";
 import Profile from "@/components/Sidebar/Profile.vue";
 import RecentReserve from "@/components/Sidebar/RecentReserve.vue";
-import { getCourses } from "@/api/course";
+import { readData, saveData } from "@/utils/localStorageUtil";
+import { useCourseStore } from "@/stores/course";
+import UpLoadLink from "@/components/UpLoadLink/UpLoadLink.vue";
 
 const term = ref<string>("");
 const language = ref<string>("");
+const courseStore = useCourseStore();
 
 const tabClass = reactive({
   tab: true,
   "expanded-tab": false,
 });
-const changeReserve = () => {
-  alert("改变收藏");
-};
 
 const courses = ref([]);
-const favList = ref<number[]>([1]);
 const haveCourses = ref<boolean>(false);
+const reservedCourses = ref([]);
+const favList = ref<number[]>([]);
+favList.value = readData();
 
-getCourses().then(({ data }) => {
-  courses.value = data.records;
+const changeReserve = (courseID: number, isReserve: boolean) => {
+  const index = favList.value.indexOf(courseID);
+  if (isReserve && index == -1) {
+    favList.value.push(courseID);
+  } else {
+    favList.value.splice(index, 1);
+  }
+  saveData(favList.value);
+};
+
+watch(
+  favList,
+  (newValue) => {
+    reservedCourses.value = courses.value.filter((ele: any) =>
+      newValue.includes(ele.id)
+    );
+  },
+  { immediate: true, deep: true }
+);
+
+courseStore.getCoursesAction().then(() => {
+  courses.value = courseStore.courses;
   haveCourses.value = true;
+  reservedCourses.value = courses.value.filter((ele: any) => {
+    return favList.value.includes(ele.id);
+  });
 });
+
+/* filter by term and programming language */
+watchEffect(() => {
+  // if courseStore have courses and term is not blank
+  if (haveCourses.value && term.value) {
+    courses.value = courseStore.getCourseByTerm(term.value);
+  } else if (haveCourses.value && !term.value) {
+    courses.value = courseStore.courses;
+  }
+});
+
+/* upload dialog */
+const isShowDialog = ref<boolean>(false);
 </script>
 
 <template>
   <Header />
 
-  <recommend />
+  <recommend @show-dialog="() => (isShowDialog = true)" />
 
   <Title :title="'Class Cards'" icon="article" />
   <div class="main-grid">
@@ -81,7 +119,7 @@ getCourses().then(({ data }) => {
             <CourseCard
               :data="course"
               @courseID="changeReserve"
-              :favList="favList"
+              :fav="favList.includes(course.id)"
             />
           </li>
         </template>
@@ -91,9 +129,16 @@ getCourses().then(({ data }) => {
     <!--   sidebar used to exhibit user info -->
     <sidebar>
       <profile />
-      <recent-reserve :have-courses="haveCourses" :fav-list="favList" />
+      <recent-reserve :courses="reservedCourses" />
     </sidebar>
   </div>
+
+  <teleport to="body">
+    <up-load-link
+      :dialog-visible="isShowDialog"
+      @change-visible="(args) => (isShowDialog = args)"
+    />
+  </teleport>
 
   <bottom />
 </template>
