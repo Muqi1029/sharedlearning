@@ -43,3 +43,10 @@ export function changeArticleStatus(articleId: number, articleStatus: number) {
     },
   });
 }
+
+export function getFeatureArticles() {
+  return request({
+    url: "article/features",
+    method: "get",
+  });
+}

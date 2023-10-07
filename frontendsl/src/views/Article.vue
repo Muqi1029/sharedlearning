@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onUnmounted, ref, nextTick } from "vue";
+import {onUnmounted, ref, nextTick, provide} from "vue";
 import { useRoute } from "vue-router";
 import { v3ImgPreviewFn } from "v3-img-preview";
 import { deleteHTMLTag } from "@/utils/html";
@@ -8,7 +8,6 @@ import Prism from "prismjs";
 import { toPageTop } from "@/utils/html";
 import { getArticleById } from "@/api/article";
 import markdownToHtml from "@/utils/markdown";
-
 import ArticleHeader from "@/components/Header/ArticleHeader.vue";
 import Sticky from "@/components/Sticky.vue";
 import Comment from "@/components/Comment/Comment.vue";
@@ -67,6 +66,7 @@ const wordNum = ref();
 const readTime = ref();
 
 articleId.value = route.params.articleId;
+provide("articleId", articleId.value);
 getArticleById(articleId.value).then(
   ({ data }) => {
     console.log(data);
@@ -143,15 +143,5 @@ onUnmounted(() => {
 .post-html {
   word-wrap: break-word;
   word-break: break-all;
-}
-
-.banner-img {
-  background: rgb(66, 96, 158);
-  background: linear-gradient(
-    90deg,
-    rgba(66, 96, 158, 1) 0%,
-    rgba(33, 114, 221, 1) 12%,
-    rgba(15, 122, 230, 1) 99%
-  );
 }
 </style>

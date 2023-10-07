@@ -33,7 +33,7 @@ const changeFav = (arg: boolean) => {
 
 <template>
   <div
-    class="course-card-container h-full rounded-2xl list-none border-blue-500 border-8 relative"
+    class="course-card-container h-full rounded-2xl list-none relative"
   >
     <!--   course cover -->
     <div

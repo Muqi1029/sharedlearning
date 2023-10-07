@@ -1,6 +1,6 @@
 <template>
   <div
-    class="linkcard overflow-hidden rounded-2xl my-1 mx-2 p-4 relative h-36 flex items-center"
+    class="linkcard overflow-hidden rounded-2xl my-4 p-4 relative h-36 flex items-center"
   >
     <div>
       <a :href="data.url" target="_blank">
@@ -10,14 +10,9 @@
       </a>
     </div>
   </div>
-  <!--  <div v-else>-->
-  <!--    &lt;!&ndash;    loading...&ndash;&gt;-->
-  <!--    <ob-skeleton></ob-skeleton>-->
-  <!--  </div>-->
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-
 
 export default defineComponent({
   name: "LinkCard",
@@ -44,11 +39,6 @@ export default defineComponent({
     //     console.error(error);
     //   }
     // }
-
-    // fetchData();
-
-    return {
-    };
   },
 });
 </script>
@@ -57,8 +47,9 @@ export default defineComponent({
 .linkcard {
   transition: transform 0.5s ease;
   transform-style: preserve-3d;
-  background: #f9fafa;
   opacity: 30;
+  box-shadow: 2px 2px 5px #888;
+
   &:hover {
     background: #e8f3ff;
   }

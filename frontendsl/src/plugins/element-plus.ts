@@ -26,6 +26,8 @@ import {
   ElTabPane,
   ElTable,
   ElTableColumn,
+  ElCarousel,
+  ElCarouselItem,
 } from "element-plus";
 
 export const components: any[] = [
@@ -52,25 +54,6 @@ export const components: any[] = [
   ElTabPane,
   ElTable,
   ElTableColumn,
-];
-
-export const plugins: any[] = [
-  ElNotification,
-  ElDrawer,
-  ElRow,
-  ElCol,
-  ElCard,
-  ElSpace,
-  ElAvatar,
-  ElImage,
-  ElUpload,
-  ElForm,
-  ElFormItem,
-  ElInput,
-  ElSwitch,
-  ElButton,
-  ElDialog,
-  ElCheckbox,
-  ElSelect,
-  ElOption,
+  ElCarousel,
+  ElCarouselItem,
 ];

@@ -55,29 +55,16 @@ const enterEditor = () => {
 <template>
   <Header />
   <div class="course-container">
-    <div
-      class="course-intro m-4 p-4 text-xl bg-purple-500 text-white text-opacity-90"
-    >
+    <div class="course-intro m-4 p-4 text-xl text-opacity-90">
       <h1 class="mx-auto mb-4">课程介绍</h1>
       {{ intro }}
     </div>
-    <hr class="h-16" />
+    <hr class="h-16 h-2.5" />
 
     <!--  编辑文章-->
-    <div class="flex justify-end">
-      <button class="w-1/6 h-16 border-8 border-blue-600" @click="enterEditor">
-        编辑文章
-      </button>
+    <div class="flex">
+      <button class="w-1/6 h-16" @click="enterEditor">编辑文章</button>
     </div>
-    <!--    <div>-->
-    <!--      <el-upload-->
-    <!--        action="http://localhost:8000/api/article/import/1"-->
-    <!--        method="post"-->
-    <!--        drag-->
-    <!--      >-->
-    <!--        <el-button type="primary">上传文章</el-button>-->
-    <!--      </el-upload>-->
-    <!--    </div>-->
 
     <!--  main_content  -->
     <div class="articlelist-grid mt-5 ml-4">
@@ -91,7 +78,7 @@ const enterEditor = () => {
       </ul>
 
       <!--   aside link    -->
-      <aside class="ml-10 border-l-4">
+      <aside class="ml-12 border-l-4">
         <div class="flex flex-col">
           <h1 class="text-center">课程相关资料</h1>
           <ul>
@@ -99,7 +86,7 @@ const enterEditor = () => {
               <link-card :data="link" />
             </li>
           </ul>
-          上传链接
+          <div class="text-center text-2xl p-5">上传链接</div>
         </div>
 
         <div class="flex flex-col">
@@ -113,17 +100,9 @@ const enterEditor = () => {
 
 <style scoped lang="scss">
 .course-intro {
-  border: 2px solid lightblue;
   box-shadow: 2px 2px 5px #888;
   border-radius: 10px;
   transition: all 0.3s ease;
-  background: rgb(158, 66, 155);
-  background: linear-gradient(
-    90deg,
-    rgba(158, 66, 155, 1) 0%,
-    rgba(116, 86, 182, 1) 24%,
-    rgba(0, 141, 255, 1) 90%
-  );
 }
 
 .articlelist-grid {

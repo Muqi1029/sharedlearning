@@ -1,27 +1,62 @@
 <script setup lang="ts">
-import RecommendLinkCard from "@/components/LinkCard/RecommendLinkCard.vue";
 import Title from "@/components/Title/Title.vue";
-import { defineEmits } from "vue";
+import { defineEmits, ref } from "vue";
+import { getFeatureArticles } from "@/api/article";
 
 const emits = defineEmits(["showDialog"]);
 
-const githubList = [];
-const articleList = [];
+const featuresItems = ref([]);
+
+getFeatureArticles().then(({ data }) => {
+  featuresItems.value = data;
+});
 </script>
 
 <template>
-  <div class="border-4 border-blue-600">
+  <div class="">
     <div class="flex justify-between">
       <Title title="Recommendation" icon="hot" />
       <el-button class="h-6 p-5" size="large" @click="emits('showDialog')"
-        >上传链接</el-button
-      >
-    </div>
-    <div class="flex">
-      <recommend-link-card title="Github" :data="githubList" />
-      <recommend-link-card title="文章 教程" :data="articleList" />
+        >上传链接
+      </el-button>
     </div>
   </div>
+
+  <el-carousel :interval="5000" type="card" height="350px">
+    <el-carousel-item v-for="item in featuresItems" :key="item">
+      <div
+        :style="{
+          background: 'url(' + item.articleCover + ')',
+          backgroundSize: 'cover',
+        }"
+        class=".feature-container"
+      >
+        <a :href="item.articleContent" target="_blank">
+          <h3>{{ item.articleTitle }}</h3>
+        </a>
+      </div>
+    </el-carousel-item>
+  </el-carousel>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.el-carousel__item h3 {
+  color: #475669;
+  opacity: 0.75;
+  line-height: 350px;
+  margin: 0;
+  text-align: center;
+}
+
+.el-carousel__item:nth-child(2n) {
+  background-color: #99a9bf;
+}
+
+.el-carousel__item:nth-child(2n + 1) {
+  background-color: #d3dce6;
+}
+
+.el-carousel__item {
+  border: 2px solid #f5c2c2;
+}
+</style>

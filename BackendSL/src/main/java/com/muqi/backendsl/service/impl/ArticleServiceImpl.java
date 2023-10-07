@@ -73,6 +73,13 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return articleMapper.updateById(article) == 1;
     }
 
+    @Override
+    public List<Article> listFeatureArticles() {
+        QueryWrapper<Article> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("isFeatured", 1);
+        return articleMapper.selectList(queryWrapper);
+    }
+
 }
 
 

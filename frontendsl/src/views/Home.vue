@@ -75,7 +75,10 @@ const isShowDialog = ref<boolean>(false);
 
   <recommend @show-dialog="() => (isShowDialog = true)" />
 
-  <Title :title="'Class Cards'" icon="article" />
+  <div class="flex">
+    <Title :title="'Class Cards'" icon="article" />
+  </div>
+
   <div class="main-grid">
     <div class="flex flex-col relative">
       <!--  tab column  -->

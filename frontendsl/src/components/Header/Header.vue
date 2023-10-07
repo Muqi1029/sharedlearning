@@ -5,17 +5,17 @@ import Controls from "./Controls.vue";
 </script>
 
 <template>
-  <header
-    class="relative flex z-50 mt-1 text-xs justify-between border-8 border-blue-500 mb-4"
-  >
-    <logo />
-    <navigation />
-    <controls />
-  </header>
+  <div class="header">
+    <header class="relative flex z-50 mt-3 text-xs justify-between mb-4 mx-16">
+      <logo />
+      <navigation />
+      <controls />
+    </header>
+  </div>
 </template>
 
 <style lang="scss" scoped>
-header {
-  background: linear-gradient(45deg, #9000ff, #5e00ff);
+.header {
+  background: linear-gradient(130deg, #24c6dc, #5433ff 41.07%, #ff0099 76.05%);
 }
 </style>

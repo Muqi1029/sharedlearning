@@ -36,5 +36,7 @@ public interface ArticleService extends IService<Article> {
 
 
     boolean changeArticleStatus(Integer articleId, Integer articleStatus);
+
+    List<Article> listFeatureArticles();
 }
 

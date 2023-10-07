@@ -16,9 +16,7 @@
       <div
         class="comment flex flex-col flex-wrap-reverse w-full max-w-full-calc"
       >
-        <div>
-          <tinymce-editor v-model:modelValue="commentContent"></tinymce-editor>
-        </div>
+        <tinymce-editor v-model:modelValue="commentContent" />
         <!-- 发表按钮 -->
         <div class="justify-between" style="text-align: right">
           <button
@@ -45,8 +43,6 @@
       v-show="comment.parentID === 0"
       :comment="comment"
     />
-    <!--      </li>-->
-    <!--    </ul>-->
   </div>
 </template>
 <script lang="ts">

@@ -1,35 +1,14 @@
 <template>
   <!-- the header of article -->
-  <div class="post-header mx-7 h-97 rounded-2xl banner-img p-5">
+  <div class="post-header mx-7 rounded-2xl bg-gray-300 p-5">
     <!-- show semester, category (?) -->
     <span class="post-labels">
-      <ob-skeleton
-        v-if="loading"
-        tag="b"
-        height="20px"
-        width="35px"
-      ></ob-skeleton>
-      <b v-else-if="!loading && article.category">
-        <span>{{ article.category }}</span>
-      </b>
-
+      <span>{{ article.category }}</span>
       <!-- labels: #计算机 -->
-      <ul>
-        <ob-skeleton
-          v-if="loading"
-          :count="2"
-          tag="li"
-          height="16px"
-          width="35px"
-          class="mr-2"
-        />
-        <template v-else>
-          <li>
-            <em class="opacity-50">#</em>
-            {{ article.term }}
-          </li>
-        </template>
-      </ul>
+      <span>
+        <em class="opacity-50">#</em>
+        {{ article.term }}
+      </span>
     </span>
 
     <!-- show title of article -->
@@ -37,19 +16,10 @@
       {{ article.articleTitle }}
     </h1>
 
-    <!-- if there is not title, show skeleton -->
-    <ob-skeleton
-      v-else
-      class="post-title text-white uppercase"
-      width="100%"
-      height="clamp(1.2rem, calc(1rem + 3.5vw), 4rem)"
-    />
-
-    <!-- // TODO show information of author, shared time -->
     <div class="flex flex-row items-center justify-start mt-8 mb-4">
       <!--    the info of author  -->
       <div class="post-footer" v-if="article.author">
-        <!-- avater -->
+        <!-- avatar -->
         <img
           class="hover:opacity-50 cursor-pointer"
           v-lazy="article.author.avatar"
@@ -93,6 +63,7 @@
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { IArticle } from "@/types/types";
 import { defineComponent, toRefs } from "vue";
@@ -129,13 +100,7 @@ export default defineComponent({
 });
 </script>
 <style lang="scss" scoped>
-.banner-img {
-  background: rgb(86, 239, 241);
-  background: linear-gradient(
-    90deg,
-    rgba(86, 239, 241, 1) 0%,
-    rgba(33, 190, 221, 1) 15%,
-    rgba(49, 15, 230, 1) 99%
-  );
+.post-header {
+  //background: rgba(0, 0, 0, 0.3);
 }
 </style>

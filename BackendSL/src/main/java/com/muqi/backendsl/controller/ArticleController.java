@@ -75,4 +75,9 @@ public class ArticleController {
         }
         return ResultVO.fail();
     }
+
+    @GetMapping("/features")
+    public ResultVO<List<Article>> getFeatureArticles() {
+        return ResultVO.ok(articleService.listFeatureArticles());
+    }
 }
