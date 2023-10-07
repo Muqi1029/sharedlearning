@@ -96,6 +96,10 @@ create table t_article
     viewCount      int         default 0                 not null comment '观看数'
 );
 
+INSERT INTO t_article (userID, articleCover, articleTitle, articleContent, isFeatured, courseID)
+VALUES (0, 'http://localhost:8000/api/image/courseCover/lackedu.png' ,'计算机教育中缺失的一课', 'https://missing-semester-cn.github.io/', 1, 0),
+       (0, 'http://localhost:8000/api/image/courseCover/crashcs.png','Crash Course Computer Science', 'https://www.bilibili.com/video/BV1EW411u7th/', 1, 0),
+       (0, 'http://localhost:8000/api/image/courseCover/csdiy.png','CS 学习规划', 'https://csdiy.wiki/CS%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/', 1, 0);
 
 -- ------------------------
 -- table structure for t_tag
