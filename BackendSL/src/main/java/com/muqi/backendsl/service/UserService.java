@@ -2,6 +2,7 @@ package com.muqi.backendsl.service;
 import com.muqi.backendsl.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
 * @author muqi
@@ -34,5 +35,8 @@ public interface UserService extends IService<User> {
 
     User getUserInfoByID(Integer userID);
 
+    List<User> getAllUsers();
+
+    boolean changeUser(int uId, int sId);
 }
 

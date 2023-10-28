@@ -15,6 +15,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static com.muqi.backendsl.constant.UserConstant.*;
@@ -57,7 +58,6 @@ public class UserController {
         } else {
             userAuthority = user.getUserAuthority();
         }
-
         if (userAuthority == DEFAULT_ROLE) {
             return ResultVO.ok(user, "user");
         }
@@ -119,5 +119,24 @@ public class UserController {
     @GetMapping("/info/{userID}")
     public ResultVO<?> getUserInfoByID(@PathVariable("userID") Integer userID) {
         return ResultVO.ok(userService.getUserInfoByID(userID));
+    }
+
+    @GetMapping("/all")
+    public ResultVO<?> getAllUsers() {
+        return ResultVO.ok(userService.getAllUsers());
+    }
+
+    @PostMapping("/change")
+    public ResultVO<?> changeUser(@RequestBody Map<String, Integer> requestBody) {
+        int uId = requestBody.getOrDefault("userID", 0);
+        int sId = requestBody.getOrDefault("status", -1);
+        if (uId == 0 || sId == -1) {
+            return ResultVO.fail();
+        }
+        if (userService.changeUser(uId, sId)) {
+            return ResultVO.ok();
+        }
+        return ResultVO.fail();
+
     }
 }

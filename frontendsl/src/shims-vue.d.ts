@@ -17,7 +17,3 @@ declare module "vue-avatar-cropper";
 declare module "js-cookie";
 
 declare module "marked";
-
-declare module "vee-validate";
-
-declare module "vee-validate/dist/rules";

@@ -35,3 +35,21 @@ export function getUserInfoByID(userID: number) {
     method: "get",
   });
 }
+
+export function getAllUsers() {
+  return request({
+    url: "/user/all",
+    method: "get",
+  });
+}
+
+export function changeUser(id: number, status: number) {
+  return request({
+    url: "/user/change",
+    method: "POST",
+    data: {
+      userID: id,
+      status,
+    },
+  });
+}

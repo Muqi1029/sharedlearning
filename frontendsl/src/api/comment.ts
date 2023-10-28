@@ -1,6 +1,5 @@
 import request from "@/utils/request";
 
-// TODO
 export function getComments(articleID: any) {
   return request({
     method: "get",

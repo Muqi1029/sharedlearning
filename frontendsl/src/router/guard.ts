@@ -31,8 +31,3 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 });
-
-// router.afterEach(() => {
-//   const appStore = useAppStore();
-//   appStore.endLoading();
-// });

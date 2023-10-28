@@ -1,5 +1,5 @@
-/**
- * encapsulate some validate function
+/*
+ *  * encapsulate some validate function
  */
 
 import axios from "axios";

@@ -1,6 +1,6 @@
 # frontendsl
-> This is a shared learning website which aims at help 
-> university students better self-learning while learning the class.
+> This is a shared learning website that aims at helping
+> university students better study by themselves while learning the class.
 
 ## Project setup
 ```

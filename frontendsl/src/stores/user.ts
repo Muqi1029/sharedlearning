@@ -25,7 +25,7 @@ export const useUserStore = defineStore("userStore", {
           .then((res) => {
             const { data } = res;
             if (data.id > 0) {
-              setToken(data.id); // 在浏览器中设置token
+              setToken(data.loginPassword); // 在浏览器中设置token
               this.avatarURL = data.avatarURL;
               this.name = data.userName;
               this.userID = data.id;

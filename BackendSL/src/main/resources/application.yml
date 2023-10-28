@@ -25,6 +25,7 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
       table-prefix: 't_'
 
+# configuration for server
 server:
   port: 8000
   servlet:

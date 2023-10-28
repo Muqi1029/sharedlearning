@@ -15,6 +15,7 @@ import org.springframework.util.DigestUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -144,6 +145,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         return UserUtil.getSafeUser(user);
     }
 
+    @Override
+    public List<User> getAllUsers() {
+        return userMapper.selectList(new QueryWrapper<>());
+    }
+
+    @Override
+    public boolean changeUser(int uId, int sId) {
+        return true;
+    }
 
 }
 
