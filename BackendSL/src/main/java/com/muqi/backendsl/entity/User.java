@@ -65,6 +65,9 @@ public class User implements Serializable {
      */
     private String userEmail;
 
+
+    private String token;
+
     /**
      * 创建时间
      */

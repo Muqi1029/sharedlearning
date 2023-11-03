@@ -1,5 +1,7 @@
 import { app } from "@/main";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
+import { getToken } from "@/utils/auth";
+import router from "@/router";
 
 // import { MessageBox, Message } from 'element-ui'
 // import store from '@/store'
@@ -13,31 +15,38 @@ const service = axios.create({
 });
 
 // request interceptor
-// service.interceptors.request.use(
-//   config => {
-//     // do something before request is sent
-
-//     if (store.getters.token) {
-//       // let each request carry token
-//       // ['X-Token'] is a custom headers key
-//       // please modify it according to the actual situation
-//       config.headers['X-Token'] = getToken() // 获取X-Token
-//     }
-//     return config
-//   },
-
-//   error => {
-//     // do something with request error
-//     console.log(error) // for debug
-//     return Promise.reject(error)
-//   }
-// )
+service.interceptors.request.use(
+  (config: AxiosRequestConfig) => {
+    // do something before request is sent
+    // let each request carry token
+    // ['X-Token'] is a custom headers key
+    // please modify it according to the actual situation
+    // let each request carry the token
+    // ['X-Token'] is a custom headers key
+    // please modify it according to the actual situation
+    if (!getToken()) {
+      router.push({
+        name: "login",
+      });
+    }
+    // @ts-ignore
+    config.headers["User-Token"] = getToken(); // Use the obtained token
+    console.log("request", config.headers);
+    return config;
+  },
+  (error) => {
+    // do something with request error
+    console.log(error); // for debug
+    return Promise.reject(error);
+  }
+);
 
 // response interceptor
 service.interceptors.response.use(
   (response) => {
+    console.log("response", response);
+
     // do something with response data
-    //
     switch (response.data.code) {
       case 50000:
         app.config.globalProperties.$notify({
@@ -47,6 +56,9 @@ service.interceptors.response.use(
         });
         break;
       case 40001:
+        router.push({
+          name: "login",
+        });
         app.config.globalProperties.$notify({
           title: "Error",
           message: "用户未登录",
@@ -60,7 +72,7 @@ service.interceptors.response.use(
   },
 
   (error) => {
-    console.log(error);
+    console.log("response error: ", error);
     return Promise.reject(error);
   }
 );

@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.muqi.backendsl.entity.User;
 import com.muqi.backendsl.mapper.UserMapper;
 import com.muqi.backendsl.service.UserService;
+import com.muqi.backendsl.utils.TokenUtil;
 import com.muqi.backendsl.utils.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -125,14 +126,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         if (user == null) {
             log.info("user not found");
             return null;
-            // TODO 修改为异常处理类
         }
 
+        String token = TokenUtil.generateToken(user.getUserName());
+        user.setToken(token);
         // 用户脱敏
         User safeUser = UserUtil.getSafeUser(user);
 
         // 记录用户登录态
-        request.getSession().setAttribute(USER_LOGIN_STATE, safeUser);
+        request.getSession().setAttribute(USER_LOGIN_STATE, token);
 
         return safeUser;
     }

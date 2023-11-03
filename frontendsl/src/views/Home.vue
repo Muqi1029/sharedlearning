@@ -73,7 +73,7 @@ const isShowDialog = ref<boolean>(false);
 <template>
   <Header />
 
-  <recommend @show-dialog="() => (isShowDialog = true)" />
+  <recommend />
 
   <div class="flex">
     <Title :title="'Class Cards'" icon="article" />

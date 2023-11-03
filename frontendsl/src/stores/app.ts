@@ -1,11 +1,5 @@
-/**
- * app.ts: store the theme of app
- */
-
 import { defineStore } from "pinia";
-// import { i18n } from '@/locales/index'
 import cookies from "js-cookie"; // cookie set
-
 import nProgress from "nprogress";
 import "nprogress/nprogress.css";
 
@@ -15,11 +9,6 @@ import "nprogress/nprogress.css";
 //   parent: '#loading-bar-wrapper'
 // })
 
-/**
- *
- * @param theme
- * this function is to switch the theme of app
- */
 const setTheme = (theme: string) => {
   if (theme === "theme-dark") {
     document.body.classList.remove("theme-light");
@@ -38,7 +27,6 @@ export const useAppStore = defineStore("appStore", {
   state: () => {
     return {
       themeConfig: {
-        // default theme-dark
         theme: cookies.get("theme")
           ? String(cookies.get("theme"))
           : "theme-dark",
@@ -66,7 +54,7 @@ export const useAppStore = defineStore("appStore", {
        * config logo, name in website
        */
       websiteConfig: {
-        logo: "http://localhost:8000/api/image/daselogo.png",
+        logo: "http://localhost:8000/api/static/image/daselogo.png",
         name: "分享学习",
         englishName: "sharedlearning",
         isCommentReview: false,
@@ -84,11 +72,6 @@ export const useAppStore = defineStore("appStore", {
   },
 
   actions: {
-    // changeLocale(locale: string) {
-    //   cookies.set('locale', locale, { expires: 7 })
-    //   i18n.global.locale = locale
-    // },
-
     initializeTheme(mode: string) {
       setTheme(mode);
     },

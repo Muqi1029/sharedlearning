@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import Title from "@/components/Title/Title.vue";
-import { defineEmits, ref } from "vue";
+import { ref } from "vue";
 import { getFeatureArticles } from "@/api/article";
-
-const emits = defineEmits(["showDialog"]);
+import UpLoadLink from "@/components/UpLoadLink/UpLoadLink.vue";
 
 const featuresItems = ref([]);
 
@@ -16,27 +15,24 @@ getFeatureArticles().then(({ data }) => {
   <div class="">
     <div class="flex justify-between">
       <Title title="Recommendation" icon="hot" />
-      <el-button class="h-6 p-5" size="large" @click="emits('showDialog')"
-        >上传链接
-      </el-button>
+      <UpLoadLink name="Your contribution here!!!" />
     </div>
-  </div>
 
-  <el-carousel :interval="5000" type="card" height="350px">
-    <el-carousel-item v-for="item in featuresItems" :key="item">
-      <div
-        :style="{
-          background: 'url(' + item.articleCover + ')',
-          backgroundSize: 'cover',
-        }"
-        class=".feature-container"
-      >
-        <a :href="item.articleContent" target="_blank">
-          <h3>{{ item.articleTitle }}</h3>
-        </a>
-      </div>
-    </el-carousel-item>
-  </el-carousel>
+    <el-carousel :interval="5000" type="card" height="300px">
+      <el-carousel-item v-for="item in featuresItems" :key="item">
+        <div
+          :style="{
+            background: 'url(' + item.articleCover + ')',
+            backgroundSize: 'cover',
+          }"
+        >
+          <a :href="item.articleContent" target="_blank">
+            <h3>{{ item.articleTitle }}</h3>
+          </a>
+        </div>
+      </el-carousel-item>
+    </el-carousel>
+  </div>
 </template>
 
 <style scoped lang="scss">

@@ -3,6 +3,8 @@ import { reactive, ref } from "vue";
 import { useUserStore } from "@/stores/user";
 import type { FormInstance, FormRules } from "element-plus";
 import { useRouter } from "vue-router";
+import { computed } from "@vue/reactivity";
+import { useAppStore } from "@/stores/app";
 
 const loginForm = reactive({
   userName: "",
@@ -66,16 +68,21 @@ const rememberPwd = (isChecked: boolean) => {
   }
 };
 const forgetPwd = () => {
-  alert("please to ask 10215501421 for help");
+  alert("please ask 10215501421 for help");
 };
+const appStore = useAppStore();
+const websiteConfig = computed(() => {
+  return appStore.websiteConfig;
+});
 </script>
 
 <template>
   <div class="h-screen flex justify-center items-center">
     <div class="flex justify-around items-center w-full">
       <img
-        src="http://localhost:8000/api/image/daselogo.png"
-        alt=""
+        :src="websiteConfig.logo"
+        alt="LOGO"
+        title="sharedlearning"
         class="w-1/8"
       />
 

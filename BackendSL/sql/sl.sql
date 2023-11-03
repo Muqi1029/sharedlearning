@@ -22,7 +22,8 @@ CREATE TABLE t_user
     createTime    datetime default CURRENT_TIMESTAMP not null comment '创建时间',
     updateTime    datetime default CURRENT_TIMESTAMP not null comment '更新时间',
     intro         varchar(255)                       null,
-    userPhone     varchar(30)                        null
+    userPhone     varchar(30)                        null,
+    token         varchar(100)                       null
 ) COMMENT '用户类' engine = InnoDB;
 
 -- --------------------
@@ -30,7 +31,8 @@ CREATE TABLE t_user
 -- --------------------
 
 INSERT INTO t_user (userName, loginAccount, loginPassword, avatarURL, userAuthority)
-VALUES ('test', '123456789', '0bc415306d4250a869dfa71a5ae86179', 'http://localhost:8000/api/image/userAvatar/test.jpg', 0)
+VALUES ('test', '123456789', '0bc415306d4250a869dfa71a5ae86179', 'http://localhost:8000/api/image/userAvatar/test.jpg',
+        0)
      , ('admin', '12345678', '2b772da1e8dc19e0d05948dc3e4dfa5c', 'http://localhost:8000/api/image/daselogo.png', 1);
 
 -- -------------------------------
@@ -95,11 +97,15 @@ create table t_article
     commentCount   int         default 0                 not null comment '评论数',
     viewCount      int         default 0                 not null comment '观看数'
 );
-
 INSERT INTO t_article (userID, articleCover, articleTitle, articleContent, isFeatured, courseID)
-VALUES (0, 'http://localhost:8000/api/image/courseCover/lackedu.png' ,'计算机教育中缺失的一课', 'https://missing-semester-cn.github.io/', 1, 0),
-       (0, 'http://localhost:8000/api/image/courseCover/crashcs.png','Crash Course Computer Science', 'https://www.bilibili.com/video/BV1EW411u7th/', 1, 0),
-       (0, 'http://localhost:8000/api/image/courseCover/csdiy.png','CS 学习规划', 'https://csdiy.wiki/CS%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/', 1, 0);
+VALUES (0, 'http://localhost:8000/api/image/courseCover/lackedu.png', '计算机教育中缺失的一课',
+        'https://missing-semester-cn.github.io/', 1, 0),
+       (0, 'http://localhost:8000/api/image/courseCover/crashcs.png', 'Crash Course Computer Science',
+        'https://www.bilibili.com/video/BV1EW411u7th/', 1, 0),
+       (0, 'http://localhost:8000/api/image/courseCover/csdiy.png', 'CS 学习规划',
+        'https://csdiy.wiki/CS%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/', 1, 0);
+
+
 
 -- ------------------------
 -- table structure for t_tag
@@ -126,22 +132,36 @@ create table t_tag
 -- -----------------
 -- table structure of t_link
 -- ------------------
-drop table if exists t_link;
-create table t_link
+DROP TABLE IF EXISTS t_link;
+CREATE TABLE t_link
 (
-    id       int auto_increment comment '主键id'
+    id          int auto_increment comment '主键id'
         primary key,
-    url      varchar(300) not null comment '链接url',
-    courseID int          null,
-    isOffice tinyint(1)   not null comment '是否公有',
-    userID   int          null comment '该链接属于哪个用户'
-) COMMENT '链接类';
+    url         varchar(300)      not null comment '链接url',
+    courseID    int               null,
+    isOffice    tinyint(1)        null comment '是否公有',
+    userID      int               null comment '该链接属于哪个用户',
+    name        varchar(200)      null comment '链接别名',
+    isRecommend tinyint default 0 not null comment '是否能被推荐',
+    source      tinyint default 1 not null comment '0:github 1:article ',
+    tagID       int               null comment '表名该条链接属于哪个tag',
+    cover       varchar(50)       null,
+    linkStatus  tinyint default 0
+);
 
-insert into `t_link` (url, courseID, isOffice, userID)
-values ('http://math.itdiffer.com/positive_definite.html', 1, 1, 12),
-       ('https://www.bilibili.com/video/BV1cD4y1D7uR/', 2, 1, 12),
-       ('https://www.bilibili.com/video/BV1iW411d7hd/', 2, 1, 12),
-       ('http://csapp.cs.cmu.edu/3e/labs.html', 2, 1, 12);
+
+INSERT INTO t_link(userID, cover, name, url, isRecommend, courseID, linkStatus)
+VALUES (0, 'http://localhost:8000/api/image/courseCover/lackedu.png', '计算机教育中缺失的一课',
+        'https://missing-semester-cn.github.io/', 1, 0, 1),
+       (0, 'http://localhost:8000/api/image/courseCover/crashcs.png', 'Crash Course Computer Science',
+        'https://www.bilibili.com/video/BV1EW411u7th/', 1, 0, 1),
+       (0, 'http://localhost:8000/api/image/courseCover/csdiy.png', 'CS 学习规划',
+        'https://csdiy.wiki/CS%E5%AD%A6%E4%B9%A0%E8%A7%84%E5%88%92/', 1, 0, 1);
+insert into `t_link` (url, courseID, isOffice, userID, linkStatus)
+values ('http://math.itdiffer.com/positive_definite.html', 1, 1, 12, 1),
+       ('https://www.bilibili.com/video/BV1cD4y1D7uR/', 2, 1, 12, 1),
+       ('https://www.bilibili.com/video/BV1iW411d7hd/', 2, 1, 12, 1),
+       ('http://csapp.cs.cmu.edu/3e/labs.html', 2, 1, 12, 1);
 
 
 

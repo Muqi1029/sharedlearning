@@ -17,6 +17,7 @@
             <result property="userEmail" column="userEmail" jdbcType="VARCHAR"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
+            <result property="token" column="token" jdbcType="VARCHAR"/>
     </resultMap>
 
     <sql id="Base_Column_List">
@@ -25,7 +26,7 @@
         loginPassword,userPhone,avatarURL,
         gender,userAuthority,
         isDelete,userEmail,createTime,
-        updateTime
+        updateTime, token
     </sql>
 
 </mapper>

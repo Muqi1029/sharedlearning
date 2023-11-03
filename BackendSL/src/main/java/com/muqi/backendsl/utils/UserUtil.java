@@ -1,9 +1,6 @@
 package com.muqi.backendsl.utils;
 
 import com.muqi.backendsl.entity.User;
-import com.muqi.backendsl.model.dto.UserDetailsDTO;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 // TODO:
 public class UserUtil {
@@ -19,6 +16,7 @@ public class UserUtil {
         safeUser.setUserPhone(originUser.getUserPhone());
         safeUser.setUserEmail(originUser.getUserEmail());
         safeUser.setUserAuthority(originUser.getUserAuthority());
+        safeUser.setToken(originUser.getToken());
         return safeUser;
     }
 }

@@ -23,7 +23,7 @@ const gradientBackground = computed(() => {
 </script>
 <template>
   <p
-    class="title uppercase relative opacity-9 flex items-center pt-12 pb-2 mb-8 text-3xl"
+    class="title uppercase relative opacity-9 flex items-center pb-1 mb-3 text-3xl"
   >
     <svg-icon :icon-class="icon" class="inline-block mr-2"></svg-icon>
     {{ title }}

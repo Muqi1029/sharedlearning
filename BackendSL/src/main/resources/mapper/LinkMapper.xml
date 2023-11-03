@@ -5,15 +5,24 @@
 <mapper namespace="com.muqi.backendsl.mapper.LinkMapper">
 
     <resultMap id="BaseResultMap" type="com.muqi.backendsl.entity.Link">
-            <id property="id" column="id" jdbcType="INTEGER"/>
-            <result property="url" column="url" jdbcType="VARCHAR"/>
-            <result property="courseID" column="courseID" jdbcType="INTEGER"/>
-            <result property="isOffice" column="isOffice" jdbcType="TINYINT"/>
-            <result property="userID" column="userID" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="INTEGER"/>
+        <result property="url" column="url" jdbcType="VARCHAR"/>
+        <result property="courseID" column="courseID" jdbcType="INTEGER"/>
+        <result property="isOffice" column="isOffice" jdbcType="TINYINT"/>
+        <result property="userID" column="userID" jdbcType="INTEGER"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="isRecommend" column="isRecommend" jdbcType="TINYINT"/>
+        <result property="source" column="source" jdbcType="TINYINT"/>
+        <result property="tagID" column="tagID" jdbcType="INTEGER"/>
+        <result property="cover" column="cover" jdbcType="VARCHAR"/>
+        <result property="linkStatus" column="linkStatus" jdbcType="TINYINT"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,url,courseID,
-        isOffice,userID
+        id
+        ,url,courseID,
+        isOffice,userID,name,
+        isRecommend,source,tagID,
+        cover,linkStatus
     </sql>
 </mapper>

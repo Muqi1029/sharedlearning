@@ -1,46 +1,40 @@
 <script lang="ts" setup>
-import { reactive, ref, defineEmits } from "vue";
+import { reactive, ref } from "vue";
+import { ElMessageBox, FormInstance, FormRules } from "element-plus";
 import { useUserStore } from "@/stores/user";
-import { FormInstance, FormRules } from "element-plus";
 import { useLinkStore } from "@/stores/link";
 
-// eslint-disable-next-line no-undef
 const props = defineProps({
-  dialogVisible: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
+  name: String,
 });
 
-const emits = defineEmits(["changeVisible"]);
-
-const userStore = useUserStore();
+const dialogVisible = ref<boolean>(false);
 const linkStore = useLinkStore();
-
+const userStore = useUserStore();
 // the form
 const uploadLinkForm = reactive({
   url: "",
   name: "",
   userID: userStore.userID,
+  add_info: "",
 });
 
 // the function used to submit form
-const submitUploadLinkForm = (formEl: FormInstance | undefined) => {
+const handleConfirm = (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   formEl.validate(async (valid) => {
     if (valid) {
       const data = await linkStore.importOfficialLink(uploadLinkForm);
-      if ((data as any).flag) {
+      if (!data) {
+        alert("操作失败");
+      } else if ((data as any).flag) {
         alert("操作成功");
         formEl.resetFields();
-        emits("changeVisible", false);
-      } else {
-        alert("操作失败");
       }
     } else {
       alert("错误的表单");
     }
+    dialogVisible.value = false;
   });
 };
 
@@ -49,58 +43,59 @@ const rules = reactive<FormRules>({
 });
 
 const uploadLinkFormRef = ref<FormInstance>();
+const handleClose = (done: () => void) => {
+  ElMessageBox.confirm("Are you sure to close this dialog?")
+    .then(() => {
+      done();
+    })
+    .catch(() => {
+      // catch error
+    });
+};
 </script>
 
 <template>
-  <div v-show="dialogVisible" class="mask">
-    <div class="dialog p-10 text-center w-1/3">
-      <h1>输入表单</h1>
-      <el-form
-        :model="uploadLinkForm"
-        ref="uploadLinkFormRef"
-        size="large"
-        :rules="rules"
-      >
-        <el-form-item label="url" required prop="url" label-width="50px">
-          <el-input
-            placeholder="请输入网站的url"
-            v-model="uploadLinkForm.url"
-          ></el-input>
-        </el-form-item>
+  <el-button @click="dialogVisible = true" style="padding: 20px; margin: 10px"
+    >{{ name }}
+  </el-button>
+  <el-dialog
+    v-model="dialogVisible"
+    title="输入表单"
+    width="30%"
+    :before-close="handleClose"
+  >
+    <el-form
+      :model="uploadLinkForm"
+      ref="uploadLinkFormRef"
+      size="large"
+      :rules="rules"
+    >
+      <el-form-item label="url" required prop="url" label-width="50px">
+        <el-input
+          placeholder="请输入网站的url"
+          v-model="uploadLinkForm.url"
+        ></el-input>
+      </el-form-item>
 
-        <el-form-item label="name" prop="name" label-width="50px">
-          <el-input
-            placeholder="请输入网站名称(optional)"
-            v-model="uploadLinkForm.name"
-          ></el-input>
-        </el-form-item>
-      </el-form>
+      <el-form-item label="name" prop="name" label-width="50px">
+        <el-input
+          placeholder="请输入网站名称(optional)"
+          v-model="uploadLinkForm.name"
+        ></el-input>
+      </el-form-item>
 
-      <el-button @click="emits('changeVisible', false)">Cancel</el-button>
-      <el-button @click="submitUploadLinkForm(uploadLinkFormRef)" type="primary"
-        >Confirm
-      </el-button>
-    </div>
-  </div>
+      <el-form-item label="additional information" prop="add_info">
+        <el-input v-model="uploadLinkForm.add_info" type="textarea" />
+      </el-form-item>
+    </el-form>
+
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">Cancel</el-button>
+        <el-button type="primary" @click="handleConfirm(uploadLinkFormRef)">
+          Confirm
+        </el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
-
-<style scoped lang="scss">
-.mask {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1000;
-}
-
-.dialog {
-  background: lightblue;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  top: 50%;
-  left: 50%;
-  z-index: 1000;
-}
-</style>

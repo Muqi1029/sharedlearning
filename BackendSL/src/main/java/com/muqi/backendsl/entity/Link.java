@@ -62,6 +62,10 @@ public class Link implements Serializable {
      */
     private Integer tagID;
 
+    private String cover;
+
+    private int linkStatus;
+
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 }

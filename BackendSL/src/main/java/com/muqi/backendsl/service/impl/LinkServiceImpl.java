@@ -1,27 +1,23 @@
 package com.muqi.backendsl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.muqi.backendsl.entity.Link;
+import com.muqi.backendsl.mapper.LinkMapper;
 import com.muqi.backendsl.mapper.UserCourseMapper;
 import com.muqi.backendsl.model.dto.LinkDTO;
 import com.muqi.backendsl.model.request.LinkRequest;
 import com.muqi.backendsl.model.vo.RecommendLinkVO;
 import com.muqi.backendsl.service.LinkService;
-import com.muqi.backendsl.mapper.LinkMapper;
 import com.muqi.backendsl.utils.UrlUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * @author mq
@@ -34,13 +30,11 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
         implements LinkService {
 
 
-
-    @Autowired
+    @Resource
     private LinkMapper linkMapper;
 
-    @Autowired
+    @Resource
     private UserCourseMapper userCourseMapper;
-
 
 
     @Override
@@ -72,7 +66,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
 
         String url = linkRequest.getUrl();
 
-        String name;
+        String name = linkRequest.getName();
         Integer courseID = linkRequest.getCourseID();
         Integer userID = linkRequest.getUserID();
         Integer source = linkRequest.getSource();
@@ -86,8 +80,10 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
             if (!UrlUtil.checkUrl(url)) {
                 return false;
             }
-            Document document = Jsoup.connect(url).get();
-            name = document.title();
+            if (name == null) {
+                Document document = Jsoup.connect(url).get();
+                name = document.title();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -102,12 +98,7 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
         link.setTagID(tagID);
         link.setIsRecommend(isRecommend);
 
-
-        boolean save = this.save(link);
-        if (save) {
-            return true;
-        }
-        return false;
+        return this.save(link);
     }
 
 }

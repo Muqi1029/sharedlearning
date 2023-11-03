@@ -28,6 +28,7 @@ import {
   ElTableColumn,
   ElCarousel,
   ElCarouselItem,
+  ElMessageBox,
 } from "element-plus";
 
 export const components: any[] = [
@@ -56,4 +57,5 @@ export const components: any[] = [
   ElTableColumn,
   ElCarousel,
   ElCarouselItem,
+  ElMessageBox,
 ];

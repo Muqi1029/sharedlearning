@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.muqi.backendsl.entity.User;
 import com.muqi.backendsl.mapper.UserMapper;
@@ -56,6 +57,18 @@ public class UserServiceTest {
     }
 
     @Test
+    public void userSearch() {
+        String loginAccount = "12345678";
+        String loginPassword = "12345678";
+        String encryptPassword = DigestUtils.md5DigestAsHex((SALT + loginPassword).getBytes(StandardCharsets.UTF_8));
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("loginAccount", loginAccount);
+        userQueryWrapper.eq("loginPassword", encryptPassword);
+        User user = userMapper.selectOne(userQueryWrapper);
+        assert user != null;
+    }
+
+    @Test
     void userRegister() {
         String loginAccount = "dase";
         String loginPassword = "";
@@ -94,12 +107,6 @@ public class UserServiceTest {
         Assertions.assertTrue(result > 0);
 
     }
-
-    @Test
-    public void testAutowired() {
-        System.out.println(userService);
-    }
-
 
     @Test
     public void testPage() {

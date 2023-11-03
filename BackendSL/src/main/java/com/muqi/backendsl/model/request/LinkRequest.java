@@ -42,5 +42,6 @@ public class LinkRequest implements Serializable {
 
     private Integer isRecommend;
 
+
     private static final long serialVersionUID = 1L;
 }

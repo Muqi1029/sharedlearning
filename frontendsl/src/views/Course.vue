@@ -7,6 +7,7 @@ import { getArticleByCourseId } from "@/api/article";
 import { getCourseIntroById } from "@/api/course";
 import { getLinkByCourseID } from "@/api/link";
 import Header from "@/components/Header/Header.vue";
+import UpLoadLink from "@/components/UpLoadLink/UpLoadLink.vue";
 
 const route = useRoute();
 const router = useRouter();
@@ -86,7 +87,7 @@ const enterEditor = () => {
               <link-card :data="link" />
             </li>
           </ul>
-          <div class="text-center text-2xl p-5">上传链接</div>
+          <UpLoadLink name="上传链接" />
         </div>
 
         <div class="flex flex-col">
