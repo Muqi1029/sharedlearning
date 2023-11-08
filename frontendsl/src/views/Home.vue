@@ -136,12 +136,12 @@ const isShowDialog = ref<boolean>(false);
     </sidebar>
   </div>
 
-  <teleport to="body">
-    <up-load-link
-      :dialog-visible="isShowDialog"
-      @change-visible="(args) => (isShowDialog = args)"
-    />
-  </teleport>
+  <!--  <teleport to="body">-->
+  <!--    <up-load-link-->
+  <!--      :dialog-visible="isShowDialog"-->
+  <!--      @change-visible="(args) => (isShowDialog = args)"-->
+  <!--    />-->
+  <!--  </teleport>-->
 
   <bottom />
 </template>

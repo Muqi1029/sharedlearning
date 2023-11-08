@@ -29,6 +29,7 @@ import {
   ElCarousel,
   ElCarouselItem,
   ElMessageBox,
+  ElRadio,
 } from "element-plus";
 
 export const components: any[] = [
@@ -58,4 +59,5 @@ export const components: any[] = [
   ElCarousel,
   ElCarouselItem,
   ElMessageBox,
+  ElRadio,
 ];

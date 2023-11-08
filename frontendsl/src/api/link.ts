@@ -29,3 +29,20 @@ export function getRecommendLinkByUserID(userID: number) {
     method: "get",
   });
 }
+
+export function changeLinkStatus(linkID: number, status: number) {
+  return request({
+    url: "/link/changeStatus",
+    method: "post",
+    data: {
+      linkID,
+      status,
+    },
+  });
+}
+
+export function getPendingLink() {
+  return request({
+    url: "/link/pendingLink",
+  });
+}

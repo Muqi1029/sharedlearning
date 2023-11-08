@@ -1,6 +1,7 @@
 package com.muqi.backendsl.controller;
 
 import com.muqi.backendsl.entity.Link;
+import com.muqi.backendsl.model.dto.LinkDTO;
 import com.muqi.backendsl.model.request.LinkRequest;
 import com.muqi.backendsl.model.vo.RecommendLinkVO;
 import com.muqi.backendsl.model.vo.ResultVO;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags ="链接模块")
 @RestController
@@ -40,4 +42,23 @@ public class LinkController {
     public ResultVO<List<Link>> listLinkByCourseID(@PathVariable("courseID") Integer courseID) {
         return ResultVO.ok(linkService.listLinkByCourseID(courseID));
     }
+
+    @GetMapping("/pendingLink")
+    public ResultVO<List<LinkDTO>> getPendingLink() {
+        return ResultVO.ok(linkService.getPendingLink());
+    }
+
+    @PostMapping("/changeStatus")
+    public ResultVO<Boolean> changeArticleStatus(@RequestBody Map<String, Integer> requestBody) {
+        int lId = requestBody.getOrDefault("linkID", 0);
+        int sId = requestBody.getOrDefault("status", -1);
+        if (lId == 0 || sId == -1) {
+            return ResultVO.fail();
+        }
+        if (linkService.changeLinkStatus(lId, sId)) {
+            return ResultVO.ok();
+        }
+        return ResultVO.fail();
+    }
+
 }

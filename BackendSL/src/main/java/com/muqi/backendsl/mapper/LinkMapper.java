@@ -2,7 +2,10 @@ package com.muqi.backendsl.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.muqi.backendsl.entity.Link;
+import com.muqi.backendsl.model.dto.LinkDTO;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 /**
 * @author mq
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LinkMapper extends BaseMapper<Link> {
 
+    List<LinkDTO> getPendingLink();
 }
 
 

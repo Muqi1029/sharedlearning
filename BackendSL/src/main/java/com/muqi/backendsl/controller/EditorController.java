@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 import static com.muqi.backendsl.constant.EditorConstant.RETURN_PATH;
 import static com.muqi.backendsl.constant.EditorConstant.UPLOAD_PATH;
@@ -24,8 +25,9 @@ public class EditorController {
         }
 
         try {
-            String fileName = file.getName();
-            String filePath = UPLOAD_PATH + "image" +  File.separator + fileName;
+            String fileName = UUID.randomUUID().toString().replace("-", "") + "_" + file.getOriginalFilename();
+            System.out.println("filename: " + fileName);
+            String filePath = UPLOAD_PATH +  File.separator + fileName;
             File dest = new File(filePath);
             if (!dest.exists()) {
                 boolean result = dest.mkdirs();

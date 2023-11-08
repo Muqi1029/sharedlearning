@@ -87,5 +87,6 @@ public class ArticleDTO {
 
     private Integer articleStatus;
 
+    private Integer articleType;
 
 }

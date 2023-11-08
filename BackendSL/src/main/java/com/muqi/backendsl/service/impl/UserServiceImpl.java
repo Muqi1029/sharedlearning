@@ -154,7 +154,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
 
     @Override
     public boolean changeUser(int uId, int sId) {
-        return true;
+        QueryWrapper<User> userQueryWrapper = new QueryWrapper<>();
+        userQueryWrapper.eq("id", uId);
+        User user = userMapper.selectOne(userQueryWrapper);
+        if (user == null) {
+            return false;
+        }
+        user.setIsDelete(sId);
+        return userMapper.updateById(user) == 1;
     }
 
 }

@@ -40,4 +40,8 @@ public interface LinkService extends IService<Link> {
      * @return The result of saving link
      */
     boolean saveLink(LinkRequest linkRequest);
+
+    List<LinkDTO> getPendingLink();
+
+    boolean changeLinkStatus(int lId, int sId);
 }

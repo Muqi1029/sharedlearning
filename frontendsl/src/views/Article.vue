@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {onUnmounted, ref, nextTick, provide} from "vue";
+import { onUnmounted, ref, nextTick, provide } from "vue";
 import { useRoute } from "vue-router";
 import { v3ImgPreviewFn } from "v3-img-preview";
 import { deleteHTMLTag } from "@/utils/html";
@@ -10,7 +10,6 @@ import { getArticleById } from "@/api/article";
 import markdownToHtml from "@/utils/markdown";
 import ArticleHeader from "@/components/Header/ArticleHeader.vue";
 import Sticky from "@/components/Sticky.vue";
-import Comment from "@/components/Comment/Comment.vue";
 import Sidebar from "@/components/Sidebar/Sidebar.vue";
 
 const route = useRoute();
@@ -66,16 +65,21 @@ const wordNum = ref();
 const readTime = ref();
 
 articleId.value = route.params.articleId;
+
 provide("articleId", articleId.value);
 getArticleById(articleId.value).then(
   ({ data }) => {
     console.log(data);
-    data.articleContent = markdownToHtml(data.articleContent);
+    if (data["articleType"] === 1) {
+      data.articleContent = markdownToHtml(data.articleContent);
+      // alert("This article is markdown");
+    }
     article.value = data;
     wordNum.value =
       Math.round(deleteHTMLTag(data.articleContent).length / 100) / 10 + "k";
     readTime.value =
       Math.round(deleteHTMLTag(data.articleContent).length / 400) + "mins";
+
     loading.value = false;
     nextTick(() => {
       Prism.highlightAll();
@@ -134,7 +138,7 @@ onUnmounted(() => {
         </Sticky>
       </sidebar>
 
-      <Comment />
+      <!--      <Comment />-->
     </div>
   </div>
 </template>

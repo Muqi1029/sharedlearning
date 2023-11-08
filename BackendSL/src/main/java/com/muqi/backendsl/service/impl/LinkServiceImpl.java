@@ -2,6 +2,7 @@ package com.muqi.backendsl.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.muqi.backendsl.entity.Article;
 import com.muqi.backendsl.entity.Link;
 import com.muqi.backendsl.mapper.LinkMapper;
 import com.muqi.backendsl.mapper.UserCourseMapper;
@@ -100,6 +101,22 @@ public class LinkServiceImpl extends ServiceImpl<LinkMapper, Link>
 
         return this.save(link);
     }
+
+    @Override
+    public List<LinkDTO> getPendingLink() {
+        return linkMapper.getPendingLink();
+    }
+
+    @Override
+    public boolean changeLinkStatus(int lId, int sId) {
+        Link link = linkMapper.selectById(lId);
+        if (link == null) {
+            return false;
+        }
+        link.setLinkStatus(sId);
+        return linkMapper.updateById(link) == 1;
+    }
+
 
 }
 

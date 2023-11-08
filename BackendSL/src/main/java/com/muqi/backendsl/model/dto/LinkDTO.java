@@ -17,10 +17,14 @@ public class LinkDTO {
      */
     private String url;
 
+    private String name;
+
     /**
      *
      */
     private Integer courseID;
+
+    private String courseName;
 
     /**
      * 是否公有

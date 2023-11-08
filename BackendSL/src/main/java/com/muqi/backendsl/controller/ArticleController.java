@@ -32,13 +32,11 @@ public class ArticleController {
         return ResultVO.ok(articleService.listArticlesByCourseId(courseID));
     }
 
-
     @ApiOperation("get article by articleId")
     @RequestMapping("/{articleId}")
     public ResultVO<ArticleDTO> getArticleById(@PathVariable("articleId") Long articleId) {
         return ResultVO.ok(articleService.getArticleById(articleId));
     }
-
 
     @PostMapping("/admin/articles")
     public ResultVO<List<Article>> getPendingArticles(@RequestBody Map<String, Integer> requestBody) {

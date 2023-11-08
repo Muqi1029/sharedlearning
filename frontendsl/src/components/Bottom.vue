@@ -1,9 +1,12 @@
-<script setup lang="ts"></script>
-
 <template>
-  <div style="border: 8px solid beige; height: 20px; margin: 0 auto">
-    网络底部信息
-  </div>
+  <footer class="footer mt-2">
+    <hr />
+    <div class="footer-content p-4">@Copyright 2023.11.8 Muqi Li</div>
+  </footer>
 </template>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.footer {
+  text-align: center; /* Center-align the content */
+}
+</style>

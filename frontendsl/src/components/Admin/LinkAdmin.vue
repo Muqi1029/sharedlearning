@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import { changeArticleStatus, getPendingArticle } from "@/api/article";
-import { useUserStore } from "@/stores/user";
-import { deleteHTMLTag } from "@/utils/html";
+import { changeLinkStatus, getPendingLink } from "@/api/link";
 
 const handlePass = (id: number) => {
-  alert(`id为${id}的文章审核通过`);
-  changeArticleStatus(id, 2).then(({ flag }) => {
+  alert(`id为${id}的链接审核通过`);
+  changeLinkStatus(id, 1).then(({ flag }) => {
     if (flag) {
       alert("修改成功");
     } else {
@@ -16,21 +14,16 @@ const handlePass = (id: number) => {
   });
 };
 const handleDelete = (id: number) => {
-  alert(`id为${id}的文章被删除`);
-  changeArticleStatus(id, 0);
+  alert(`id为${id}的链接被删除`);
+  changeLinkStatus(id, 0);
   fun();
 };
 
 let tableData = ref([]);
 
-const userStore = useUserStore();
-
 const fun = () => {
-  getPendingArticle(userStore.userAuthority).then(
+  getPendingLink().then(
     (res) => {
-      res.data.forEach((d: { articleContent: string }) => {
-        d.articleContent = deleteHTMLTag(d.articleContent).slice(0, 300);
-      });
       tableData.value = res.data;
     },
     (err) => {
@@ -44,8 +37,9 @@ fun();
 <template>
   <div class="">
     <el-table :data="tableData">
-      <el-table-column label="文章标题" prop="articleTitle"></el-table-column>
-      <el-table-column label="文章内容" prop="articleContent"></el-table-column>
+      <el-table-column label="链接对应课程" prop="courseName"></el-table-column>
+      <el-table-column label="链接地址" prop="url"></el-table-column>
+      <el-table-column label="链接名称" prop="name"></el-table-column>
       <el-table-column align="right">
         <template #default="scope">
           <el-button size="small" @click="handlePass(scope.row.id)"

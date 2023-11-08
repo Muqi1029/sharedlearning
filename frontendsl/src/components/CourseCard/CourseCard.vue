@@ -3,7 +3,6 @@ import { defineProps, ref } from "vue";
 import { defaultImg } from "@/constant/app";
 import { useRouter } from "vue-router";
 import Favorites from "@/components/Favorites/Favorites.vue";
-import { defineEmits } from "@vue/runtime-core";
 
 const props = defineProps({
   data: {
@@ -16,11 +15,15 @@ const props = defineProps({
     default: false,
   },
 });
+// eslint-disable-next-line no-undef
 const emits = defineEmits(["courseID"]);
 const router = useRouter();
 const toCourse = () => {
   router.push({
     path: "/course/" + props.data.id,
+    query: {
+      course: props.data.title,
+    },
   });
 };
 
@@ -32,9 +35,7 @@ const changeFav = (arg: boolean) => {
 </script>
 
 <template>
-  <div
-    class="course-card-container h-full rounded-2xl list-none relative"
-  >
+  <div class="course-card-container h-full rounded-2xl list-none relative">
     <!--   course cover -->
     <div
       class="relative cursor-pointer courseCover-container h-52"

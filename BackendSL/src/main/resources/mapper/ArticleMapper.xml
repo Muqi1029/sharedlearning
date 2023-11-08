@@ -8,6 +8,7 @@
             <id property="id" column="id" jdbcType="BIGINT"/>
             <result property="articleCover" column="articleCover" jdbcType="VARCHAR"/>
             <result property="articleTitle" column="articleTitle" jdbcType="VARCHAR"/>
+            <result property="articleType" column="articleType" jdbcType="TINYINT"/>
             <result property="articleContent" column="articleContent" jdbcType="VARCHAR"/>
             <result property="articleStatus" column="articleStatus" jdbcType="TINYINT"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
@@ -55,15 +56,16 @@
     </select>
 
     <select id="getArticleById" resultType="com.muqi.backendsl.model.dto.ArticleDTO">
-        select
-            *
-        from t_article a
-        left join (select id as cID, term, category from t_course) c
-        on a.courseID = cID
-        left join (select id as uID, userName, avatarURL from t_user) u
-                  on a.userID = uID
-        where id = ${articleID} and isDelete = 0;
+        SELECT *
+        FROM t_article a
+                 left join (select id as cID, term, category from t_course) c
+                           on a.courseID = cID
+                 left join (select id as uID, userName, avatarURL from t_user) u
+                           on a.userID = uID
+        where id = ${articleID}
+          and isDelete = 0;
     </select>
+
     <select id="findByArticleStatus" resultType="com.muqi.backendsl.entity.Article">
         SELECT * FROM t_article WHERE articleStatus = #{articleStatus}
     </select>

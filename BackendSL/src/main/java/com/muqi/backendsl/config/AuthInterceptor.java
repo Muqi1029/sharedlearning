@@ -19,7 +19,7 @@ public class AuthInterceptor extends HandlerInterceptorAdapter {
         System.out.println("Request URL: " + request.getRequestURL());
         System.out.println("Start Time: " + System.currentTimeMillis());
         String token = (String) request.getSession().getAttribute(UserConstant.USER_LOGIN_STATE);
-        System.out.println("token: " + token + "\n user-Token: " + request.getHeader("User-Token"));
+        System.out.println("token: " + token + "\nuser-Token: " + request.getHeader("User-Token"));
         if (token == null || !Objects.equals(token, request.getHeader("User-Token"))) {
             ObjectMapper objectMapper = new ObjectMapper();
             ResultVO<Object> result = ResultVO.fail(StatusCodeEnum.NO_LOGIN);

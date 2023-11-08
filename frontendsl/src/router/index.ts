@@ -48,6 +48,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/admin",
     name: "admin",
+    redirect: "/admin/article",
     component: () => import("../views/Admin.vue"),
     children: [
       {
@@ -57,6 +58,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "article",
         component: () => import("@/components/Admin/ArticleAdmin.vue"),
+      },
+      {
+        path: "link",
+        component: () => import("@/components/Admin/LinkAdmin.vue"),
       },
     ],
   },

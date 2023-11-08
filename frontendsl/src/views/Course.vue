@@ -8,6 +8,7 @@ import { getCourseIntroById } from "@/api/course";
 import { getLinkByCourseID } from "@/api/link";
 import Header from "@/components/Header/Header.vue";
 import UpLoadLink from "@/components/UpLoadLink/UpLoadLink.vue";
+import { deleteHTMLTag } from "@/utils/html";
 
 const route = useRoute();
 const router = useRouter();
@@ -19,12 +20,17 @@ let md = require("markdown-it")();
 
 getArticleByCourseId(courseID).then(
   ({ data }) => {
+    // console.log(data);
     data.records.forEach((element: any) => {
-      element.articleContent = md
-        .render(element.articleContent)
-        .replace(/<\/?[^>]*>/g, "")
-        .replace(/[|]*\n/, "")
-        .replace(/&npsp;/gi, "");
+      if (element.dataType === 1) {
+        element.articleContent = md
+          .render(element.articleContent)
+          .replace(/<\/?[^>]*>/g, "")
+          .replace(/[|]*\n/, "")
+          .replace(/&npsp;/gi, "");
+      } else {
+        element.articleContent = deleteHTMLTag(element.articleContent);
+      }
     });
     articles.value = data.records;
   },
@@ -47,7 +53,8 @@ const enterEditor = () => {
   router.push({
     path: "/editor",
     query: {
-      course_name: courseID,
+      course: route.query.course,
+      courseID,
     },
   });
 };
@@ -60,11 +67,16 @@ const enterEditor = () => {
       <h1 class="mx-auto mb-4">课程介绍</h1>
       {{ intro }}
     </div>
-    <hr class="h-16 h-2.5" />
+    <hr class="h-6" />
 
     <!--  编辑文章-->
     <div class="flex">
-      <button class="w-1/6 h-16" @click="enterEditor">编辑文章</button>
+      <button
+        class="w-4/6 mx-auto h-20 bg-indigo-600 text-white text-3xl rounded-2xl hover:bg-indigo-800 shadow-md"
+        @click="enterEditor"
+      >
+        编辑文章
+      </button>
     </div>
 
     <!--  main_content  -->
@@ -90,10 +102,10 @@ const enterEditor = () => {
           <UpLoadLink name="上传链接" />
         </div>
 
-        <div class="flex flex-col">
-          <h1 class="text-center">私有的链接</h1>
-          <button>上传</button>
-        </div>
+        <!--        <div class="flex flex-col">-->
+        <!--          <h1 class="text-center">私有的链接</h1>-->
+        <!--          <button>上传</button>-->
+        <!--        </div>-->
       </aside>
     </div>
   </div>

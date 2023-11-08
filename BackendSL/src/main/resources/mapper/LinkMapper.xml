@@ -25,4 +25,10 @@
         isRecommend,source,tagID,
         cover,linkStatus
     </sql>
+    <select id="getPendingLink" resultType="com.muqi.backendsl.model.dto.LinkDTO">
+        SELECT l.url AS url, title AS courseName, l.name AS name, l.id AS id
+        FROM t_link l
+                 LEFT JOIN t_course c
+                      ON l.courseID = c.id;
+    </select>
 </mapper>

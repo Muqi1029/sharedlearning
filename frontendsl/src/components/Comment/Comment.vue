@@ -51,7 +51,7 @@ import { useUserStore } from "@/stores/user";
 import { useRoute } from "vue-router";
 import { useAppStore } from "@/stores/app";
 import { saveComment, getComments } from "@/api/comment";
-import tinymceEditor from "@/components/tinymceEditor/tinymceEditor.vue";
+import tinymceEditor from "@/components/Editor/tinymceEditor.vue";
 import CommentItem from "./CommentItem.vue";
 import SubTitle from "@/components/Title/SubTitle.vue";
 

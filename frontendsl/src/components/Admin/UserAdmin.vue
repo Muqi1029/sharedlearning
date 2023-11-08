@@ -17,8 +17,8 @@ const fun = () => {
 
 const ban = (id: number) => {
   changeUser(id, 1).then(
-    (res) => {
-      if (res.flag) {
+    ({ flag }) => {
+      if (flag) {
         alert("操作成功");
       } else {
         alert("操作失败");
@@ -36,7 +36,7 @@ fun();
 
 <template>
   <div>
-    {{ usersData }}
+    <!--    {{ usersData }}-->
     <el-table :data="usersData">
       <el-table-column label="用户名" prop="userName"></el-table-column>
       <el-table-column align="right">

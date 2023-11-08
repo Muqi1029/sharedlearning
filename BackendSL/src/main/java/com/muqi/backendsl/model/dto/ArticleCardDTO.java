@@ -24,6 +24,8 @@ public class ArticleCardDTO {
 
     private String articleContent;
 
+    private Integer articleType;
+
     private UserInfo userInfo;
 
     private Integer articleStatus;

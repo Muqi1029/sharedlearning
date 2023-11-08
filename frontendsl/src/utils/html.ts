@@ -1,4 +1,4 @@
-export function deleteHTMLTag(content: any) {
+export function deleteHTMLTag(content: string) {
   return content
     .replace(/<\/?[^>]*>/g, "")
     .replace(/[|]*\n/, "")

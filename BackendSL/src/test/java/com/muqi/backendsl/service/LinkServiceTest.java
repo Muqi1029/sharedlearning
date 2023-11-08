@@ -56,6 +56,15 @@ public class LinkServiceTest {
         linkRequest.setIsRecommend(1);
 
         assert linkService.saveLink(linkRequest);
+    }
 
+    @Test
+    public void getPendingLinkTest() {
+        System.out.println(linkService.getPendingLink());
+    }
+
+    @Test
+    public void changeLinkStatusTest() {
+        assert linkService.changeLinkStatus(2, 0);
     }
 }
