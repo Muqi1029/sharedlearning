@@ -1,4 +1,5 @@
 # sharedlearning
+
 This project, built as a full-stack web application using Spring Boot and Vue 3, aims to enhance self-learning experiences for undergraduates by fostering collaborative and shared learning environments.
 
 
@@ -40,6 +41,5 @@ npm run serve # start server of frontend
 ```
 
 To set up your database, utilize the provided SQL file and configuration file in the BackendSL directory. Once configured, you can initiate the backend server directly.
-
 
 
